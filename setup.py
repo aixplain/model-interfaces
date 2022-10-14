@@ -54,7 +54,7 @@ test_requirements = [
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, "aixplain_models", "__version__.py"), "r") as f:
+with open(os.path.join(here, "src/aixplain_models", "__version__.py"), "r") as f:
     exec(f.read(), about)
 
 with open("README.md", "r") as f:
@@ -70,7 +70,6 @@ setup(
     author_email=about["__author_email__"],
     url=about["__url__"],
     packages=find_packages(exclude=["test"]),
-    packages=["aixplain_models"],
     package_dir={"": "src"},
     package_data={"": ["LICENSE"]},
     include_package_data=True,

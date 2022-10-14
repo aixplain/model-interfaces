@@ -10,8 +10,9 @@ The directory structure needs to be following:
 ```
 src
 │   model.py
-│   bash.sh
-│   requirements.txt
+│   bash.sh [Optional]
+│   requirements.txt [Optional]
+|   Addtional files required by your code [Optional]
 ```
 
 ### The model artefact directory
@@ -87,24 +88,31 @@ The output is expected to return the predictions from the model in the same orde
 The bash.sh file:  
 This file implementation should include installing any system dependencies using bash commands.
 
-The requirements.txt file:
-Include all python packages that you need to run the model by extracting the requirements using:
+The requirements.txt file:  
+Include all python packages that you need to run the model by extracting the requirements using the command below
 
 ```
 pip freeze >> requirements.txt
 ```
 
-Note: The requirements should include aixplain-models package.
+Remove aixplain-models, CUDA, Torch and Tensorflow requirements from this file as their latest versions come pre-baked into the hosting server.
 
 
 ### Testing the model locally
 
-Run your model with the following command
+Run your model with the following command:
 ```
 MODEL_DIR=<path/to/model_artefacts_dir> MODEL_URI=<model_uri> python -m model
 ```
 
-TODO: write testing instructions
+Make an inference call:
+
+```
+MODEL_URI=<model_uri>
+curl -v -H http://localhost:8080/v1/models/$MODEL_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
+```
+
+The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/aixplain_models/schemas/function_input.py)
 
 ### The environment variables
 

@@ -11,10 +11,11 @@ class ModelResolver():
     def __init__(self) -> None:
         self._model_uri = MODEL_URI
 
-    def resolve_path(path):
-        model_path = os.path.join(MODEL_DIR, path)
+    @staticmethod
+    def resolve_path():
+        model_path = os.path.join(MODEL_DIR, MODEL_URI)
         return model_path
 
-    @property
-    def model_uri(self):
-        return self._model_uri
+    @staticmethod
+    def model_uri():
+        return MODEL_URI

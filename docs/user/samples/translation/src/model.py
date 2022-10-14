@@ -57,6 +57,6 @@ class MTModel(TranslationModel):
 
 
 if __name__ == "__main__":
-    model = MTModel(ModelResolver.model_uri)
+    model = MTModel(ModelResolver.model_uri())
     model.load()
     AixplainModelServer(workers=1).start([model])
