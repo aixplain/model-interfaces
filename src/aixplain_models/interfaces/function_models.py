@@ -1,15 +1,19 @@
+from http import HTTPStatus
 from typing import Dict, List
+
 from aixplain_models.schemas.function_input import (
     TranslationInput,
     SpeechRecognitionInput,
     DiacritizationInput,
-    ClassificationInput
+    ClassificationInput,
+    SpeechEnhancementInput
 )
 from aixplain_models.schemas.function_output import (
     TranslationOutput,
     SpeechRecognitionOutput,
     DiacritizationOutput,
-    ClassificationOutput
+    ClassificationOutput,
+    SpeechEnhancementOutput
 )
 from aixplain_models.interfaces.aixplain_model import AixplainModel
 
@@ -92,3 +96,31 @@ class ClassificationModel(AixplainModel):
                 **classification_output["predictions"][i].dict()
             )
         return classification_output
+
+class SpeechEnhancementModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]]) -> Dict[str, List[SpeechEnhancementOutput]]:
+        pass 
+
+    def predict(self, request: Dict) -> Dict:
+        instances = request['instances']
+        speech_enhancement_input_list = []
+        # Convert JSON serializables into SpeechEnhancementInputs
+        for instance in instances:
+            speech_enhancement_input = SpeechEnhancementInput(**instance)
+            speech_enhancement_input_list.append(speech_enhancement_input)
+        speech_enhancement_output = self.run_model({"instances": speech_enhancement_input_list})
+
+        # Convert JSON serializables into SpeechEnhancementOutputs
+        for i in range(len(speech_enhancement_output["predictions"])):
+            speech_enhancement_dict = speech_enhancement_output["predictions"][i].dict()
+            SpeechEnhancementOutput(**speech_enhancement_dict)
+            try:
+                speech_enhancement_dict["audio_config"]["audio_encoding"] = speech_enhancement_dict["audio_config"]["audio_encoding"].value
+            except AttributeError as e:
+                raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
+                    reason="The user request, although correct, is generating unacceptable output from the server."
+                )
+            
+            speech_enhancement_output["predictions"][i] = speech_enhancement_dict
+        return speech_enhancement_output

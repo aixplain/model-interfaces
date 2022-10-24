@@ -1,13 +1,17 @@
-from typing import Optional, Any
-import tornado
+from enum import Enum
 from http import HTTPStatus
-from pydantic import BaseModel
+from typing import Optional, Any
+
+from pydantic import BaseModel, validator
+import tornado
+
+from aixplain_models.utils import serialize
 
 class APIInput(BaseModel):
     """The standardized schema of the aiXplain's API input.
     
     :param data:
-        Input data to the supplier model.
+        Input data to the model.
     :type data:
         Any
     :param supplier:
@@ -15,7 +19,7 @@ class APIInput(BaseModel):
     :type supplier:
         str
     :param function:
-        The functionality of the supplier's model. 
+        The aixplain function name for the model. 
     :type function:
         str 
     :param version:
@@ -34,11 +38,35 @@ class APIInput(BaseModel):
     version: Optional[str] = ""
     language: Optional[str] = ""
 
+class AudioEncoding(Enum):
+    """
+    All supported audio encoding formats by the interface are
+    enlisted in this enum. 
+    """
+    
+    WAV = "wav" # 16 bit Linear PCM default wav format
+
+class AudioConfig(BaseModel):
+    """The standardized schema of the aiXplain's audio serialized data config.
+    :param audio_encoding:
+        Audio format of the audio data before base64 encoding.
+        Chosen from the supported types in the enum AudioEncoding
+        Supported encoding(s): wav
+    :type audio_encoding:
+        AudioEncoding
+    :param sampling_rate:
+        Sampling rate in hertz for the audio data. Optional.
+    :type sampling_rate:
+        int
+    """
+    audio_encoding: AudioEncoding
+    sampling_rate: Optional[int]
+
 class TranslationInputSchema(APIInput):
     """The standardized schema of the aiXplain's Translation API input.
     
     :param data:
-        Input data to the supplier model.
+        Input data to the model.
     :type data:
         Any
     :param supplier:
@@ -46,7 +74,7 @@ class TranslationInputSchema(APIInput):
     :type supplier:
         str
     :param function:
-        The functionality of the supplier's model. 
+        The aixplain function name for the model. 
     :type function:
         str 
     :param version:
@@ -88,15 +116,22 @@ class SpeechRecognitionInputSchema(APIInput):
     """The standardized schema of the aiXplain's Speech Recognition API input.
     
     :param data:
-        Input data to the supplier model.
+        Input data to the model.
+        Serialized base 64 encoded audio data in the audio encoding defined
+        by the audio_config parameter.
     :type data:
-        Any
+        str
+    :param audio_config:
+        Configuration specifying the audio encoding parameters of the provided
+        input.
+    :type audio_config:
+        AudioConfig
     :param supplier:
         Supplier name.
     :type supplier:
         str
     :param function:
-        The functionality of the supplier's model. 
+        The aixplain function name for the model. 
     :type function:
         str 
     :param version:
@@ -114,8 +149,15 @@ class SpeechRecognitionInputSchema(APIInput):
     :type dialect:
         str
     """
+    data: str
+    audio_config: AudioConfig
     language: str
     dialect: Optional[str] = ""
+
+    @validator('data')
+    def decode_data(cls, v):
+        decoded = serialize.decode(v)
+        return decoded
 
 class SpeechRecognitionInput(SpeechRecognitionInputSchema):
     def __init__(self, **input):
@@ -132,7 +174,7 @@ class DiacritizationInputSchema(APIInput):
     """The standardized schema of the aiXplain's diacritization API input.
     
     :param data:
-        Input data to the supplier model.
+        Input data to the model.
     :type data:
         Any
     :param supplier:
@@ -140,7 +182,7 @@ class DiacritizationInputSchema(APIInput):
     :type supplier:
         str
     :param function:
-        The functionality of the supplier's model. 
+        The aixplain function name for the model. 
     :type function:
         str 
     :param version:
@@ -176,7 +218,7 @@ class ClassificationInputSchema(APIInput):
     """The standardized schema of the aiXplain's classification API input.
     
     :param data:
-        Input data to the supplier model.
+        Input data to the model.
     :type data:
         Any
     :param supplier:
@@ -184,7 +226,7 @@ class ClassificationInputSchema(APIInput):
     :type supplier:
         str
     :param function:
-        The functionality of the supplier's model. 
+        The aixplain function name for the model. 
     :type function:
         str 
     :param version:
@@ -214,4 +256,62 @@ class ClassificationInput(ClassificationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into DiarizationInput."
+                )
+
+class SpeechEnhancementInputSchema(APIInput):
+    """The standardized schema of the aiXplain's Speech Enhancement API input.
+    
+    :param data:
+        Input data to the model.
+        Serialized base 64 encoded audio data in the audio encoding defined
+        by the audio_config parameter.
+    :type data:
+        str
+    :param audio_config:
+        Configuration specifying the audio encoding parameters of the provided
+        input.
+    :type audio_config:
+        AudioConfig
+    :param supplier:
+        Supplier name.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. 
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param language:
+        The source language the model processes for Speech Recognition.
+    :type language:
+        str
+    :param dialect:
+        The source dialect the model processes (if specified) for Speech Recognition.
+        Optional.
+    :type dialect:
+        str
+    """
+    data: str
+    audio_config: AudioConfig
+    language: str
+    dialect: Optional[str] = ""
+
+    @validator('data')
+    def decode_data(cls, v):
+        decoded = serialize.decode(v)
+        return decoded
+
+class SpeechEnhancementInput(SpeechEnhancementInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SpeechRecognitionInput."
                 )

@@ -1,7 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import Any, Optional, List, Dict, Union
 import tornado
-from http import HTTPStatus         
+from http import HTTPStatus
+
+from aixplain_models.schemas.function_input import AudioConfig
+from aixplain_models.utils import serialize
 
 class APIOutput(BaseModel):
     """The standardized schema of the aiXplain's API Output.
@@ -111,7 +114,15 @@ class SpeechRecognitionOutputSchema(APIOutput):
     :type details:
         TextSegmentDetails
     """ 
+    data: str
     details: TextSegmentDetails
+
+    @validator('data')
+    def encode_data(cls, v):
+        if not isinstance(v, str):
+            raise ValueError('Data must be a string.')
+        encoded = serialize.encode(v)
+        return encoded
 
 class SpeechRecognitionOutput(SpeechRecognitionOutputSchema):
     def __init__(self, **input):
@@ -160,3 +171,26 @@ class ClassificationOutput(APIOutput):
     """ 
     predicted_labels: List[Label]
     all_labels: Optional[List[Label]]
+
+class SpeechEnhancementOutputSchema(APIOutput):
+    """The standardized schema of the aiXplain's Speech Enhancement Output.
+    :param data:
+        Output data string encoded in base64 encoding containing audio encoding
+        defined by the audio_config parameter. 
+        Use aixplain_models.utils.serialize.encode() function to encode audio data.
+
+    :type data:
+        str
+    """ 
+    data: str
+    audio_config: AudioConfig
+
+class SpeechEnhancementOutput(SpeechEnhancementOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SpeechRecognitionOutput"
+                )

@@ -1,5 +1,4 @@
 import os
-import kserve
 from typing import Dict, List
 
 from transformers import MarianMTModel, MarianTokenizer
