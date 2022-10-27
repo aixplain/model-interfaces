@@ -10,7 +10,7 @@ from aixplain_models.utils import serialize
 
 import soundfile as sf, numpy as np, tensorflow as tf
 
-MODEL_NOT_FOUND_ERROR = """
+MODEL_NOT_FOUND_ERROR = f"""
     Download model files using command:
         wget https://aixplain-kserve-models-dev.s3.amazonaws.com/serving-models/sample-models/speech-enhancement/dtln/dtln/saved_model.pb
         wget https://aixplain-kserve-models-dev.s3.amazonaws.com/serving-models/sample-models/speech-enhancement/dtln/dtln/variables/variables.data-00000-of-00001
@@ -30,7 +30,8 @@ class SpeechEnhancer(SpeechEnhancementModel):
     def load(self):
         model_path = ModelResolver.resolve_path()
         if not os.path.exists(model_path):
-            raise ValueError(MODEL_NOT_FOUND_ERROR)
+            error_msg = f"Model not found in path: {model_path}\n" + MODEL_NOT_FOUND_ERROR
+            raise ValueError(error_msg)
         self.model = tf.saved_model.load(model_path)
         self.infer = self.model.signatures['serving_default']
         self.ready = True
