@@ -38,7 +38,7 @@ class TestDTLNSpeechenhancement():
         dtln_model = SpeechEnhancer(ModelResolver.model_uri())
         dtln_model.load()
         predict_output = dtln_model.predict(predict_input)
-        output_dict = predict_output["predictions"][0].dict()
+        output_dict = predict_output["predictions"][0]
 
         with open('decoded_ref_content.txt', 'r') as decode_handle:
             decoded_ref = decode_handle.read()

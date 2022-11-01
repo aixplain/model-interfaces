@@ -6,10 +6,11 @@ The open source model DTLN was taken from the github repository in the [link](ht
 
 ### Download the model file
 
-Navigate to the speech-enhancement reference example:
+Clone the aixplain-models repository and navigate to the speech-enhancement reference example:
 
 ```
-cd docs/user/samples/speech-enhancement
+git clone git@github.com:aixplain/aixplain-models-internal.git
+cd aixplain-models-internal/docs/user/samples/speech-enhancement
 ```
 
 Download the model file using the commands
@@ -33,11 +34,15 @@ dtln
 ```
 sudo apt-get install ffmpeg
 
-# Install aixplain-models from GitHub
-pip install https://github.com/aixplain/aixplain-models-internal.git
+# Install aixplain-models from GitHub, preferably by using a virtualenv
+pip install -e 'git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models'
 
-pip install -r requirements.txt # Preferably using a virtualenv
+pip install -r src/requirements.txt
 ```
+
+- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the aixplain_models repository
+
+Documentation to generate the GitHub personal access token can be found [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
 ## Run the model locally
 
@@ -70,10 +75,10 @@ cd docs/user/samples/speech-enhancement
 ### Build the model's container
 
 ```
-docker build --build-arg GH_API_KEY=<KEY_FROM_GITHUB_ACCOUNT> --build-arg MODEL_URI=<MODEL_URI> . -t 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
+docker build --build-arg GH_ACCESS_TOKEN=<TOKEN_FROM_GITHUB_ACCOUNT> --build-arg MODEL_URI=<MODEL_URI> . -t 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
 ```
 
-- GH_API_KEY: Generate a GitHub API key from your account that can clone aixplain_models repository
+- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the aixplain_models repository
 - MODEL_URI: Your model's name; 'dtln' in this reference example.
 
 ### Run the container

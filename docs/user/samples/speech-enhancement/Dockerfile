@@ -1,6 +1,6 @@
 # Stage 1: Builder/Compiler
 FROM python:3.8-slim as builder
-ARG GH_API_KEY
+ARG GH_ACCESS_TOKEN
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc git
 
@@ -9,7 +9,7 @@ COPY src/requirements.txt /requirements.txt
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir --user -r /requirements.txt
 
-RUN pip install --no-cache-dir --user -e "git+https://$GH_API_KEY@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models"
+RUN pip install --no-cache-dir --user -e "git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models"
 
 # Stage 2: Runtime
 FROM nvidia/cuda:11.3.0-cudnn8-runtime-ubuntu20.04
