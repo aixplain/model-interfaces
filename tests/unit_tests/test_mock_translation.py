@@ -16,7 +16,7 @@ class TestMockTranslation():
         target_language = "Spanish"
         target_dialect = ""
 
-        input_dict = {
+        translation_input = {
             "data": data,
             "supplier": supplier,
             "function": function,
@@ -28,19 +28,18 @@ class TestMockTranslation():
             "target_dialect": target_dialect
         }
 
-        translation_input = TranslationInput(**input_dict)
         predict_input = {"instances": [translation_input]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)
-        translation_output_dict = predict_output["predictions"][0].dict()
+        translation_output_dict = predict_output["predictions"][0]
 
         assert translation_output_dict["data"] == "Hola, como estas?"
         assert translation_output_dict["details"]["text"] == "Hola, como estas?"
         assert translation_output_dict["details"]["confidence"] == 0.7
 
 class MockModel(TranslationModel):
-    def predict(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

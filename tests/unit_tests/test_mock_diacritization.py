@@ -12,7 +12,7 @@ class TestMockDiacritization():
         version = ""
         language = "Arabic"
 
-        input_dict = {
+        speech_recognition_input = {
             "data": data,
             "supplier": supplier,
             "function": function,
@@ -20,19 +20,18 @@ class TestMockDiacritization():
             "language": language
         }
 
-        speech_recognition_input = DiacritizationInput(**input_dict)
         predict_input = {"instances": [speech_recognition_input]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)
-        output_dict = predict_output["predictions"][0].dict()
+        output_dict = predict_output["predictions"][0]
 
         assert output_dict["data"] == "السَّلَامُ عَلَيْكُمْ"
         assert output_dict["details"]["text"] == "السَّلَامُ عَلَيْكُمْ"
         assert output_dict["details"]["confidence"] == 0.7
 
 class MockModel(DiacritizationModel):
-    def predict(self, api_input: Dict[str, List[DiacritizationInput]]) -> Dict[str, List[DiacritizationOutput]]:
+    def run_model(self, api_input: Dict[str, List[DiacritizationInput]]) -> Dict[str, List[DiacritizationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

@@ -12,7 +12,7 @@ class TestMockClassification():
         version = ""
         language = "English"
 
-        input_dict = {
+        speech_recognition_input = {
             "data": data,
             "supplier": supplier,
             "function": function,
@@ -20,19 +20,18 @@ class TestMockClassification():
             "language": language
         }
 
-        speech_recognition_input = ClassificationInput(**input_dict)
         predict_input = {"instances": [speech_recognition_input]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)
-        output_dict = predict_output["predictions"][0].dict()
+        output_dict = predict_output["predictions"][0]
 
         assert output_dict["data"] == "positive"
         assert output_dict["predicted_labels"][0]["label"] == "positive"
         assert output_dict["predicted_labels"][0]["confidence"] == 0.7
 
 class MockModel(ClassificationModel):
-    def predict(self, api_input: Dict[str, List[ClassificationInput]]) -> Dict[str, List[ClassificationOutput]]:
+    def run_model(self, api_input: Dict[str, List[ClassificationInput]]) -> Dict[str, List[ClassificationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

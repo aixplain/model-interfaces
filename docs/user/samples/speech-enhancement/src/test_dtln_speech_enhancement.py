@@ -1,13 +1,10 @@
 from aixplain_models.interfaces.model_resolver import ModelResolver
-from aixplain_models.schemas.function_input import AudioConfig, AudioEncoding, SpeechEnhancementInput
-from aixplain_models.schemas.function_output import SpeechEnhancementOutput 
-from aixplain_models.interfaces.function_models import SpeechEnhancementModel
+from aixplain_models.schemas.function_input import AudioEncoding
 from typing import Dict, List
 
 from aixplain_models.utils.serialize import (
     audio_file_handle,
-    encode,
-    decode
+    encode
 )
 from model import SpeechEnhancer
 

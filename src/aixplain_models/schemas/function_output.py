@@ -117,13 +117,6 @@ class SpeechRecognitionOutputSchema(APIOutput):
     data: str
     details: TextSegmentDetails
 
-    @validator('data')
-    def encode_data(cls, v):
-        if not isinstance(v, str):
-            raise ValueError('Data must be a string.')
-        encoded = serialize.encode(v)
-        return encoded
-
 class SpeechRecognitionOutput(SpeechRecognitionOutputSchema):
     def __init__(self, **input):
         try:

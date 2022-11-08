@@ -32,9 +32,9 @@ class TranslationModel(AixplainModel):
 
         # Convert JSON serializables into TranslationOutputs
         for i in range(len(translation_output["predictions"])):
-            translation_output["predictions"][i] = TranslationOutput(
-                **translation_output["predictions"][i].dict()
-            )
+            translation_output_dict = translation_output["predictions"][i].dict()
+            TranslationOutput(**translation_output_dict)
+            translation_output["predictions"][i] = translation_output_dict
         return translation_output
 
 class SpeechRecognitionModel(AixplainModel):
@@ -52,9 +52,9 @@ class SpeechRecognitionModel(AixplainModel):
 
         # Convert JSON serializables into SpeechRecognitionOutputs
         for i in range(len(sr_output["predictions"])):
-            sr_output["predictions"][i] = SpeechRecognitionOutput(
-                **sr_output["predictions"][i].dict()
-            )
+            sr_output_dict = sr_output["predictions"][i].dict()
+            SpeechRecognitionOutput(**sr_output_dict)
+            sr_output["predictions"][i] = sr_output_dict
         return sr_output
 
 class DiacritizationModel(AixplainModel):
@@ -72,9 +72,9 @@ class DiacritizationModel(AixplainModel):
 
         # Convert JSON serializables into DiacritizationOutputs
         for i in range(len(diacritiztn_output["predictions"])):
-            diacritiztn_output["predictions"][i] = DiacritizationOutput(
-                **diacritiztn_output["predictions"][i].dict()
-            )
+            diacritiztn_output_dict = diacritiztn_output["predictions"][i].dict()
+            DiacritizationOutput(**diacritiztn_output_dict)
+            diacritiztn_output["predictions"][i] = diacritiztn_output_dict
         return diacritiztn_output
 
 class ClassificationModel(AixplainModel):
@@ -92,9 +92,9 @@ class ClassificationModel(AixplainModel):
 
         # Convert JSON serializables into ClassificationOutputs
         for i in range(len(classification_output["predictions"])):
-            classification_output["predictions"][i] = ClassificationOutput(
-                **classification_output["predictions"][i].dict()
-            )
+            classification_output_dict = classification_output["predictions"][i].dict()
+            ClassificationOutput(**classification_output_dict)
+            classification_output["predictions"][i] = classification_output_dict
         return classification_output
 
 class SpeechEnhancementModel(AixplainModel):
