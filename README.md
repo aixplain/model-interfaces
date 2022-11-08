@@ -9,8 +9,8 @@ Refer to the [user guide document](docs/users/README.md).
 ### Samples
 
 Reference implementations reside here:
- - University of Helsinki's Opus Spanish to English [machine translation model](docs/users/samples/translation)
- - DTLN [speech enhancement model](docs/users/samples/speech-enhancement)
+ - DTLN [speech enhancement model](docs/user/samples/speech-enhancement)
+ - University of Helsinki's Opus Spanish to English [machine translation model](docs/user/samples/translation/src/model.py)
 
 ## Developer Guide
 
