@@ -41,6 +41,7 @@ requires = [
     "kserve>=0.9.0",
     "protobuf>=3.19.4",
     "pydantic>=1.9.1",
+    "pydub>=0.25.1",
     "requests>=2.28.1",
 ]
 
