@@ -1,0 +1,212 @@
+{
+    "success": {
+        "hypotheses": [
+            [
+                { "text": "", "category": "PER", "offset": 2, "length": 2}
+            ],
+            [
+                { "text": "", "category": "LOC", "offset": 1, "length": 1},
+                { "text": "", "category": "LOC", "offset": 3, "length": 1}
+            ]
+        ],
+        "references": [
+            [
+                { "text": "", "category": "PER", "offset": 2, "length": 2}
+            ],
+            [
+                { "text": "", "category": "LOC", "offset": 1, "length": 1},
+                { "text": "", "category": "LOC", "offset": 3, "length": 1}
+            ]
+        ]
+    },
+    "complex": {
+        "hypotheses": [
+            [
+                { "text": "healthy", "category": "brand", "offset": 6, "length": 7},
+                { "text": "of warfarin", "category": "drug", "offset": 15, "length": 11},
+                { "text": "propranolol", "category": "brand", "offset": 28, "length": 11},
+                { "text": "phenytoin", "category": "drug", "offset": 41, "length": 9},
+                { "text": "theophylline", "category": "drug", "offset": 52, "length": 12},
+                { "text": "oral contraceptives", "category": "drug", "offset": 66, "length": 19}
+            ]
+        ],
+        "references": [
+            [
+                { "text": "TIKOSYN", "category": "brand", "offset": 0, "length": 5},
+                { "text": "warfarin", "category": "drug", "offset": 18, "length": 8},
+                { "text": "propranolol", "category": "drug", "offset": 28, "length": 11},
+                { "text": "phenytoin", "category": "drug", "offset": 41, "length": 9},
+                { "text": "theophylline", "category": "drug", "offset": 52, "length": 12},
+                { "text": "contraceptives", "category": "group", "offset": 71, "length": 14}
+            ]
+        ]
+    },
+    "complex2": {
+        "hypotheses": [
+            [
+                {
+                    "text": "Sebastian Thrun",
+                    "category": "Person",
+                    "offset": 5,
+                    "length": 15,
+                    "confidenceScore": 1
+                },
+                {
+                    "text": "self-driving cars",
+                    "category": "Product",
+                    "offset": 40,
+                    "length": 17,
+                    "confidenceScore": 0.84
+                },
+                {
+                    "text": "-driving",
+                    "category": "Skill",
+                    "offset": 44,
+                    "length": 8,
+                    "confidenceScore": 0.66
+                },
+                {
+                    "text": "Google",
+                    "category": "Organization",
+                    "offset": 61,
+                    "length": 6,
+                    "confidenceScore": 0.99
+                },
+                {
+                    "text": "2007",
+                    "category": "DateTime",
+                    "subcategory": "DateRange",
+                    "offset": 71,
+                    "length": 4,
+                    "confidenceScore": 0.8
+                },
+                {
+                    "text": "CEOs",
+                    "category": "PersonType",
+                    "offset": 159,
+                    "length": 4,
+                    "confidenceScore": 0.94
+                },
+                {
+                    "text": "car",
+                    "category": "Product",
+                    "offset": 182,
+                    "length": 3,
+                    "confidenceScore": 0.55
+                },
+                {
+                    "text": "Thrun",
+                    "category": "Person",
+                    "offset": 271,
+                    "length": 5,
+                    "confidenceScore": 0.99
+                },
+                {
+                    "text": "now",
+                    "category": "DateTime",
+                    "offset": 278,
+                    "length": 3,
+                    "confidenceScore": 0.8},
+                {
+                    "text": "co-founder",
+                    "category": "PersonType",
+                    "offset": 286,
+                    "length": 10,
+                    "confidenceScore": 0.97
+                },
+                {
+                    "text": "CEO",
+                    "category": "PersonType",
+                    "offset": 301,
+                    "length": 3,
+                    "confidenceScore": 0.97
+                },
+                {
+                    "text": "Udacity",
+                    "category": "Organization",
+                    "offset": 340,
+                    "length": 7,
+                    "confidenceScore": 0.97
+                },
+                {
+                    "text": "interview",
+                    "category": "Event",
+                    "offset": 355,
+                    "length": 9,
+                    "confidenceScore": 0.66
+                },
+                {
+                    "text": "Recode",
+                    "category": "Organization",
+                    "offset": 370,
+                    "length": 6,
+                    "confidenceScore": 0.96
+                },
+                {
+                    "text": "earlier this week",
+                    "category": "DateTime",
+                    "subcategory": "DateRange",
+                    "offset": 377,
+                    "length": 17,
+                    "confidenceScore": 0.8
+                }
+            ]
+        ],
+        "references": [
+            [
+                {
+                    "text": "Sebastian Thrun",
+                    "category": "Person",
+                    "offset": 5,
+                    "length": 15,
+                    "confidenceScore": 1
+                },
+                {
+                    "text": "Google",
+                    "category": "Organization",
+                    "offset": 61,
+                    "length": 6,
+                    "confidenceScore": 0.99
+                },
+                {
+                    "text": "2007",
+                    "category": "DateTime",
+                    "subcategory": "DateRange",
+                    "offset": 71,
+                    "length": 4,
+                    "confidenceScore": 0.8
+                },
+                {
+                    "text": "American",
+                    "category": "NORP",
+                    "subcategory": "",
+                    "offset": 173,
+                    "length": 8,
+                    "confidenceScore": 0.8
+                },
+                {
+                    "text": "Thrun",
+                    "category": "Person",
+                    "offset": 271,
+                    "length": 5,
+                    "confidenceScore": 0.99
+                },
+                {
+                    "text": "Recode",
+                    "category": "Organization",
+                    "offset": 370,
+                    "length": 6,
+                    "confidenceScore": 0.96
+                },
+                {
+                    "text": "earlier this week",
+                    "category": "DateTime",
+                    "subcategory": "DateRange",
+                    "offset": 377,
+                    "length": 17,
+                    "confidenceScore": 0.8
+                }
+            ]
+        ]
+    }
+}

@@ -1,0 +1,7 @@
+docs==0.1.0
+fairseq==0.12.2
+librosa==0.9.2
+numpy==1.21.6
+pytest==7.2.0
+scipy==1.7.2
+torch==1.13.1+cu116

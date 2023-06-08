@@ -1,0 +1,36 @@
+{
+    "meteor": {
+      "regular": {
+        "sentence-level": [
+          75,
+          75,
+          75
+        ],
+        "corpus-level": 75
+      },
+      "multireference": {
+        "sentence-level": [
+          84.41,
+          57.52,
+          99.6
+        ],
+        "corpus-level": 80.51
+      },
+      "multireference2": {
+        "sentence-level": [
+          84.41,
+          57.52,
+          0
+        ],
+        "corpus-level": 47.31
+      },
+      "emptystring": {
+        "sentence-level": [
+          0,
+          0,
+          0
+        ],
+        "corpus-level": 0
+      }
+    }
+  }

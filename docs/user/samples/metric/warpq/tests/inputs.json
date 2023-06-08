@@ -1,0 +1,24 @@
+{
+    "regular": {
+        "sources": [
+            "this is a test data"
+        ],
+        "hypotheses": [
+            "https://aixplain-samples-public.s3.amazonaws.com/audio_samples/tts_data/transcoded_CA01_01.wav"
+        ],
+        "references": [
+            "https://aixplain-samples-public.s3.amazonaws.com/audio_samples/tts_data/CA01_01.wav"
+        ]
+    },
+    "same": {
+        "sources": [
+            "this is a test data"
+        ],
+        "hypotheses": [
+            "https://aixplain-samples-public.s3.amazonaws.com/audio_samples/tts_data/CA01_01.wav"
+        ],
+        "references": [
+            "https://aixplain-samples-public.s3.amazonaws.com/audio_samples/tts_data/CA01_01.wav"
+        ]
+    }
+}

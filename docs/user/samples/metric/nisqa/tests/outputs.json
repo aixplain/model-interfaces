@@ -1,0 +1,14 @@
+{
+    "referenceless1": {
+        "sentence-level": [
+            3.0477
+        ],
+        "corpus-level": 3.05
+    },
+    "referenceless2": {
+        "sentence-level": [
+            3.8135
+        ],
+        "corpus-level": 3.81
+    }
+}

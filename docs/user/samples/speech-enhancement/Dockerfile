@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir --user -e "git+https://$GH_ACCESS_TOKEN@github.co
 
 # Stage 2: Runtime
 FROM nvidia/cuda:11.3.0-cudnn8-runtime-ubuntu20.04
-ARG MODEL_URI
+ARG ASSET_URI
 
 RUN DEBIAN_FRONTEND=noninteractive apt update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata && \
@@ -27,11 +27,11 @@ COPY --from=builder /root/.local/lib/python3.8/site-packages /usr/local/lib/pyth
 COPY --from=builder /src/aixplain-models /src/aixplain-models
 
 RUN mkdir /code
-RUN mkdir /$MODEL_URI
+RUN mkdir /$ASSET_URI
 
 WORKDIR /code
 COPY src /code
-COPY $MODEL_URI/. /$MODEL_URI/
+COPY $ASSET_URI/. /$ASSET_URI/
 
 RUN chmod +x /code/bash.sh
 RUN ./bash.sh

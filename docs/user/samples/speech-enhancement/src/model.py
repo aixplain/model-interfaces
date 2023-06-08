@@ -2,7 +2,7 @@ import os, io
 from typing import Dict, List
 
 from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.model_resolver import ModelResolver
+from aixplain_models.interfaces.asset_resolver import AssetResolver
 from aixplain_models.schemas.function_input import AudioEncoding, SpeechEnhancementInput
 from aixplain_models.schemas.function_output import SpeechEnhancementOutput
 from aixplain_models.interfaces.function_models import SpeechEnhancementModel
@@ -28,7 +28,7 @@ SAMPLING_RATE = 16000
 class SpeechEnhancer(SpeechEnhancementModel):
 
     def load(self):
-        model_path = ModelResolver.resolve_path()
+        model_path = AssetResolver.resolve_path()
         if not os.path.exists(model_path):
             error_msg = f"Model not found in path: {model_path}\n" + MODEL_NOT_FOUND_ERROR
             raise ValueError(error_msg)
@@ -90,6 +90,6 @@ class SpeechEnhancer(SpeechEnhancementModel):
 
 
 if __name__ == '__main__':
-    model = SpeechEnhancer(ModelResolver.model_uri())
+    model = SpeechEnhancer(AssetResolver.asset_uri())
     model.load()
     AixplainModelServer(workers=1).start([model])

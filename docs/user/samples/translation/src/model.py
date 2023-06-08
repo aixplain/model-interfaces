@@ -4,7 +4,7 @@ from typing import Dict, List
 from transformers import MarianMTModel, MarianTokenizer
 
 from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.model_resolver import ModelResolver
+from aixplain_models.interfaces.asset_resolver import AssetResolver
 from aixplain_models.schemas.function_input import TranslationInput
 from aixplain_models.schemas.function_output import TextSegmentDetails, TranslationOutput
 from aixplain_models.interfaces.function_models import TranslationModel
@@ -18,7 +18,7 @@ MODEL_NOT_FOUND_ERROR = """
 
 class MTModel(TranslationModel):
     def load(self):
-        model_path = ModelResolver.resolve_path()
+        model_path = AssetResolver.resolve_path()
         if not os.path.exists(model_path):
             raise ValueError(MODEL_NOT_FOUND_ERROR)
         self.tokenizer = MarianTokenizer.from_pretrained(model_path)
@@ -56,6 +56,6 @@ class MTModel(TranslationModel):
 
 
 if __name__ == "__main__":
-    model = MTModel(ModelResolver.model_uri())
+    model = MTModel(AssetResolver.asset_uri())
     model.load()
     AixplainModelServer(workers=1).start([model])

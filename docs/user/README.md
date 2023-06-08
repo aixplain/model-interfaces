@@ -17,11 +17,11 @@ src
 
 ### The model artefact directory
 
-The hosted model might depend on files for loading parameters, configurations or other model assets. Create a model directory having the same name as the value provided in `MODEL_URI` and place all your dependant model assets in this directory.
+The hosted model might depend on files for loading parameters, configurations or other model assets. Create a model directory having the same name as the value provided in `ASSET_URI` and place all your dependant model assets in this directory.
 
 Note:
 1. The contents of this directory would be accessed or loaded by the model class' load function. 
-2. The environment variable `MODEL_URI` defaults to the value `model`.
+2. The environment variable `ASSET_URI` defaults to the value `asset`.
 
 ### Implementing the model.py file
 
@@ -35,12 +35,12 @@ To implement the model interface, define the following functions:
 
 #### Load function
 
-Implement the load function to load all model artefacts from the model directory specified in `MODEL_URI`. The model artefacts loaded here can be used by the model during prediction time, i.e. executing run_model().
+Implement the load function to load all model artefacts from the model directory specified in `ASSET_URI`. The model artefacts loaded here can be used by the model during prediction time, i.e. executing run_model().
 Set the value self.ready as 'True' to indicate that loading has successfully executed.
 
 ```
     def load(self):
-        model_path = ModelResolver.resolve_path()
+        model_path = AssetResolver.resolve_path()
         if not os.path.exists(model_path):
             raise ValueError('Model not found')
         self.model = pickle.load(os.path.join(model_path, 'model.pkl'))
@@ -102,19 +102,19 @@ Remove aixplain-models, CUDA, Torch and Tensorflow requirements from this file a
 
 Run your model with the following command:
 ```
-MODEL_DIR=<path/to/model_artefacts_dir> MODEL_URI=<model_uri> python -m model
+ASSET_DIR=<path/to/model_artefacts_dir> ASSET_URI=<asset_uri> python -m model
 ```
 
 Make an inference call:
 
 ```
-MODEL_URI=<model_uri>
-curl -v -H http://localhost:8080/v1/models/$MODEL_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
+ASSET_URI=<asset_uri>
+curl -v -H http://localhost:8080/v1/models/$ASSET_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
 ```
 
 The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/aixplain_models/schemas/function_input.py)
 
 ### The environment variables
 
- - `MODEL_DIR`: The relative or absolute path of the model artefacts directory (MODEL_URI) on your system. This defaults to current directory.
- - `MODEL_URI`: The name of the model artefacts directory. The default name is `model`.
+ - `ASSET_DIR`: The relative or absolute path of the model artefacts directory (ASSET_URI) on your system. This defaults to current directory.
+ - `ASSET_URI`: The name of the model artefacts directory. The default name is `asset`.

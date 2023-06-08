@@ -1,0 +1,26 @@
+{
+    "regular": [
+        {"sentence-level": [50.93, 51.67, 66.48], "corpus-level": 57.16, "options": {"casing": "Cased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [49.92, 50.71, 66.66], "corpus-level": 56.69, "options": {"casing": "Cased", "punctuation": "Not Punctuated"}}, 
+        {"sentence-level": [49.15, 49.92, 65.83], "corpus-level": 55.87, "options": {"casing": "Uncased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [49.92, 50.71, 66.66], "corpus-level": 56.69, "options": {"casing": "Uncased", "punctuation": "Not Punctuated"}}
+    ],
+    "multireference": [
+        {"sentence-level": [87.23, 43.25, 100.0], "corpus-level": 76.3, "options": {"casing": "Cased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [92.47, 49.06, 100.0], "corpus-level": 80.67, "options": {"casing": "Cased", "punctuation": "Not Punctuated"}}, 
+        {"sentence-level": [100.0, 55.87, 98.52], "corpus-level": 84.86, "options": {"casing": "Uncased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [100.0, 56.71, 100.0], "corpus-level": 85.72, "options": {"casing": "Uncased", "punctuation": "Not Punctuated"}}
+    ],
+    "multireference2": [
+        {"sentence-level": [87.23, 43.25, 0.0], "corpus-level": 47.27, "options": {"casing": "Cased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [92.47, 49.06, 0.0], "corpus-level": 50.56, "options": {"casing": "Cased", "punctuation": "Not Punctuated"}}, 
+        {"sentence-level": [100.0, 55.87, 0.0], "corpus-level": 55.67, "options": {"casing": "Uncased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [100.0, 56.71, 0.0], "corpus-level": 55.97, "options": {"casing": "Uncased", "punctuation": "Not Punctuated"}}
+    ],
+    "emptystring": [
+        {"sentence-level": [0.0, 0.0, 0.0], "corpus-level": 0.0, "options": {"casing": "Cased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [0.0, 0.0, 0.0], "corpus-level": 0.0, "options": {"casing": "Cased", "punctuation": "Not Punctuated"}}, 
+        {"sentence-level": [0.0, 0.0, 0.0], "corpus-level": 0.0, "options": {"casing": "Uncased", "punctuation": "Punctuated"}}, 
+        {"sentence-level": [0.0, 0.0, 0.0], "corpus-level": 0.0, "options": {"casing": "Uncased", "punctuation": "Not Punctuated"}}
+    ]
+}

@@ -49,13 +49,13 @@ Documentation to generate the GitHub personal access token can be found [here](h
 ### Test using the given test and samples
 
 ```
-MODEL_DIR=. MODEL_URI=dtln pytest
+ASSET_DIR=. ASSET_URI=dtln pytest
 ```
 
 ### Serve the model using a webserver
 
 ```
-MODEL_DIR=. MODEL_URI=dtln python src/model.py
+ASSET_DIR=. ASSET_URI=dtln python src/model.py
 ```
 
 ### Test the model server
@@ -75,14 +75,14 @@ cd docs/user/samples/speech-enhancement
 ### Build the model's container
 
 ```
-docker build --build-arg GH_ACCESS_TOKEN=<TOKEN_FROM_GITHUB_ACCOUNT> --build-arg MODEL_URI=<MODEL_URI> . -t 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
+docker build --build-arg GH_ACCESS_TOKEN=<TOKEN_FROM_GITHUB_ACCOUNT> --build-arg ASSET_URI=<ASSET_URI> . -t 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
 ```
 
 - GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the aixplain_models repository
-- MODEL_URI: Your model's name; 'dtln' in this reference example.
+- ASSET_URI: Your model's name; 'dtln' in this reference example.
 
 ### Run the container
 
 ```
-docker run -e MODEL_DIR=/ -e MODEL_URI=dtln -p 8080:8080 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
+docker run -e ASSET_DIR=/ -e ASSET_URI=dtln -p 8080:8080 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
 ```

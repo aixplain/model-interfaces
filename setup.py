@@ -38,24 +38,27 @@ consider upgrading to a supported Python version.
     sys.exit(1)
 
 requires = [
-    "kserve>=0.9.0",
+    "kserve>=0.10.0",
+    "multiprocess==0.70.14", # Support for MacOS multiprocessing.
     "protobuf>=3.19.4",
     "pydantic>=1.9.1",
     "pydub>=0.25.1",
     "requests>=2.28.1",
+    "tornado>=6.2", #TODO(krishnadurai): Remove as soon as HTTP errors are refactored
+    "validators>=0.20.0"
 ]
 
 test_requirements = [
     "pytest>=7.1.2",
-    "sentencepiece==0.1.96",
-    "torch==1.10.1",
-    "transformers==4.21.1"
+    "sentencepiece>=0.1.96",
+    "torch>=1.13.1",
+    "transformers>=4.21.1"
 ]
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, "src/aixplain_models", "__version__.py"), "r") as f:
+with open(os.path.join(here, "aixplain_models", "__version__.py"), "r") as f:
     exec(f.read(), about)
 
 with open("README.md", "r") as f:
@@ -71,7 +74,6 @@ setup(
     author_email=about["__author_email__"],
     url=about["__url__"],
     packages=find_packages(exclude=["test"]),
-    package_dir={"": "src"},
     package_data={"": ["LICENSE"]},
     include_package_data=True,
     python_requires=">=3.5, <4",

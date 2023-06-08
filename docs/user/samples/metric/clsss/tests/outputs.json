@@ -1,0 +1,22 @@
+{
+    "regular": [{
+        "sentence-level": [90.16, 82.08, 63.8],
+        "corpus-level": 78.68,
+        "options": {"Paramns": null}
+    }],
+    "multireference": [{
+        "sentence-level": [94.44, 75.17, 87.52],
+        "corpus-level": 85.71,
+        "options": {"Paramns": null}
+    }],
+    "multireference2": [{
+        "sentence-level": [94.44, 75.17, 22.27],
+        "corpus-level": 63.96,
+        "options": {"Paramns": null}
+    }],
+    "emptystring": [{
+        "sentence-level": [34.21, 13.78, 22.27],
+        "corpus-level": 23.42,
+        "options": {"Paramns": null}
+    }]
+}

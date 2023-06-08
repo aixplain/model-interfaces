@@ -1,6 +1,5 @@
-from aixplain_models.interfaces.model_resolver import ModelResolver
+from aixplain_models.interfaces.asset_resolver import AssetResolver
 from aixplain_models.schemas.function_input import AudioEncoding
-from typing import Dict, List
 
 from aixplain_models.utils.serialize import (
     audio_file_handle,
@@ -32,7 +31,7 @@ class TestDTLNSpeechenhancement():
 
         predict_input = {"instances": [input_dict]}
         
-        dtln_model = SpeechEnhancer(ModelResolver.model_uri())
+        dtln_model = SpeechEnhancer(AssetResolver.asset_uri())
         dtln_model.load()
         predict_output = dtln_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
