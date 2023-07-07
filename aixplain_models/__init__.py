@@ -7,7 +7,8 @@ from aixplain_models.schemas.function_input import (
     DiacritizationInput,
     ClassificationInput,
     SpeechEnhancementInput,
-    SpeechSynthesisInput
+    SpeechSynthesisInput,
+    TextToImageGenerationInput
 )
 
 from aixplain_models.schemas.function_output import(
@@ -19,7 +20,8 @@ from aixplain_models.schemas.function_output import(
     SpeechRecognitionOutput,
     DiacritizationOutput,
     ClassificationOutput,
-    SpeechEnhancementOutput
+    SpeechEnhancementOutput,
+    TextToImageGenerationOutput
 )
 
 from aixplain_models.schemas.metric_input import(
@@ -52,7 +54,8 @@ from aixplain_models.interfaces.function_models import(
     DiacritizationModel,
     ClassificationModel,
     SpeechEnhancementModel,
-    SpeechSynthesis
+    SpeechSynthesis,
+    TextToImageGeneration
 )
 
 from aixplain_models.interfaces.metric_models import(
@@ -70,7 +73,8 @@ function_classes = [
     DiacritizationModel,
     ClassificationModel,
     SpeechEnhancementModel,
-    SpeechSynthesis
+    SpeechSynthesis,
+    TextToImageGeneration
 ]
 
 function_classes_input = [
@@ -82,7 +86,8 @@ function_classes_input = [
     DiacritizationInput,
     ClassificationInput,
     SpeechEnhancementInput,
-    SpeechSynthesisInput
+    SpeechSynthesisInput,
+    TextToImageGenerationInput
 ]
 
 metric_classes_input = [
