@@ -24,17 +24,18 @@ from aixplain_models.schemas.function_output import (
 from aixplain_models.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
-        pass 
 
-    def predict(self, request: Dict) -> Dict:
+    def run_model(self, api_input: Dict[str, List[TranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TranslationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         translation_input_list = []
         # Convert JSON serializables into TranslationInputs
         for instance in instances:
             translation_input = TranslationInput(**instance)
             translation_input_list.append(translation_input)
-        translation_output = self.run_model({"instances": translation_input_list})
+        translation_output = self.run_model({"instances": translation_input_list}, headers)
 
         # Convert JSON serializables into TranslationOutputs
         for i in range(len(translation_output["predictions"])):
@@ -44,17 +45,20 @@ class TranslationModel(AixplainModel):
         return translation_output
 
 class SpeechRecognitionModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]]) -> Dict[str, List[SpeechRecognitionOutput]]:
-        pass 
 
-    def predict(self, request: Dict) -> Dict:
+    def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechRecognitionOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+
         instances = request['instances']
         sr_input_list = []
         # Convert JSON serializables into SpeechRecognitionInputs
         for instance in instances:
             sr_input = SpeechRecognitionInput(**instance)
             sr_input_list.append(sr_input)
-        sr_output = self.run_model({"instances": sr_input_list})
+        sr_output = self.run_model({"instances": sr_input_list}, headers)
+
 
         # Convert JSON serializables into SpeechRecognitionOutputs
         for i in range(len(sr_output["predictions"])):
@@ -64,17 +68,18 @@ class SpeechRecognitionModel(AixplainModel):
         return sr_output
 
 class DiacritizationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[DiacritizationInput]]) -> Dict[str, List[DiacritizationOutput]]:
-        pass 
 
-    def predict(self, request: Dict) -> Dict:
+    def run_model(self, api_input: Dict[str, List[DiacritizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[DiacritizationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         diacritiztn_input_list = []
         # Convert JSON serializables into DiacritizationInputs
         for instance in instances:
             diacritiztn_input = DiacritizationInput(**instance)
             diacritiztn_input_list.append(diacritiztn_input)
-        diacritiztn_output = self.run_model({"instances": diacritiztn_input_list})
+        diacritiztn_output = self.run_model({"instances": diacritiztn_input_list}, headers)
 
         # Convert JSON serializables into DiacritizationOutputs
         for i in range(len(diacritiztn_output["predictions"])):
@@ -84,17 +89,17 @@ class DiacritizationModel(AixplainModel):
         return diacritiztn_output
 
 class ClassificationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[ClassificationInput]]) -> Dict[str, List[ClassificationOutput]]:
-        pass 
+    def run_model(self, api_input: Dict[str, List[ClassificationInput]], headers: Dict[str, str] = None) -> Dict[str, List[ClassificationOutput]]:
+        pass
 
-    def predict(self, request: Dict) -> Dict:
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         classification_input_list = []
         # Convert JSON serializables into ClassificationInputs
         for instance in instances:
             classification_input = ClassificationInput(**instance)
             classification_input_list.append(classification_input)
-        classification_output = self.run_model({"instances": classification_input_list})
+        classification_output = self.run_model({"instances": classification_input_list}, headers)
 
         # Convert JSON serializables into ClassificationOutputs
         for i in range(len(classification_output["predictions"])):
@@ -104,17 +109,18 @@ class ClassificationModel(AixplainModel):
         return classification_output
 
 class SpeechEnhancementModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]]) -> Dict[str, List[SpeechEnhancementOutput]]:
-        pass 
 
-    def predict(self, request: Dict) -> Dict:
+    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechEnhancementOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         speech_enhancement_input_list = []
         # Convert JSON serializables into SpeechEnhancementInputs
         for instance in instances:
             speech_enhancement_input = SpeechEnhancementInput(**instance)
             speech_enhancement_input_list.append(speech_enhancement_input)
-        speech_enhancement_output = self.run_model({"instances": speech_enhancement_input_list})
+        speech_enhancement_output = self.run_model({"instances": speech_enhancement_input_list}, headers)
 
         # Convert JSON serializables into SpeechEnhancementOutputs
         for i in range(len(speech_enhancement_output["predictions"])):
@@ -127,10 +133,11 @@ class SpeechEnhancementModel(AixplainModel):
                     status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
                     reason="The user request, although correct, is generating unacceptable output from the server."
                 )
-            
+
             speech_enhancement_output["predictions"][i] = speech_enhancement_dict
         return speech_enhancement_output
-    
+
+
 class SpeechSynthesis(AixplainModel):
     def run_model(self, api_input: Dict[str, List[SpeechSynthesisInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechSynthesisOutput]]:
         pass
@@ -142,8 +149,9 @@ class SpeechSynthesis(AixplainModel):
         for instance in instances:
             speech_synthesis_input = SpeechSynthesisInput(**instance)
             speech_synthesis_input_list.append(speech_synthesis_input)
-            
-        speech_synthesis_output = self.run_model({"instances": speech_synthesis_input_list})
+
+        speech_synthesis_output = self.run_model({"instances": speech_synthesis_input_list}, headers)
+
 
         # Convert JSON serializables into SpeechEnhancementOutputs
         for i in range(len(speech_synthesis_output["instances"])):
@@ -151,7 +159,6 @@ class SpeechSynthesis(AixplainModel):
             SpeechSynthesisOutput(**speech_synthesis_dict)
             speech_synthesis_output["instances"][i] = speech_synthesis_dict
         return speech_synthesis_output
-    
 class TextToImageGeneration(AixplainModel):
     def run_model(self, api_input: Dict[str, List[SpeechSynthesisInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechSynthesisOutput]]:
         pass
