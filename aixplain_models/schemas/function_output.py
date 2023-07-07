@@ -210,3 +210,23 @@ class SpeechSynthesisOutput(SpeechSynthesisOutputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SpeechSynthesisOutput"
                 )
+
+class TextToImageGenerationOutputSchema(BaseModel):
+    """The standardized schema of the aiXplain's Text-based Image Generation Output.
+    :param data:
+        Output image encoded in base64 encoding
+
+    :type data:
+        str
+    """
+    data: str
+
+class TextToImageGenerationOutput(TextToImageGenerationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextToImageGenerationOutput"
+                )

@@ -364,3 +364,24 @@ class SpeechSynthesisInput(SpeechSynthesisInputSchema):
                         reason="Incorrect types passed into SpeechSynthesisInput. data field shouldn't be pass, and the data for audio file should be passed in field with the name [audio]"
                     )
 
+class TextToImageGenerationInputSchema(BaseModel):
+    """The standardized schema of the aiXplain's Text-based Image Generation API input.
+    
+    :param data:
+        Input data to the model.
+        Prompt for image generation
+    :type data:
+        str
+    """
+    data: str
+
+class TextToImageGenerationInput(TextToImageGenerationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into TextToImageGenerationInput."
+                )

@@ -9,7 +9,8 @@ from aixplain_models.schemas.function_input import (
     DiacritizationInput,
     ClassificationInput,
     SpeechEnhancementInput,
-    SpeechSynthesisInput
+    SpeechSynthesisInput,
+    TextToImageGenerationInput
 )
 from aixplain_models.schemas.function_output import (
     TranslationOutput,
@@ -17,7 +18,8 @@ from aixplain_models.schemas.function_output import (
     DiacritizationOutput,
     ClassificationOutput,
     SpeechEnhancementOutput,
-    SpeechSynthesisOutput
+    SpeechSynthesisOutput,
+    TextToImageGenerationOutput
 )
 from aixplain_models.interfaces.aixplain_model import AixplainModel
 
@@ -157,4 +159,23 @@ class SpeechSynthesis(AixplainModel):
             SpeechSynthesisOutput(**speech_synthesis_dict)
             speech_synthesis_output["instances"][i] = speech_synthesis_dict
         return speech_synthesis_output
+class TextToImageGeneration(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SpeechSynthesisInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechSynthesisOutput]]:
+        pass
 
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_to_image_generation_input_list = []
+        # Convert JSON serializables into TextToImageGenerationInputs
+        for instance in instances:
+            text_to_image_generation_input = TextToImageGenerationInput(**instance)
+            text_to_image_generation_input_list.append(text_to_image_generation_input)
+            
+        text_to_image_generation_output = self.run_model({"instances": text_to_image_generation_input_list})
+
+        # Convert JSON serializables into TextToImageGenerationOutputs
+        for i in range(len(text_to_image_generation_output["instances"])):
+            text_to_image_generation_dict = text_to_image_generation_output["instances"][i].dict()
+            TextToImageGenerationOutput(**text_to_image_generation_dict)
+            text_to_image_generation_output["instances"][i] = text_to_image_generation_dict
+        return text_to_image_generation_output
