@@ -85,7 +85,7 @@ class SpeechEnhancer(SpeechEnhancementModel):
             speech_enhancement_output = SpeechEnhancementOutput(**output_dict)
             predictions.append(speech_enhancement_output)
             predict_output = {'predictions': predictions}
-        
+
         return predict_output
 
 
