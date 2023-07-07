@@ -160,7 +160,7 @@ class SpeechSynthesis(AixplainModel):
             speech_synthesis_output["instances"][i] = speech_synthesis_dict
         return speech_synthesis_output
 class TextToImageGeneration(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[SpeechSynthesisInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechSynthesisOutput]]:
+    def run_model(self, api_input: Dict[str, List[TextToImageGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextToImageGenerationOutput]]:
         pass
 
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
