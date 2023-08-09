@@ -21,13 +21,13 @@ from timing_asgi import TimingMiddleware, TimingClient
 from timing_asgi.integrations import StarletteScopeToName
 import logging
 
-from aixplain_models.interfaces.metric_server.dataplane import DataPlane
-from aixplain_models.interfaces.metric_server.metric_errors import (
+from aixplain.aixplain_models.interfaces.metric_server.dataplane import DataPlane
+from aixplain.aixplain_models.interfaces.metric_server.metric_errors import (
     InvalidInput, MetricNotFound, MetricNotReady, invalid_input_handler,
     metric_not_found_handler, metric_not_ready_handler, not_implemented_error_handler,
     generic_exception_handler
 )
-from aixplain_models.interfaces.metric_server.v1_endpoints import V1Endpoints
+from aixplain.aixplain_models.interfaces.metric_server.v1_endpoints import V1Endpoints
 
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S"

@@ -5,12 +5,12 @@ import itertools
 
 import sacrebleu
 
-from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.metric_models import TextGenerationMetric
-from aixplain_models.schemas.metric_input import TextGenerationMetricInput, MetricAggregate
-from aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain_models.schemas.metric_output import TextGenerationMetricOutput
-import aixplain_models.utils.metric_utils as metric_utils
+from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.aixplain_models.interfaces.metric_models import TextGenerationMetric
+from aixplain.aixplain_models.schemas.metric_input import TextGenerationMetricInput, MetricAggregate
+from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
+from aixplain.aixplain_models.schemas.metric_output import TextGenerationMetricOutput
+import aixplain.aixplain_models.utils.metric_utils as metric_utils
 
 class BLEU(TextGenerationMetric):
     params = {

@@ -5,7 +5,7 @@ from typing import Optional, Any
 from pydantic import BaseModel, validator
 import tornado.web
 
-from aixplain_models.utils import serialize
+from aixplain.aixplain_models.utils import serialize
 
 class APIInput(BaseModel):
     """The standardized schema of the aiXplain's API input.

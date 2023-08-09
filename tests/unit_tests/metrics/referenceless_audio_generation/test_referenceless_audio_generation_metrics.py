@@ -6,8 +6,8 @@ import tempfile
 
 from fastapi import status
 import os
-from aixplain_models.interfaces.metric_models import ReferencelessAudioGenerationMetric
-from aixplain_models.schemas.metric_input import ReferencelessAudioGenerationMetricInput
+from aixplain.aixplain_models.interfaces.metric_models import ReferencelessAudioGenerationMetric
+from aixplain.aixplain_models.schemas.metric_input import ReferencelessAudioGenerationMetricInput
 
 INPUTS_PATH = "tests/unit_tests/metrics/referenceless_audio_generation/inputs.json"
 OUTPUTS_PATH = "tests/unit_tests/metrics/referenceless_audio_generation/outputs.json"

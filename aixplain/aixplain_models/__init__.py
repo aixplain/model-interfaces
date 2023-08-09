@@ -1,4 +1,4 @@
-from aixplain_models.schemas.function_input import (
+from aixplain.aixplain_models.schemas.function_input import (
     APIInput,
     AudioEncoding,
     AudioConfig,
@@ -11,7 +11,7 @@ from aixplain_models.schemas.function_input import (
     TextToImageGenerationInput
 )
 
-from aixplain_models.schemas.function_output import(
+from aixplain.aixplain_models.schemas.function_output import(
     APIOutput,
     WordDetails,
     TextSegmentDetails,
@@ -24,7 +24,7 @@ from aixplain_models.schemas.function_output import(
     TextToImageGenerationOutput
 )
 
-from aixplain_models.schemas.metric_input import(
+from aixplain.aixplain_models.schemas.metric_input import(
     MetricInput,
     MetricAggregate,
     TextGenerationSettings,
@@ -38,7 +38,7 @@ from aixplain_models.schemas.metric_input import(
     NamedEntityRecognitionMetricInput
 )
 
-from aixplain_models.schemas.metric_output import(
+from aixplain.aixplain_models.schemas.metric_output import(
     MetricOutput,
     TextGenerationMetricOutput,
     ReferencelessTextGenerationMetricOutput,
@@ -48,7 +48,7 @@ from aixplain_models.schemas.metric_output import(
     NamedEntityRecognitionMetricOutput
 )
 
-from aixplain_models.interfaces.function_models import(
+from aixplain.aixplain_models.interfaces.function_models import(
     TranslationModel,
     SpeechRecognitionModel,
     DiacritizationModel,
@@ -58,7 +58,7 @@ from aixplain_models.interfaces.function_models import(
     TextToImageGeneration
 )
 
-from aixplain_models.interfaces.metric_models import(
+from aixplain.aixplain_models.interfaces.metric_models import(
     TextGenerationMetric,
     ReferencelessTextGenerationMetric,
     ClassificationMetric,

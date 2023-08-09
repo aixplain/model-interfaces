@@ -3,8 +3,8 @@ from typing import Any, Optional, List, Dict, Union
 import tornado.web
 from http import HTTPStatus
 
-from aixplain_models.schemas.function_input import AudioConfig, AudioEncoding
-from aixplain_models.utils import serialize
+from aixplain.aixplain_models.schemas.function_input import AudioConfig, AudioEncoding
+from aixplain.aixplain_models.utils import serialize
 
 class APIOutput(BaseModel):
     """The standardized schema of the aiXplain's API Output.

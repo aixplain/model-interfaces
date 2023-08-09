@@ -1,10 +1,10 @@
 __author__ = "aiXplain"
 
-from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.metric_models import NamedEntityRecognitionMetric
-from aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain_models.schemas.metric_input import NamedEntityRecognitionMetricInput, NamedEntityRecognitionElement
-from aixplain_models.schemas.metric_output import NamedEntityRecognitionMetricOutput
+from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.aixplain_models.interfaces.metric_models import NamedEntityRecognitionMetric
+from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
+from aixplain.aixplain_models.schemas.metric_input import NamedEntityRecognitionMetricInput, NamedEntityRecognitionElement
+from aixplain.aixplain_models.schemas.metric_output import NamedEntityRecognitionMetricOutput
 from typing import Dict, List
 
 

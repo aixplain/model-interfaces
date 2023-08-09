@@ -4,14 +4,14 @@
 
 import numpy as np
 
-from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.metric_models import ReferencelessAudioGenerationMetric
-from aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain_models.schemas.metric_input import ReferencelessAudioGenerationMetricInput, MetricAggregate
-from aixplain_models.schemas.metric_output import (
+from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.aixplain_models.interfaces.metric_models import ReferencelessAudioGenerationMetric
+from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
+from aixplain.aixplain_models.schemas.metric_input import ReferencelessAudioGenerationMetricInput, MetricAggregate
+from aixplain.aixplain_models.schemas.metric_output import (
     ReferencelessAudioGenerationMetricOutput,
 )
-from aixplain_models.utils.data_utils import download_data
+from aixplain.aixplain_models.utils.data_utils import download_data
 
 from typing import Dict, List
 from pathlib import Path

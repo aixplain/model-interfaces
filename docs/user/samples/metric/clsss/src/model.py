@@ -3,11 +3,11 @@ __author__='aiXplain'
 import numpy as np
 import torch
 
-from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.metric_models import ReferencelessTextGenerationMetric
-from aixplain_models.schemas.metric_input import ReferencelessTextGenerationMetricInput, MetricAggregate
-from aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain_models.schemas.metric_output import ReferencelessTextGenerationMetricOutput
+from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.aixplain_models.interfaces.metric_models import ReferencelessTextGenerationMetric
+from aixplain.aixplain_models.schemas.metric_input import ReferencelessTextGenerationMetricInput, MetricAggregate
+from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
+from aixplain.aixplain_models.schemas.metric_output import ReferencelessTextGenerationMetricOutput
 from transformers import BertModel, BertTokenizer
 from typing import Dict, List
 import itertools

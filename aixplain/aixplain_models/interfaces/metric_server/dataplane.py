@@ -1,8 +1,8 @@
 import pkg_resources
 from typing import List, Dict, Optional
 
-from aixplain_models.interfaces.aixplain_metric import AixplainMetric, MetricType
-from aixplain_models.interfaces.metric_server.metric_errors import MetricNotFound
+from aixplain.aixplain_models.interfaces.aixplain_metric import AixplainMetric, MetricType
+from aixplain.aixplain_models.interfaces.metric_server.metric_errors import MetricNotFound
 
 class AssetRepository:
     def __init__(self):

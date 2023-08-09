@@ -5,7 +5,7 @@ from typing import Dict, List
 import tornado.web
 from fastapi.responses import JSONResponse
 
-from aixplain_models.schemas.metric_input import (
+from aixplain.aixplain_models.schemas.metric_input import (
     TextGenerationMetricInput,
     ReferencelessTextGenerationMetricInput,
     ClassificationMetricInput,
@@ -14,7 +14,7 @@ from aixplain_models.schemas.metric_input import (
     NamedEntityRecognitionMetricInput,
     MetricAggregate,
 )
-from aixplain_models.schemas.metric_output import (
+from aixplain.aixplain_models.schemas.metric_output import (
     TextGenerationMetricOutput,
     ReferencelessTextGenerationMetricOutput,
     ClassificationMetricOutput,
@@ -23,7 +23,7 @@ from aixplain_models.schemas.metric_output import (
     NamedEntityRecognitionMetricOutput,
 )
 
-from aixplain_models.interfaces.aixplain_metric import AixplainMetric
+from aixplain.aixplain_models.interfaces.aixplain_metric import AixplainMetric
 
 
 class TextGenerationMetric(AixplainMetric):

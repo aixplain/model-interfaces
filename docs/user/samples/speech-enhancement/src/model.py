@@ -1,12 +1,12 @@
 import os, io
 from typing import Dict, List
 
-from aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain_models.schemas.function_input import AudioEncoding, SpeechEnhancementInput
-from aixplain_models.schemas.function_output import SpeechEnhancementOutput
-from aixplain_models.interfaces.function_models import SpeechEnhancementModel
-from aixplain_models.utils import serialize
+from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
+from aixplain.aixplain_models.schemas.function_input import AudioEncoding, SpeechEnhancementInput
+from aixplain.aixplain_models.schemas.function_output import SpeechEnhancementOutput
+from aixplain.aixplain_models.interfaces.function_models import SpeechEnhancementModel
+from aixplain.aixplain_models.utils import serialize
 
 import soundfile as sf, numpy as np, tensorflow as tf
 
