@@ -89,7 +89,8 @@ class AudioGenerationMetricOutputSchema(MetricOutput):
     """
 
     data: Any
-    details: Optional[Union[List[str], Dict[str, Any]]] = {}
+    details: Optional[Union[List[Any], Dict[str, Any]]] = {}
+    metric_aggregate: Optional[MetricAggregate] = None
 
 
 class AudioGenerationMetricOutput(AudioGenerationMetricOutputSchema):
