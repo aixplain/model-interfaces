@@ -1,12 +1,12 @@
 __author__ = "aiXplain"
 
-from aixplain.aixplain_models.utils.data_utils import download_data
+from aixplain.model_schemas.utils.data_utils import download_data
 from http import HTTPStatus
 from typing import Optional, Any
 from pydantic import BaseModel, validator
 from typing import Dict, List, Optional, Union
 
-import aixplain.aixplain_models.utils.metric_utils as utils
+import aixplain.model_schemas.utils.metric_utils as utils
 import json
 import os
 import tornado.web

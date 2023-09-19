@@ -3,7 +3,7 @@ import tornado.web
 from http import HTTPStatus
 from typing import Dict, List
 
-from aixplain.aixplain_models.schemas.function_input import (
+from aixplain.model_schemas.schemas.function_input import (
     TranslationInput,
     SpeechRecognitionInput,
     DiacritizationInput,
@@ -12,7 +12,7 @@ from aixplain.aixplain_models.schemas.function_input import (
     SpeechSynthesisInput,
     TextToImageGenerationInput
 )
-from aixplain.aixplain_models.schemas.function_output import (
+from aixplain.model_schemas.schemas.function_output import (
     TranslationOutput,
     SpeechRecognitionOutput,
     DiacritizationOutput,
@@ -21,7 +21,7 @@ from aixplain.aixplain_models.schemas.function_output import (
     SpeechSynthesisOutput,
     TextToImageGenerationOutput
 )
-from aixplain.aixplain_models.interfaces.aixplain_model import AixplainModel
+from aixplain.model_schemas.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
 
