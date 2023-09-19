@@ -3,11 +3,11 @@ from typing import Dict, List
 
 from transformers import MarianMTModel, MarianTokenizer
 
-from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain.aixplain_models.schemas.function_input import TranslationInput
-from aixplain.aixplain_models.schemas.function_output import TextSegmentDetails, TranslationOutput
-from aixplain.aixplain_models.interfaces.function_models import TranslationModel
+from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
+from aixplain.model_schemas.schemas.function_input import TranslationInput
+from aixplain.model_schemas.schemas.function_output import TextSegmentDetails, TranslationOutput
+from aixplain.model_schemas.interfaces.function_models import TranslationModel
 
 MODEL_NOT_FOUND_ERROR = """
     Download model file using command:

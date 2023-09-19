@@ -1,7 +1,7 @@
 from unittest.mock import Mock
-from aixplain.aixplain_models.schemas.function_input import TranslationInput
-from aixplain.aixplain_models.schemas.function_output import TextSegmentDetails, TranslationOutput 
-from aixplain.aixplain_models.interfaces.function_models import TranslationModel
+from aixplain.model_schemas.schemas.function_input import TranslationInput
+from aixplain.model_schemas.schemas.function_output import TextSegmentDetails, TranslationOutput 
+from aixplain.model_schemas.interfaces.function_models import TranslationModel
 from typing import Dict, List
 
 class TestMockTranslation():

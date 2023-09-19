@@ -4,8 +4,8 @@ import json
 import pytest
 import tempfile
 
-from aixplain.aixplain_models.interfaces.metric_models import AudioGenerationMetric
-from aixplain.aixplain_models.schemas.metric_input import AudioGenerationMetricInput
+from aixplain.model_schemas.interfaces.metric_models import AudioGenerationMetric
+from aixplain.model_schemas.schemas.metric_input import AudioGenerationMetricInput
 
 INPUTS_PATH = "tests/unit_tests/metrics/audio_generation/inputs.json"
 OUTPUTS_PATH = "tests/unit_tests/metrics/audio_generation/outputs.json"

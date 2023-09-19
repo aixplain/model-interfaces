@@ -1,7 +1,7 @@
 from unittest.mock import Mock
-from aixplain.aixplain_models.schemas.function_input import DiacritizationInput
-from aixplain.aixplain_models.schemas.function_output import TextSegmentDetails, DiacritizationOutput
-from aixplain.aixplain_models.interfaces.function_models import DiacritizationModel
+from aixplain.model_schemas.schemas.function_input import DiacritizationInput
+from aixplain.model_schemas.schemas.function_output import TextSegmentDetails, DiacritizationOutput
+from aixplain.model_schemas.interfaces.function_models import DiacritizationModel
 from typing import Dict, List
 
 class TestMockDiacritization():

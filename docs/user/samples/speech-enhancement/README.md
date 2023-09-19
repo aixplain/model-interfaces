@@ -35,12 +35,12 @@ dtln
 sudo apt-get install ffmpeg
 
 # Install model-schemas from GitHub, preferably by using a virtualenv
-pip install -e 'git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models'
+pip install -e 'git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=model_schemas'
 
 pip install -r src/requirements.txt
 ```
 
-- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the aixplain_models repository
+- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the model_schemas repository
 
 Documentation to generate the GitHub personal access token can be found [here](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
@@ -78,7 +78,7 @@ cd docs/user/samples/speech-enhancement
 docker build --build-arg GH_ACCESS_TOKEN=<TOKEN_FROM_GITHUB_ACCOUNT> --build-arg ASSET_URI=<ASSET_URI> . -t 535945872701.dkr.ecr.us-east-1.amazonaws.com/aixmodel-dtln
 ```
 
-- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the aixplain_models repository
+- GH_ACCESS_TOKEN: Generate a GitHub access token from your account that can clone the model_schemas repository
 - ASSET_URI: Your model's name; 'dtln' in this reference example.
 
 ### Run the container

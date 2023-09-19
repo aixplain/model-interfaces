@@ -1,7 +1,7 @@
 from unittest.mock import Mock
-from aixplain.aixplain_models.schemas.function_input import ClassificationInput
-from aixplain.aixplain_models.schemas.function_output import Label, ClassificationOutput
-from aixplain.aixplain_models.interfaces.function_models import ClassificationModel
+from aixplain.model_schemas.schemas.function_input import ClassificationInput
+from aixplain.model_schemas.schemas.function_output import Label, ClassificationOutput
+from aixplain.model_schemas.interfaces.function_models import ClassificationModel
 from typing import Dict, List
 
 class TestMockClassification():

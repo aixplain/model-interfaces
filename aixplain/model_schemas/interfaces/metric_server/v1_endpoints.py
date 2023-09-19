@@ -1,8 +1,8 @@
 from typing import Dict, Union
 from fastapi import Request, Response
 
-from aixplain.aixplain_models.interfaces.metric_server.dataplane import DataPlane
-from aixplain.aixplain_models.interfaces.metric_server.metric_errors import MetricNotReady
+from aixplain.model_schemas.interfaces.metric_server.dataplane import DataPlane
+from aixplain.model_schemas.interfaces.metric_server.metric_errors import MetricNotReady
 
 class V1Endpoints:
     """AiXplain Metrics V1 Endpoints

@@ -1,14 +1,14 @@
 __author__='mohamedelbadrashiny'
 
-import aixplain.aixplain_models.utils.metric_utils as utils
+import aixplain.model_schemas.utils.metric_utils as utils
 import re
 import docs.user.samples.metric.diacritization_accuracy.src.utils as diacritization_utils
 
-from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.aixplain_models.interfaces.metric_models import ClassificationMetric
-from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain.aixplain_models.schemas.metric_input import ClassificationMetricInput
-from aixplain.aixplain_models.schemas.metric_output import ClassificationMetricOutput
+from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_schemas.interfaces.metric_models import ClassificationMetric
+from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
+from aixplain.model_schemas.schemas.metric_input import ClassificationMetricInput
+from aixplain.model_schemas.schemas.metric_output import ClassificationMetricOutput
 from typing import Dict, List
 
 class DiacritizationAccuracy(ClassificationMetric):

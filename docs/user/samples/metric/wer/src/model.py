@@ -1,10 +1,10 @@
 __author__='aiXplain'
 
-from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.aixplain_models.interfaces.metric_models import TextGenerationMetric
-from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain.aixplain_models.schemas.metric_input import TextGenerationMetricInput
-from aixplain.aixplain_models.schemas.metric_output import TextGenerationMetricOutput
+from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_schemas.interfaces.metric_models import TextGenerationMetric
+from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
+from aixplain.model_schemas.schemas.metric_input import TextGenerationMetricInput
+from aixplain.model_schemas.schemas.metric_output import TextGenerationMetricOutput
 from jiwer import compute_measures
 from typing import Dict, List
 

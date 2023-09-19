@@ -7,12 +7,12 @@ import numpy as np
 import re
 import subprocess
 
-from aixplain.aixplain_models.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.aixplain_models.interfaces.metric_models import AudioGenerationMetric
-from aixplain.aixplain_models.interfaces.asset_resolver import AssetResolver
-from aixplain.aixplain_models.schemas.metric_input import AudioGenerationMetricInput, MetricAggregate
-from aixplain.aixplain_models.schemas.metric_output import AudioGenerationMetricOutput
-from aixplain.aixplain_models.utils.data_utils import download_data
+from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_schemas.interfaces.metric_models import AudioGenerationMetric
+from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
+from aixplain.model_schemas.schemas.metric_input import AudioGenerationMetricInput, MetricAggregate
+from aixplain.model_schemas.schemas.metric_output import AudioGenerationMetricOutput
+from aixplain.model_schemas.utils.data_utils import download_data
 
 from typing import Dict, List
 from pathlib import Path

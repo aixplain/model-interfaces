@@ -1,14 +1,14 @@
 __author__='thiagocastroferreira'
 
-import aixplain.aixplain_models.utils.metric_utils as utils
+import aixplain.model_schemas.utils.metric_utils as utils
 import json
 import pytest
 import tempfile
 
-from aixplain.aixplain_models.interfaces.metric_models import (
+from aixplain.model_schemas.interfaces.metric_models import (
     ReferencelessTextGenerationMetric
 )
-from aixplain.aixplain_models.schemas.metric_input import ReferencelessTextGenerationMetricInput
+from aixplain.model_schemas.schemas.metric_input import ReferencelessTextGenerationMetricInput
 import os
 
 INPUTS_PATH="tests/unit_tests/metrics/referenceless_text_generation/inputs.json"

@@ -1,7 +1,7 @@
 import sys
 import requests
 
-from aixplain.aixplain_models.utils import serialize
+from aixplain.model_schemas.utils import serialize
 
 HOST="localhost"
 PORT=8080

@@ -9,7 +9,7 @@ COPY src/requirements.txt /requirements.txt
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir --user -r /requirements.txt
 
-RUN pip install --no-cache-dir --user -e "git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models"
+RUN pip install --no-cache-dir --user -e "git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=model_schemas"
 
 # Stage 2: Runtime
 FROM nvidia/cuda:11.3.0-cudnn8-runtime-ubuntu20.04
