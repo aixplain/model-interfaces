@@ -10,7 +10,7 @@ include = ["aixplain"]
 namespaces = true
 
 [project]
-name = "aixplain-models-internal"
+name = "models-schemas"
 version = "1.0.3"
 description = "Mock description"
 license = { text = "Mock license" }

@@ -2,7 +2,7 @@
 
 ## Model development
 
-The aixplain-models package organizes your model's code in a standardized format in order to deploy these models on aixplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
+The model-schemas package organizes your model's code in a standardized format in order to deploy these models on aixplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
 
 ### Model directory structure
 
@@ -95,7 +95,7 @@ Include all python packages that you need to run the model by extracting the req
 pip freeze >> requirements.txt
 ```
 
-Remove aixplain-models, CUDA, Torch and Tensorflow requirements from this file as their latest versions come pre-baked into the hosting server.
+Remove model-schemas, CUDA, Torch and Tensorflow requirements from this file as their latest versions come pre-baked into the hosting server.
 
 
 ### Testing the model locally

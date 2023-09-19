@@ -1,12 +1,12 @@
-__title__ = "aixplain-models"
-__description__ = "aiXplain-models is the interface to host your models on aiXplain"
+__title__ = "model-schemas"
+__description__ = "model-schemas is the interface to host your models on aiXplain"
 __url__ = "https://github.com/aixplain/aixplain-models/tree/main/docs"
 __version__ = "0.0.1"
 __author__ = "Duraikrishna Selvaraju and Michael Lam"
 __author_email__ = "krishna.durai@aixplain.com"
 __license__ = "http://www.apache.org/licenses/LICENSE-2.0"
 __copyright__ = """
-Copyright 2022 The aiXplain-models authors
+Copyright 2022 The model-schemas authors
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at

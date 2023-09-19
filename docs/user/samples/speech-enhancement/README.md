@@ -6,7 +6,7 @@ The open source model DTLN was taken from the github repository in the [link](ht
 
 ### Download the model file
 
-Clone the aixplain-models repository and navigate to the speech-enhancement reference example:
+Clone the model-schemas repository and navigate to the speech-enhancement reference example:
 
 ```
 git clone git@github.com:aixplain/aixplain-models-internal.git
@@ -34,7 +34,7 @@ dtln
 ```
 sudo apt-get install ffmpeg
 
-# Install aixplain-models from GitHub, preferably by using a virtualenv
+# Install model-schemas from GitHub, preferably by using a virtualenv
 pip install -e 'git+https://$GH_ACCESS_TOKEN@github.com/aixplain/aixplain-models-internal.git@master#egg=aixplain_models'
 
 pip install -r src/requirements.txt
