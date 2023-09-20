@@ -193,7 +193,7 @@ class SpeechSynthesisOutputSchema(BaseModel):
     :param data:
         Output data string encoded in base64 encoding containing audio encoding
         defined by the audio_config parameter. 
-        Use aixplain_models.utils.serialize.encode() function to encode audio data.
+        Use model_schemas.utils.serialize.encode() function to encode audio data.
 
     :type data:
         str
