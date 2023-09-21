@@ -1,10 +1,10 @@
 from unittest.mock import Mock
-from aixplain.model_schemas.schemas.function_input import SpeechRecognitionInput, AudioEncoding
-from aixplain.model_schemas.schemas.function_output import TextSegmentDetails, SpeechRecognitionOutput 
-from aixplain.model_schemas.interfaces.function_models import SpeechRecognitionModel
+from aixplain.model_interfaces.schemas.function_input import SpeechRecognitionInput, AudioEncoding
+from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, SpeechRecognitionOutput 
+from aixplain.model_interfaces.interfaces.function_models import SpeechRecognitionModel
 from typing import Dict, List
 
-from aixplain.model_schemas.utils.serialize import (
+from aixplain.model_interfaces.utils.serialize import (
     encode
 )
 

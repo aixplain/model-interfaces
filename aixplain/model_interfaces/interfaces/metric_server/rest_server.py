@@ -21,13 +21,13 @@ from timing_asgi import TimingMiddleware, TimingClient
 from timing_asgi.integrations import StarletteScopeToName
 import logging
 
-from aixplain.model_schemas.interfaces.metric_server.dataplane import DataPlane
-from aixplain.model_schemas.interfaces.metric_server.metric_errors import (
+from aixplain.model_interfaces.interfaces.metric_server.dataplane import DataPlane
+from aixplain.model_interfaces.interfaces.metric_server.metric_errors import (
     InvalidInput, MetricNotFound, MetricNotReady, invalid_input_handler,
     metric_not_found_handler, metric_not_ready_handler, not_implemented_error_handler,
     generic_exception_handler
 )
-from aixplain.model_schemas.interfaces.metric_server.v1_endpoints import V1Endpoints
+from aixplain.model_interfaces.interfaces.metric_server.v1_endpoints import V1Endpoints
 
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S"
@@ -57,7 +57,7 @@ class RESTServer:
 
         return FastAPI(
             title="Aixplain Metric Server",
-            version=pkg_resources.get_distribution("model_schemas").version,
+            version=pkg_resources.get_distribution("model_interfaces").version,
             docs_url="/docs" if self.enable_docs_url else None,
             redoc_url=None,
             default_response_class=ORJSONResponse,

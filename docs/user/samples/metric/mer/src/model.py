@@ -1,11 +1,11 @@
 __author__='aiXplain'
 
-import aixplain.model_schemas.utils.metric_utils as utils
-from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.model_schemas.interfaces.metric_models import TextGenerationMetric
-from aixplain.model_schemas.interfaces.model_resolver import ModelResolver
-from aixplain.model_schemas.schemas.metric_input import TextGenerationMetricInput
-from aixplain.model_schemas.schemas.metric_output import TextGenerationMetricOutput
+import aixplain.model_interfaces.utils.metric_utils as utils
+from aixplain.model_interfaces.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_interfaces.interfaces.metric_models import TextGenerationMetric
+from aixplain.model_interfaces.interfaces.model_resolver import ModelResolver
+from aixplain.model_interfaces.schemas.metric_input import TextGenerationMetricInput
+from aixplain.model_interfaces.schemas.metric_output import TextGenerationMetricOutput
 import torchmetrics 
 from torchmetrics.metric import Metric as BaseTorchMetric
 import numpy as np

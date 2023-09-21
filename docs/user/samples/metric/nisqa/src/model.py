@@ -5,14 +5,14 @@
 import numpy as np
 import librosa as librosa
 
-from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.model_schemas.interfaces.metric_models import ReferencelessAudioGenerationMetric
-from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
-from aixplain.model_schemas.schemas.metric_input import ReferencelessAudioGenerationMetricInput, MetricAggregate
-from aixplain.model_schemas.schemas.metric_output import (
+from aixplain.model_interfaces.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_interfaces.interfaces.metric_models import ReferencelessAudioGenerationMetric
+from aixplain.model_interfaces.interfaces.asset_resolver import AssetResolver
+from aixplain.model_interfaces.schemas.metric_input import ReferencelessAudioGenerationMetricInput, MetricAggregate
+from aixplain.model_interfaces.schemas.metric_output import (
     ReferencelessAudioGenerationMetricOutput,
 )
-from aixplain.model_schemas.utils.data_utils import download_data
+from aixplain.model_interfaces.utils.data_utils import download_data
 
 from typing import Dict, List
 from pathlib import Path

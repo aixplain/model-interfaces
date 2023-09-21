@@ -1,5 +1,5 @@
 **/__pycache__/**
 **/.pytest_cache__/**
-**/model_schemas.egg-info/**
+**/model_interfaces.egg-info/**
 **/weights/**
 **/bin/**

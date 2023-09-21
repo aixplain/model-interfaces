@@ -1,8 +1,8 @@
 import pkg_resources
 from typing import List, Dict, Optional
 
-from aixplain.model_schemas.interfaces.aixplain_metric import AixplainMetric, MetricType
-from aixplain.model_schemas.interfaces.metric_server.metric_errors import MetricNotFound
+from aixplain.model_interfaces.interfaces.aixplain_metric import AixplainMetric, MetricType
+from aixplain.model_interfaces.interfaces.metric_server.metric_errors import MetricNotFound
 
 class AssetRepository:
     def __init__(self):
@@ -20,7 +20,7 @@ class DataPlane:
 
     def __init__(self, asset_repository: AssetRepository):
         self._server_name = "aixplain_metric_server"
-        self._server_version = pkg_resources.get_distribution("model_schemas").version
+        self._server_version = pkg_resources.get_distribution("model_interfaces").version
         self._asset_repo = asset_repository
 
     @staticmethod

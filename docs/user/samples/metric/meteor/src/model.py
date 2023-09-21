@@ -1,14 +1,14 @@
 __author__ = "aiXplain"
 
-import aixplain.model_schemas.utils.metric_utils as utils
-from aixplain.model_schemas.interfaces.aixplain_model_server import AixplainModelServer
-from aixplain.model_schemas.interfaces.metric_models import TextGenerationMetric
-from aixplain.model_schemas.interfaces.asset_resolver import AssetResolver
-from aixplain.model_schemas.schemas.metric_input import TextGenerationMetricInput, MetricAggregate
-from aixplain.model_schemas.schemas.metric_output import TextGenerationMetricOutput
+import aixplain.model_interfaces.utils.metric_utils as utils
+from aixplain.model_interfaces.interfaces.aixplain_model_server import AixplainModelServer
+from aixplain.model_interfaces.interfaces.metric_models import TextGenerationMetric
+from aixplain.model_interfaces.interfaces.asset_resolver import AssetResolver
+from aixplain.model_interfaces.schemas.metric_input import TextGenerationMetricInput, MetricAggregate
+from aixplain.model_interfaces.schemas.metric_output import TextGenerationMetricOutput
 import evaluate
 import numpy as np
-import aixplain.model_schemas.utils.metric_utils as metric_utils
+import aixplain.model_interfaces.utils.metric_utils as metric_utils
 import itertools
 from typing import Dict, List
 

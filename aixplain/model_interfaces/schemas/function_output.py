@@ -3,8 +3,8 @@ from typing import Any, Optional, List, Dict, Union
 import tornado.web
 from http import HTTPStatus
 
-from aixplain.model_schemas.schemas.function_input import AudioConfig, AudioEncoding
-from aixplain.model_schemas.utils import serialize
+from aixplain.model_interfaces.schemas.function_input import AudioConfig, AudioEncoding
+from aixplain.model_interfaces.utils import serialize
 
 class APIOutput(BaseModel):
     """The standardized schema of the aiXplain's API Output.
@@ -170,7 +170,7 @@ class SpeechEnhancementOutputSchema(APIOutput):
     :param data:
         Output data string encoded in base64 encoding containing audio encoding
         defined by the audio_config parameter. 
-        Use model_schemas.utils.serialize.encode() function to encode audio data.
+        Use model_interfaces.utils.serialize.encode() function to encode audio data.
 
     :type data:
         str
@@ -193,7 +193,7 @@ class SpeechSynthesisOutputSchema(BaseModel):
     :param data:
         Output data string encoded in base64 encoding containing audio encoding
         defined by the audio_config parameter. 
-        Use model_schemas.utils.serialize.encode() function to encode audio data.
+        Use model_interfaces.utils.serialize.encode() function to encode audio data.
 
     :type data:
         str
