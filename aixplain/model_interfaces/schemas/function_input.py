@@ -33,8 +33,8 @@ class APIInput(BaseModel):
         str
     """
     data: Any
-    supplier: str
-    function: str
+    supplier: Optional[str] = ""
+    function: Optional[str] = ""
     version: Optional[str] = ""
     language: Optional[str] = ""
 
