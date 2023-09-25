@@ -10,9 +10,9 @@ import sys
 from typing import List
 
 
-from aixplain_models.interfaces.aixplain_metric import AixplainMetric
-from aixplain_models.interfaces.metric_server.dataplane import DataPlane, AssetRepository
-from aixplain_models.interfaces.metric_server.rest_server import UvicornProcess
+from aixplain.model_interfaces.interfaces.aixplain_metric import AixplainMetric
+from aixplain.model_interfaces.interfaces.metric_server.dataplane import DataPlane, AssetRepository
+from aixplain.model_interfaces.interfaces.metric_server.rest_server import UvicornProcess
 
 
 DEFAULT_HTTP_PORT = 8080

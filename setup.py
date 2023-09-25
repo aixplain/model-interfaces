@@ -58,14 +58,14 @@ test_requirements = [
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, "aixplain_models", "__version__.py"), "r") as f:
+with open(os.path.join(here, "aixplain", "model_interfaces", "__version__.py"), "r") as f:
     exec(f.read(), about)
 
 with open("README.md", "r") as f:
     readme = f.read()
 
 setup(
-    name="aixplain_models",
+    name="model_interfaces",
     version=about["__version__"],
     description=about["__description__"],
     long_description=readme,

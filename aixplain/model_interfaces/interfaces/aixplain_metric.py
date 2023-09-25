@@ -8,8 +8,8 @@ import logging
 import time
 from typing import Dict, List
 
-from aixplain_models.schemas.metric_input import MetricInput, MetricAggregate
-from aixplain_models.schemas.metric_output import MetricOutput
+from aixplain.model_interfaces.schemas.metric_input import MetricInput, MetricAggregate
+from aixplain.model_interfaces.schemas.metric_output import MetricOutput
 
 class MetricType(Enum):
     SCORE = 1

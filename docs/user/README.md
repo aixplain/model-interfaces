@@ -2,7 +2,7 @@
 
 ## Model development
 
-The aixplain-models package organizes your model's code in a standardized format in order to deploy these models on aixplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
+The model-interfaces package organizes your model's code in a standardized format in order to deploy these models on aixplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
 
 ### Model directory structure
 
@@ -95,7 +95,7 @@ Include all python packages that you need to run the model by extracting the req
 pip freeze >> requirements.txt
 ```
 
-Remove aixplain-models, CUDA, Torch and Tensorflow requirements from this file as their latest versions come pre-baked into the hosting server.
+Remove model-interfaces, CUDA, Torch and Tensorflow requirements from this file as their latest versions come pre-baked into the hosting server.
 
 
 ### Testing the model locally
@@ -112,7 +112,7 @@ ASSET_URI=<asset_uri>
 curl -v -H http://localhost:8080/v1/models/$ASSET_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
 ```
 
-The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/aixplain_models/schemas/function_input.py)
+The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/model_interfaces/schemas/function_input.py)
 
 ### The environment variables
 

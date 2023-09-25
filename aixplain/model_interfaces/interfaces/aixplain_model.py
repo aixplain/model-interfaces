@@ -1,7 +1,7 @@
 from kserve.model import Model
 from typing import Dict, List
-from aixplain_models.schemas.function_input import APIInput
-from aixplain_models.schemas.function_output import APIOutput
+from aixplain.model_interfaces.schemas.function_input import APIInput
+from aixplain.model_interfaces.schemas.function_output import APIOutput
 
 class AixplainModel(Model):
 
