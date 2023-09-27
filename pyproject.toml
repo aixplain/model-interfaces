@@ -11,6 +11,6 @@ namespaces = true
 
 [project]
 name = "model-interfaces"
-version = "1.0.3"
+version = "0.0.1"
 description = "Mock description"
 license = { text = "Mock license" }
