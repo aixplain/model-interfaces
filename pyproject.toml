@@ -4,14 +4,18 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["aixplain"]
-namespaces = true
+# [tool.setuptools.packages.find]
+# where = ["."]
+# include = ["aixplain"]
+# namespaces = true
+
+[tool.pdm.build]
+package-dir = "aixplain"
+includes = ["aixplain"]
 
 [project]
 name = "model-interfaces"
-version = "0.0.1rc5"
+version = "0.0.1rc6"
 description = "A package specifying the model interfaces supported by aiXplain"
 license = { text = "Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0" }
 dependencies = [
