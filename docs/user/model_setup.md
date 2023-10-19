@@ -108,7 +108,7 @@ ASSET_URI=<asset_uri>
 curl -v -H http://localhost:8080/v1/models/$ASSET_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
 ```
 
-The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/aixplain_models/schemas/function_input.py)
+The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/aixplain/model_interfaces/schemas/function_input.py)
 
 ### Dockerfile
 Create an image using the following sample Dockerfile. Add features as needed:
