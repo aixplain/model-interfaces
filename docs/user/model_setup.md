@@ -25,11 +25,15 @@ Note:
 
 ### Implementing the model.py file
 
-Each hosted model needs to be an instance of a function based aiXplain model. If the model that your are building is a translation model, the model class implementation should inherit the TranslationModel class interface as shown below.
+Each hosted model needs to be an instance of a function based aiXplain model. If the model that your are building is a translation model, for example, the model class implementation should inherit the TranslationModel class interface as shown below.
 
 ```
+from aixplain.model_interfaces.interfaces.function_models import TranslationModel
+
 class ExampleTranslationModel(TranslationModel):
 ```
+
+All interfaces can be imported via the package `aixplain.model_interfaces`, which can be installed as an extra dependency to the main aiXplain SDK using the command `pip install aixplain[model-builder]`.
 
 To implement the model interface, define the following functions:
 
@@ -59,6 +63,9 @@ The output to the run model function is a dictionary. This dictionary has a key 
 The output is expected to return the predictions from the model in the same order as the input instances were received.
 
 ```
+from aixplain.model_interfaces.schemas.function_input import TranslationInput
+from aixplain.model_interfaces.schemas.function_output import TranslationOutput
+
     def run_model(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
         src_text = self.parse_inputs(api_input["instances"])
 
@@ -108,7 +115,7 @@ ASSET_URI=<asset_uri>
 curl -v -H http://localhost:8080/v1/models/$ASSET_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
 ```
 
-The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/src/aixplain_models/schemas/function_input.py)
+The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/aixplain/model_interfaces/schemas/function_input.py)
 
 ### Dockerfile
 Create an image using the following sample Dockerfile. Add features as needed:
