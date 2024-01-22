@@ -5,8 +5,8 @@ from transformers import MarianMTModel, MarianTokenizer
 
 from aixplain.model_interfaces.interfaces.aixplain_model_server import AixplainModelServer
 from aixplain.model_interfaces.interfaces.asset_resolver import AssetResolver
-from aixplain.model_interfaces.schemas.function_input import TranslationInput
-from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, TranslationOutput
+from aixplain.model_interfaces.schemas.function.function_input import TranslationInput
+from aixplain.model_interfaces.schemas.function.function_output import TextSegmentDetails, TranslationOutput
 from aixplain.model_interfaces.interfaces.function_models import TranslationModel
 
 MODEL_NOT_FOUND_ERROR = """

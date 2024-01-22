@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import TranslationInput
-from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, TranslationOutput 
+from aixplain.model_interfaces.schemas.function.function_input import TranslationInput
+from aixplain.model_interfaces.schemas.function.function_output import TextSegmentDetails, TranslationOutput 
 from aixplain.model_interfaces.interfaces.function_models import TranslationModel
 from typing import Dict, List
 

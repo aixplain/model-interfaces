@@ -3,23 +3,10 @@ from typing import Any, Optional, List, Dict, Union
 import tornado.web
 from http import HTTPStatus
 
-from aixplain.model_interfaces.schemas.function_input import AudioConfig, AudioEncoding
+from aixplain.model_interfaces.schemas.function.function_input import AudioConfig, AudioEncoding
 from aixplain.model_interfaces.utils import serialize
-
-class APIOutput(BaseModel):
-    """The standardized schema of the aiXplain's API Output.
-
-    :param data:
-        Processed output data from supplier model.
-    :type data:
-        Any
-    :param details:
-        Details of the output data. Optional.
-    :type details:
-        List[str] or Dict[str, str]
-    """
-    data: Any
-    details: Optional[Union[List[str], Dict[str, str]]] = []
+from aixplain.model_interfaces.schemas.api.basic_api_output import APIOutput
+from aixplain.model_interfaces.schemas.modality.modality_output import TextOutput
 
 class WordDetails(BaseModel):
     """The standardized schema of the aiXplain's representation of word
@@ -229,4 +216,19 @@ class TextToImageGenerationOutput(TextToImageGenerationOutputSchema):
              raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into TextToImageGenerationOutput"
+                )
+
+class TextGenerationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's text generation output.
+    """
+    pass 
+
+class TextGenerationOutput(TextGenerationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextGenerationOutput"
                 )

@@ -6,37 +6,8 @@ from pydantic import BaseModel, validator
 import tornado.web
 
 from aixplain.model_interfaces.utils import serialize
-
-class APIInput(BaseModel):
-    """The standardized schema of the aiXplain's API input.
-    
-    :param data:
-        Input data to the model.
-    :type data:
-        Any
-    :param supplier:
-        Supplier name.
-    :type supplier:
-        str
-    :param function:
-        The aixplain function name for the model. 
-    :type function:
-        str 
-    :param version:
-        The version number of the model if the supplier has multiple 
-        models with the same function. Optional.  
-    :type version:
-        str
-    :param language:
-        The language the model processes (if relevant). Optional.
-    :type language:
-        str
-    """
-    data: Any
-    supplier: Optional[str] = ""
-    function: Optional[str] = ""
-    version: Optional[str] = ""
-    language: Optional[str] = ""
+from aixplain.model_interfaces.schemas.api.basic_api_input import APIInput
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
 
 class AudioEncoding(Enum):
     """
@@ -384,4 +355,28 @@ class TextToImageGenerationInput(TextToImageGenerationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect type passed into TextToImageGenerationInput."
+                )
+        
+class TextGenerationInputSchema(TextInput):
+    """The standardized schema of aiXplains text generation API Input
+
+
+    """
+    data: str
+    temperature: Optional[int] = 1.0
+    max_new_tokens: Optional[int] = 200
+    top_p: Optional[int] = 0.8
+    top_k: Optional[int] = 40
+    num_return_sequences: Optional[int] = 1
+    script: Optional[str] = None
+
+class TextGenerationInput(TextGenerationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into TextGenerationInput."
                 )
