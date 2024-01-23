@@ -221,7 +221,7 @@ class TextToImageGenerationOutput(TextToImageGenerationOutputSchema):
 class TextGenerationOutputSchema(TextOutput):
     """The standardized schema of the aiXplain's text generation output.
     """
-    pass 
+    details = Optional[Any]
 
 class TextGenerationOutput(TextGenerationOutputSchema):
     def __init__(self, **input):
@@ -232,3 +232,26 @@ class TextGenerationOutput(TextGenerationOutputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into TextGenerationOutput"
                 )
+
+class TranslationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's Translation Output.
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        Any
+    :param details:
+        Details of the text segments generated.
+    :type details:
+        TextSegmentDetails
+    """ 
+    details: TextSegmentDetails
+
+class TranslationOutput(TranslationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TranslationOutput"
+                )  

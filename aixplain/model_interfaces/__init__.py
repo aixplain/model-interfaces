@@ -58,7 +58,7 @@ from aixplain.model_interfaces.interfaces.function_models import(
     SpeechEnhancementModel,
     SpeechSynthesis,
     TextToImageGeneration,
-    TextGeneration
+    TextGenerationModel
 )
 
 from aixplain.model_interfaces.interfaces.metric_models import(
@@ -78,7 +78,7 @@ function_classes = [
     SpeechEnhancementModel,
     SpeechSynthesis,
     TextToImageGeneration,
-    TextGeneration
+    TextGenerationModel
 ]
 
 function_classes_input = [

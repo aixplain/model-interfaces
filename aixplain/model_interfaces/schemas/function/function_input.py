@@ -33,56 +33,6 @@ class AudioConfig(BaseModel):
     audio_encoding: AudioEncoding
     sampling_rate: Optional[int]
 
-class TranslationInputSchema(APIInput):
-    """The standardized schema of the aiXplain's Translation API input.
-    
-    :param data:
-        Input data to the model.
-    :type data:
-        Any
-    :param supplier:
-        Supplier name.
-    :type supplier:
-        str
-    :param function:
-        The aixplain function name for the model. 
-    :type function:
-        str 
-    :param version:
-        The version number of the model if the supplier has multiple 
-        models with the same function. Optional.  
-    :type version:
-        str
-    :param source_language:
-        The source language the model processes for translation.
-    :type source_language:
-        str
-    :param source_dialect:
-        The source dialect the model processes (if specified) for translation.
-        Optional.
-    :type source_dialect:
-        str
-    :param target_language:
-        The target language the model processes for translation.
-    :type target_language:
-        str
-    """
-    source_language: str
-    source_dialect: Optional[str] = ""
-    target_language: str
-    target_dialect: Optional[str] = ""
-
-class TranslationInput(TranslationInputSchema):
-    def __init__(self, **input):
-        super().__init__(**input)
-        try:
-            super().__init__(**input)
-        except ValueError:
-            raise tornado.web.HTTPError(
-                    status_code=HTTPStatus.BAD_REQUEST,
-                    reason="Incorrect types passed into TranslationInput."
-                )
-
 class SpeechRecognitionInputSchema(APIInput):
     """The standardized schema of the aiXplain's Speech Recognition API input.
     
@@ -362,7 +312,6 @@ class TextGenerationInputSchema(TextInput):
 
 
     """
-    data: str
     temperature: Optional[int] = 1.0
     max_new_tokens: Optional[int] = 200
     top_p: Optional[int] = 0.8
@@ -379,4 +328,55 @@ class TextGenerationInput(TextGenerationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect type passed into TextGenerationInput."
+                )
+        
+
+class TranslationInputSchema(TextInput):
+    """The standardized schema of the aiXplain's Translation API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. 
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.  
+    :type version:
+        str
+    :param source_language:
+        The source language the model processes for translation.
+    :type source_language:
+        str
+    :param source_dialect:
+        The source dialect the model processes (if specified) for translation.
+        Optional.
+    :type source_dialect:
+        str
+    :param target_language:
+        The target language the model processes for translation.
+    :type target_language:
+        str
+    """
+    source_language: str
+    source_dialect: Optional[str] = ""
+    target_language: str
+    target_dialect: Optional[str] = ""
+
+class TranslationInput(TranslationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TranslationInput."
                 )

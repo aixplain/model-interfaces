@@ -183,7 +183,7 @@ class TextToImageGeneration(AixplainModel):
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
     
-class TextGeneration(AixplainModel):
+class TextGenerationModel(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         pass
 
