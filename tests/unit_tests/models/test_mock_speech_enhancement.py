@@ -38,7 +38,7 @@ class TestMockSpeechEnhancement():
         assert output_dict["data"] == "VGhpcyBpcyBhbiBhdWRpbyBvdXRwdXQ="
 
 class MockModel(SpeechEnhancementModel):
-    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]]) -> Dict[str, List[SpeechEnhancementOutput]]:
+    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechEnhancementOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

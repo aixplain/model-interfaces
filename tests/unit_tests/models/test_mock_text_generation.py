@@ -39,7 +39,7 @@ class TestMockTextGeneration():
         assert translation_output_dict["data"] == "I am a text generation model."
 
 class MockModel(TextGenerationModel):
-    def run_model(self, api_input: Dict[str, List[TextGenerationInput]]) -> Dict[str, List[TextGenerationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

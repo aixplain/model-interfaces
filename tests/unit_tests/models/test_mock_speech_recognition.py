@@ -40,7 +40,7 @@ class TestMockSpeechRecognition():
         assert output_dict["details"]["confidence"] == 0.7
 
 class MockModel(SpeechRecognitionModel):
-    def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]]) -> Dict[str, List[SpeechRecognitionOutput]]:
+    def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechRecognitionOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

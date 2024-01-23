@@ -31,7 +31,7 @@ class TestMockDiacritization():
         assert output_dict["details"]["confidence"] == 0.7
 
 class MockModel(DiacritizationModel):
-    def run_model(self, api_input: Dict[str, List[DiacritizationInput]]) -> Dict[str, List[DiacritizationOutput]]:
+    def run_model(self, api_input: Dict[str, List[DiacritizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[DiacritizationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.
