@@ -36,7 +36,7 @@ class TestMockTextGeneration():
         predict_output = mock_model.predict(predict_input)
         translation_output_dict = predict_output["predictions"][0]
 
-        assert translation_output_dict["data"] == "Hola, como estas?"
+        assert translation_output_dict["data"] == "I am a text generation model."
 
 class MockModel(TextGenerationModel):
     def run_model(self, api_input: Dict[str, List[TextGenerationInput]]) -> Dict[str, List[TextGenerationOutput]]:
