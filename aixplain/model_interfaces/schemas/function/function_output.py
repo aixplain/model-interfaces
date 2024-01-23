@@ -221,7 +221,7 @@ class TextToImageGenerationOutput(TextToImageGenerationOutputSchema):
 class TextGenerationOutputSchema(TextOutput):
     """The standardized schema of the aiXplain's text generation output.
     """
-    details = Optional[Any]
+    details: Optional[Any]
 
 class TextGenerationOutput(TextGenerationOutputSchema):
     def __init__(self, **input):
