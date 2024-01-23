@@ -46,8 +46,8 @@ class MockModel(TextGenerationModel):
         for instance in instances:
             instance_data = instance.dict()
             model_instance = Mock()
-            model_instance.process_data.return_value = ("I am a text generation model.")
-            result, confidence = model_instance.process_data(instance_data["data"])
+            model_instance.process_data.return_value = "I am a text generation model."
+            result = model_instance.process_data(instance_data["data"])
             model_instance.delete()
             
             # Map back onto TextGenerationOutput
