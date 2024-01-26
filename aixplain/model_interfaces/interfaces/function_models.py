@@ -13,7 +13,10 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     TextToImageGenerationInput,
     TextGenerationInput,
     TextSummarizationInput,
-    SearchInput
+    SearchInput,
+    TextReconstructionInput,
+    FillTextMaskInput,
+    SubtitleTranslationInput
 )
 from aixplain.model_interfaces.schemas.function.function_output import (
     TranslationOutput,
@@ -25,7 +28,10 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     TextToImageGenerationOutput,
     TextGenerationOutput,
     TextSummarizationOutput,
-    SearchOutput
+    SearchOutput,
+    TextReconstructionOutput,
+    FillTextMaskOutput,
+    SubtitleTranslationOutput
 )
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
@@ -250,3 +256,65 @@ class SearchModel(AixplainModel):
             search_output["predictions"][i] = search_dict
         return search_output
     
+class TextReconstructionModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[TextReconstructionInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextReconstructionInput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_reconstruction_input_list = []
+        # Convert JSON serializables into TextReconstructionInputs
+        for instance in instances:
+            text_reconstruction_input = TextReconstructionInput(**instance)
+            text_reconstruction_input_list.append(text_reconstruction_input)
+            
+        text_reconstruction_output = self.run_model({"instances": text_reconstruction_input_list})
+
+        # Convert JSON serializables into TextReconstructionOutputs
+        for i in range(len(text_reconstruction_output["predictions"])):
+            text_reconstruction_dict = text_reconstruction_output["predictions"][i].dict()
+            TextReconstructionOutput(**text_reconstruction_dict)
+            text_reconstruction_output["predictions"][i] = text_reconstruction_dict
+        return text_reconstruction_output
+    
+class FillTextMaskModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[FillTextMaskInput]], headers: Dict[str, str] = None) -> Dict[str, List[FillTextMaskOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        fill_text_mask_input_list = []
+        # Convert JSON serializables into FillTextMaskInputs
+        for instance in instances:
+            fill_text_mask_input = FillTextMaskInput(**instance)
+            fill_text_mask_input_list.append(fill_text_mask_input)
+            
+        fill_text_mask_output = self.run_model({"instances": fill_text_mask_input_list})
+
+        # Convert JSON serializables into FillTextMaskOutputs
+        for i in range(len(fill_text_mask_output["predictions"])):
+            fill_text_mask_dict = fill_text_mask_output["predictions"][i].dict()
+            FillTextMaskOutput(**fill_text_mask_dict)
+            fill_text_mask_output["predictions"][i] = fill_text_mask_dict
+        return fill_text_mask_output
+    
+class SubtitleTranslationModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SubtitleTranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[SubtitleTranslationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        subtitle_translation_input_list = []
+        # Convert JSON serializables into SubtitleTranslationInputs
+        for instance in instances:
+            subtitle_translation_input = SubtitleTranslationInput(**instance)
+            subtitle_translation_input_list.append(subtitle_translation_input)
+            
+        subtitle_translation_output = self.run_model({"instances": subtitle_translation_input_list})
+
+        # Convert JSON serializables into SubtitleTranslationOutput
+        for i in range(len(subtitle_translation_output["predictions"])):
+            subtitle_translation_dict = subtitle_translation_output["predictions"][i].dict()
+            SubtitleTranslationOutput(**subtitle_translation_dict)
+            subtitle_translation_output["predictions"][i] = subtitle_translation_dict
+        return subtitle_translation_output

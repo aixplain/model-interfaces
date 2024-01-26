@@ -9,7 +9,12 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     SpeechEnhancementInput,
     SpeechSynthesisInput,
     TextToImageGenerationInput,
-    TextGenerationInput
+    TextGenerationInput,
+    TextSummarizationInput,
+    SearchInput,
+    TextReconstructionInput,
+    FillTextMaskInput,
+    SubtitleTranslationInput
 )
 
 from aixplain.model_interfaces.schemas.function.function_output import(
@@ -23,7 +28,12 @@ from aixplain.model_interfaces.schemas.function.function_output import(
     ClassificationOutput,
     SpeechEnhancementOutput,
     TextToImageGenerationOutput,
-    TextGenerationOutput
+    TextGenerationOutput,
+    TextSummarizationOutput,
+    SearchOutput,
+    TextReconstructionOutput,
+    FillTextMaskOutput,
+    SubtitleTranslationOutput
 )
 
 from aixplain.model_interfaces.schemas.metric.metric_input import(
@@ -58,7 +68,12 @@ from aixplain.model_interfaces.interfaces.function_models import(
     SpeechEnhancementModel,
     SpeechSynthesis,
     TextToImageGeneration,
-    TextGenerationModel
+    TextGenerationModel,
+    TextSummarizationModel,
+    SearchModel,
+    TextReconstructionModel,
+    FillTextMaskModel,
+    SubtitleTranslationModel
 )
 
 from aixplain.model_interfaces.interfaces.metric_models import(
@@ -78,7 +93,12 @@ function_classes = [
     SpeechEnhancementModel,
     SpeechSynthesis,
     TextToImageGeneration,
-    TextGenerationModel
+    TextGenerationModel,
+    TextSummarizationModel,
+    SearchModel,
+    TextReconstructionModel,
+    FillTextMaskModel,
+    SubtitleTranslationModel
 ]
 
 function_classes_input = [
