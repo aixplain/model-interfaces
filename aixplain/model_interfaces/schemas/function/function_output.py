@@ -114,29 +114,6 @@ class SpeechRecognitionOutput(SpeechRecognitionOutputSchema):
                     reason="Incorrect types passed into SpeechRecognitionOutput"
                 )  
 
-class DiacritizationOutputSchema(APIOutput):
-    """The standardized schema of the aiXplain's Diacritization Output.
-    :param data:
-        Processed output data from supplier model.
-    :type data:
-        Any
-    :param details:
-        Details of the text segments generated.
-    :type details:
-        TextSegmentDetails
-    """ 
-    details: TextSegmentDetails
-
-class DiacritizationOutput(DiacritizationOutputSchema):
-    def __init__(self, **input):
-        try:
-            super().__init__(**input)
-        except ValueError:
-             raise tornado.web.HTTPError(
-                    status_code=HTTPStatus.BAD_REQUEST,
-                    reason="Incorrect types passed into DiacritizationOutput"
-                )
-
 class ClassificationOutput(APIOutput):
     """The standardized schema of the aiXplain's Classification Output.
     :param predicted_labels:
@@ -255,3 +232,143 @@ class TranslationOutput(TranslationOutputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into TranslationOutput"
                 )  
+        
+class TextSummarizationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's Translation Output.
+
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        str
+    :param details:
+        Details of the summary generated.
+    :type details:
+        Any. Optional.
+    """ 
+    details: Optional[Any]
+
+class TextSummarizationOutput(TextSummarizationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextSummarizationOutput"
+                )
+
+class SearchOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's search output.
+
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        str
+    :param details:
+        Details of the summary generated.
+    :type details:
+        Any. Optional.
+    """
+    details: Optional[Any]
+
+class SearchOutput(SearchOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SearchOutput"
+                )
+        
+class DiacritizationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's Diacritization Output.
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        Any
+    :param details:
+        Details of the text segments generated.
+    :type details:
+        TextSegmentDetails
+    """ 
+    details: TextSegmentDetails
+
+class DiacritizationOutput(DiacritizationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into DiacritizationOutput"
+                )
+
+class TextReconstructionOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's text reconstruction output.
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        Any
+    :param details:
+        Details of the text segments generated.
+    :type details:
+        TextSegmentDetails
+    """ 
+    details: Optional[TextSegmentDetails]
+
+class TextReconstructionOutput(TextReconstructionOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextReconstructionOutput"
+                )
+        
+class FillTextMaskOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's fill-text-mask output.
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        Any
+    :param details:
+        Details of the text segments generated.
+    :type details:
+        TextSegmentDetails
+    """ 
+    details: Optional[TextSegmentDetails]
+
+class FillTextMaskOutput(FillTextMaskOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into FillTextMaskOutput"
+                )
+        
+class SubtitleTranslationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's subtitle translation output.
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        Any
+    :param details:
+        Details of the text segments generated.
+    :type details:
+        TextSegmentDetails
+    """ 
+    details: Optional[TextSegmentDetails]
+
+class SubtitleTranslationOutput(SubtitleTranslationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SubtitleTranslationOutput"
+                )

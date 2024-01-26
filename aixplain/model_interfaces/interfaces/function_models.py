@@ -11,7 +11,9 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     SpeechEnhancementInput,
     SpeechSynthesisInput,
     TextToImageGenerationInput,
-    TextGenerationInput
+    TextGenerationInput,
+    TextSummarizationInput,
+    SearchInput
 )
 from aixplain.model_interfaces.schemas.function.function_output import (
     TranslationOutput,
@@ -21,7 +23,9 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     SpeechEnhancementOutput,
     SpeechSynthesisOutput,
     TextToImageGenerationOutput,
-    TextGenerationOutput
+    TextGenerationOutput,
+    TextSummarizationOutput,
+    SearchOutput
 )
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
@@ -190,16 +194,59 @@ class TextGenerationModel(AixplainModel):
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []
-        # Convert JSON serializables into TextToImageGenerationInputs
+        # Convert JSON serializables into TextGenerationInputs
         for instance in instances:
             text_generation_input = TextGenerationInput(**instance)
             text_generation_input_list.append(text_generation_input)
             
         text_generation_output = self.run_model({"instances": text_generation_input_list})
 
-        # Convert JSON serializables into TextToImageGenerationOutputs
+        # Convert JSON serializables into TextGenerationOutputs
         for i in range(len(text_generation_output["predictions"])):
             text_generation_dict = text_generation_output["predictions"][i].dict()
-            TextToImageGenerationOutput(**text_generation_dict)
+            TextGenerationOutput(**text_generation_dict)
             text_generation_output["predictions"][i] = text_generation_dict
         return text_generation_output
+
+class TextSummarizationModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[TextSummarizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextSummarizationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_summarization_input_list = []
+        # Convert JSON serializables into TextSummarizationInputs
+        for instance in instances:
+            text_summarization_input = TextSummarizationInput(**instance)
+            text_summarization_input_list.append(text_summarization_input)
+            
+        text_summarization_output = self.run_model({"instances": text_summarization_input_list})
+
+        # Convert JSON serializables into TextSummarizationOutputs
+        for i in range(len(text_summarization_output["predictions"])):
+            text_summarization_dict = text_summarization_output["predictions"][i].dict()
+            TextSummarizationOutput(**text_summarization_dict)
+            text_summarization_output["predictions"][i] = text_summarization_dict
+        return text_summarization_output
+    
+class SearchModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SearchInput]], headers: Dict[str, str] = None) -> Dict[str, List[SearchOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        search_input_list = []
+        # Convert JSON serializables into SearchInputs
+        for instance in instances:
+            search_input = SearchInput(**instance)
+            search_input_list.append(search_input)
+            
+        search_output = self.run_model({"instances": search_input_list})
+
+        # Convert JSON serializables into SearchOutputs
+        for i in range(len(search_output["predictions"])):
+            search_dict = search_output["predictions"][i].dict()
+            SearchOutput(**search_dict)
+            search_output["predictions"][i] = search_dict
+        return search_output
+    
