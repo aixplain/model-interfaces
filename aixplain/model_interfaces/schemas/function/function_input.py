@@ -1,6 +1,6 @@
 from enum import Enum
 from http import HTTPStatus
-from typing import Optional, Any
+from typing import Optional, Any, List
 
 from pydantic import BaseModel, validator
 import tornado.web
@@ -89,50 +89,6 @@ class SpeechRecognitionInput(SpeechRecognitionInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SpeechRecognitionInput."
-                )
-
-class DiacritizationInputSchema(APIInput):
-    """The standardized schema of the aiXplain's diacritization API input.
-    
-    :param data:
-        Input data to the model.
-    :type data:
-        Any
-    :param supplier:
-        Supplier name.
-    :type supplier:
-        str
-    :param function:
-        The aixplain function name for the model. 
-    :type function:
-        str 
-    :param version:
-        The version number of the model if the supplier has multiple 
-        models with the same function. Optional.
-    :type version:
-        str
-    :param language:
-        The source language the model processes for diarization.
-    :type language:
-        str
-    :param dialect:
-        The source dialect the model processes (if specified) for diarization.
-        Optional.
-    :type dialect:
-        str
-    """
-    language: str
-    dialect: Optional[str] = ""
-
-class DiacritizationInput(DiacritizationInputSchema):
-    def __init__(self, **input):
-        super().__init__(**input)
-        try:
-            super().__init__(**input)
-        except ValueError:
-            raise tornado.web.HTTPError(
-                    status_code=HTTPStatus.BAD_REQUEST,
-                    reason="Incorrect types passed into DiacritizationInput."
                 )
 
 class ClassificationInputSchema(APIInput):
@@ -379,4 +335,278 @@ class TranslationInput(TranslationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into TranslationInput."
+                )
+        
+class TextSummarizationInputSchema(TextInput):
+    """The standardized schema of the aiXplain's text summarization API input.
+
+    :param data:
+        Input data to the model.
+    :type data:
+        str
+    :param supplier:
+        Supplier name. Optional.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. Optional.
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :param language:
+        The model's language. Optional.
+    :type language:
+        str
+    :param script:
+        # TODO What is this?
+    :type script:
+        str
+    :param dialect:
+        The language's dialect. Optional.
+    :type dialect:
+        str 
+    """
+    language: Optional[str] = ""
+    script: Optional[str] = ""
+    dialect: Optional[str] = ""
+
+class TextSummarizationInput(TextSummarizationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextSummarizationInput."
+                )
+
+class SearchInputSchema(TextInput):
+    """The standardized schema of the aiXplain's text summarization API input.
+
+    :param data:
+        Input data to the model.
+    :type data:
+        str
+    :param supplier:
+        Supplier name. Optional.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. Optional.
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :param language:
+        The model's language. Optional.
+    :type language:
+        str
+    :param script:
+        # TODO What is this?
+    :type script:
+        str
+    :param supplier_model_id:
+        The model ID from the supplier. Optional.
+    :type supplier_model_id:
+        str
+    """
+    script: Optional[str] = ""
+    supplier_model_id: Optional[str] = ""
+
+class SearchInput(SearchInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SearchInput."
+                )
+        
+class DiacritizationInputSchema(TextInput):
+    """The standardized schema of the aiXplain's diacritization API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. 
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param language:
+        The source language the model processes for diarization.
+    :type language:
+        str
+    :param dialect:
+        The source dialect the model processes (if specified) for diarization.
+        Optional.
+    :type dialect:
+        str
+    """
+    dialect: Optional[str] = ""
+
+class DiacritizationInput(DiacritizationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into DiacritizationInput."
+                )
+
+class TextReconstructionInputSchema(TextInput):
+    """The standardized schema of the aiXplain's text reconstruction API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. 
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param language:
+        The source language the model processes for diarization.
+    :type language:
+        str
+    """
+    pass
+
+class TextReconstructionInput(TextReconstructionInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into TextReconstructionInput."
+                )
+        
+class FillTextMaskInputSchema(TextInput):
+    """The standardized schema of the aiXplain's fill-text-mask API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name. Optional.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. Optional.
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param language:
+        The source language the model processes for diarization.
+    :type language:
+        str
+    :param dialect:
+        The source dialect the model processes (if specified) for diarization.
+        Optional.
+    :type dialect:
+        str
+    :param script:
+        # TODO What is this? Optional.
+    :type script:
+        str
+    """
+    language: str
+    dialect: Optional[str]
+    script: Optional[str]
+
+class FillTextMaskInput(FillTextMaskInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into FillTextMaskInput."
+                )
+
+class SubtitleTranslationInputSchema(TextInput):
+    """The standardized schema of the aiXplain's subtitle translation API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name. Optional.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. Optional.
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param source_language:
+        The subtitle's source language.
+    :type source_language:
+        str
+    :param dialect_in:
+        The dialect of the source language. Optional.
+    :type dialect_in:
+        str
+    :param target_supplier:
+        TODO What is this?
+    :type target_supplier:
+        str
+    :param target_languages:
+        Languages to which to translate the subtitle.
+    :type target_languages:
+        List[str]
+    """
+    source_language: str
+    dialect_in: Optional[str]
+    target_supplier: Optional[str]
+    target_languages: Optional[List[str]]
+
+class SubtitleTranslationInput(SubtitleTranslationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into SubtitleTranslationInput."
                 )
