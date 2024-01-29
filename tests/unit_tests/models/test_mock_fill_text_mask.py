@@ -1,6 +1,6 @@
 from unittest.mock import Mock
 from aixplain.model_interfaces.schemas.function.function_input import FillTextMaskInput
-from aixplain.model_interfaces.schemas.function.function_output import FillTextMaskInput
+from aixplain.model_interfaces.schemas.function.function_output import FillTextMaskOutput
 from aixplain.model_interfaces.interfaces.function_models import FillTextMaskModel
 from typing import Dict, List
 
@@ -35,7 +35,7 @@ class TestMockFillTextMask():
         assert output_dict["data"] == "We are filling a text mask."
 
 class MockModel(FillTextMaskModel):
-    def run_model(self, api_input: Dict[str, List[FillTextMaskInput]], headers: Dict[str, str] = None) -> Dict[str, List[FillTextMaskInput]]:
+    def run_model(self, api_input: Dict[str, List[FillTextMaskInput]], headers: Dict[str, str] = None) -> Dict[str, List[FillTextMaskOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.
@@ -46,13 +46,13 @@ class MockModel(FillTextMaskModel):
             result = model_instance.process_data(instance_data["data"])
             model_instance.delete()
             
-            # Map back onto FillTextMaskInputs
+            # Map back onto FillTextMaskOutputs
             data = result
 
             output_dict = {
                 "data": data,
             }
-            output = FillTextMaskInput(**output_dict)
+            output = FillTextMaskOutput(**output_dict)
             predictions_list.append(output)
         predict_output = {"predictions": predictions_list}
         return predict_output
