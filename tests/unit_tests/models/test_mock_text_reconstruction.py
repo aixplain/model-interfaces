@@ -21,8 +21,7 @@ class TestMockTextReconstruction():
             "language": language
         }
 
-        input = TextReconstructionInput(**input_dict)
-        predict_input = {"instances": [input]}
+        predict_input = {"instances": [input_dict]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)

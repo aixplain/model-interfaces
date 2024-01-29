@@ -29,8 +29,7 @@ class TestMockTextGeneration():
             "top_k": top_k,
             "num_return_sequences": num_return_sequences
         }
-        text_generation_input = TextGenerationInput(**text_generation_input_dict)
-        predict_input = {"instances": [text_generation_input]}
+        predict_input = {"instances": [text_generation_input_dict]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)

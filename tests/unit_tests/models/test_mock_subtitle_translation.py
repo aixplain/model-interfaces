@@ -27,8 +27,7 @@ class TestMockSearch():
             "target_languages": target_languages
         }
 
-        search_input = SubtitleTranslationInput(**input_dict)
-        predict_input = {"instances": [search_input]}
+        predict_input = {"instances": [input_dict]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)

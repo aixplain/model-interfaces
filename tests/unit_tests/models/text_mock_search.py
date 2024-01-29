@@ -25,8 +25,7 @@ class TestMockSearch():
             "supplier_model_id": supplier_model_id
         }
 
-        search_input = SearchInput(**input_dict)
-        predict_input = {"instances": [search_input]}
+        predict_input = {"instances": [input_dict]}
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)
