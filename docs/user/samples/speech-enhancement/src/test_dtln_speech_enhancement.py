@@ -1,5 +1,5 @@
 from aixplain.model_interfaces.interfaces.asset_resolver import AssetResolver
-from aixplain.model_interfaces.schemas.function_input import AudioEncoding
+from aixplain.model_interfaces.schemas.function.function_input import AudioEncoding
 
 from aixplain.model_interfaces.utils.serialize import (
     audio_file_handle,

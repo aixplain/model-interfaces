@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import SpeechEnhancementInput, AudioEncoding
-from aixplain.model_interfaces.schemas.function_output import SpeechEnhancementOutput 
+from aixplain.model_interfaces.schemas.function.function_input import SpeechEnhancementInput, AudioEncoding
+from aixplain.model_interfaces.schemas.function.function_output import SpeechEnhancementOutput 
 from aixplain.model_interfaces.interfaces.function_models import SpeechEnhancementModel
 from typing import Dict, List
 
@@ -38,7 +38,7 @@ class TestMockSpeechEnhancement():
         assert output_dict["data"] == "VGhpcyBpcyBhbiBhdWRpbyBvdXRwdXQ="
 
 class MockModel(SpeechEnhancementModel):
-    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]]) -> Dict[str, List[SpeechEnhancementOutput]]:
+    def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechEnhancementOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.
