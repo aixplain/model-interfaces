@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import ClassificationInput
-from aixplain.model_interfaces.schemas.function_output import Label, ClassificationOutput
+from aixplain.model_interfaces.schemas.function.function_input import ClassificationInput
+from aixplain.model_interfaces.schemas.function.function_output import Label, ClassificationOutput
 from aixplain.model_interfaces.interfaces.function_models import ClassificationModel
 from typing import Dict, List
 

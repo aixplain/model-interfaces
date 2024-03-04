@@ -184,7 +184,7 @@ class TextToImageGeneration(AixplainModel):
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
     
-class TextGeneration(AixplainModel):
+class TextGenerationModel(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         pass
 
@@ -208,7 +208,7 @@ class TextGeneration(AixplainModel):
     def count_tokens(self, messages: List[str]) -> List[int]:
         pass
 
-class TextGenerationChat(TextGeneration):
+class TextGenerationChatModel(TextGenerationModel):
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []

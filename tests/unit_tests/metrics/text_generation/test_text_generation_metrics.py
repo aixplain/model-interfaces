@@ -8,7 +8,7 @@ import os
 from aixplain.model_interfaces.interfaces.metric_models import (
     TextGenerationMetric
 )
-from aixplain.model_interfaces.schemas.metric_input import TextGenerationMetricInput
+from aixplain.model_interfaces.schemas.metric.metric_input import TextGenerationMetricInput
 
 INPUTS_PATH="tests/unit_tests/metrics/text_generation/inputs.json"
 OUTPUTS_PATH="tests/unit_tests/metrics/text_generation/outputs.json"

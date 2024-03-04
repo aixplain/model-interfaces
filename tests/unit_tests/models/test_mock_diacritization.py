@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import DiacritizationInput
-from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, DiacritizationOutput
+from aixplain.model_interfaces.schemas.function.function_input import DiacritizationInput
+from aixplain.model_interfaces.schemas.function.function_output import TextSegmentDetails, DiacritizationOutput
 from aixplain.model_interfaces.interfaces.function_models import DiacritizationModel
 from typing import Dict, List
 
