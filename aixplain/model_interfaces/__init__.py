@@ -1,4 +1,4 @@
-from aixplain.model_interfaces.schemas.function_input import (
+from aixplain.model_interfaces.schemas.function.function_input import (
     APIInput,
     AudioEncoding,
     AudioConfig,
@@ -8,23 +8,11 @@ from aixplain.model_interfaces.schemas.function_input import (
     ClassificationInput,
     SpeechEnhancementInput,
     SpeechSynthesisInput,
-    TextToImageGenerationInput
+    TextToImageGenerationInput,
+    TextGenerationInput
 )
 
-from aixplain.model_interfaces.schemas.function_output import(
-    APIOutput,
-    WordDetails,
-    TextSegmentDetails,
-    Label,
-    TranslationOutput,
-    SpeechRecognitionOutput,
-    DiacritizationOutput,
-    ClassificationOutput,
-    SpeechEnhancementOutput,
-    TextToImageGenerationOutput
-)
-
-from aixplain.model_interfaces.schemas.metric_input import(
+from aixplain.model_interfaces.schemas.metric.metric_input import(
     MetricInput,
     MetricAggregate,
     TextGenerationSettings,
@@ -38,16 +26,6 @@ from aixplain.model_interfaces.schemas.metric_input import(
     NamedEntityRecognitionMetricInput
 )
 
-from aixplain.model_interfaces.schemas.metric_output import(
-    MetricOutput,
-    TextGenerationMetricOutput,
-    ReferencelessTextGenerationMetricOutput,
-    AudioGenerationMetricOutput,
-    ReferencelessAudioGenerationMetricOutput,
-    ClassificationMetricOutput,
-    NamedEntityRecognitionMetricOutput
-)
-
 from aixplain.model_interfaces.interfaces.function_models import(
     TranslationModel,
     SpeechRecognitionModel,
@@ -55,7 +33,8 @@ from aixplain.model_interfaces.interfaces.function_models import(
     ClassificationModel,
     SpeechEnhancementModel,
     SpeechSynthesis,
-    TextToImageGeneration
+    TextToImageGeneration,
+    TextGeneration
 )
 
 from aixplain.model_interfaces.interfaces.metric_models import(
@@ -74,7 +53,8 @@ function_classes = [
     ClassificationModel,
     SpeechEnhancementModel,
     SpeechSynthesis,
-    TextToImageGeneration
+    TextToImageGeneration,
+    TextGeneration
 ]
 
 function_classes_input = [
@@ -87,7 +67,8 @@ function_classes_input = [
     ClassificationInput,
     SpeechEnhancementInput,
     SpeechSynthesisInput,
-    TextToImageGenerationInput
+    TextToImageGenerationInput,
+    TextGenerationInput
 ]
 
 metric_classes_input = [

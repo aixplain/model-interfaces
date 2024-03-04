@@ -3,6 +3,7 @@ import tornado.web
 from http import HTTPStatus
 from typing import Dict, List
 
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
 from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
     SpeechRecognitionInput,
@@ -203,3 +204,29 @@ class TextGeneration(AixplainModel):
             TextGenerationOutput(**text_generation_dict)
             text_generation_output["predictions"][i] = text_generation_dict
         return text_generation_output
+    
+    def count_tokens(self, messages: List[str]) -> List[int]:
+        pass
+
+class TextGenerationChat(TextGeneration):
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_generation_input_list = []
+        # Convert JSON serializables into TextInputs
+        # NOTE: These TextInputs should contain templatized data, which should
+        # have been processed by TEMPLATIZE.
+        for instance in instances:
+            text_generation_input = TextInput(**instance)
+            text_generation_input_list.append(text_generation_input)
+            
+        text_generation_output = self.run_model({"instances": text_generation_input_list})
+
+        # Convert JSON serializables into TextGenerationOutputs
+        for i in range(len(text_generation_output["predictions"])):
+            text_generation_dict = text_generation_output["predictions"][i].dict()
+            TextGenerationOutput(**text_generation_dict)
+            text_generation_output["predictions"][i] = text_generation_dict
+        return text_generation_output
+    
+    def templatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
+        pass
