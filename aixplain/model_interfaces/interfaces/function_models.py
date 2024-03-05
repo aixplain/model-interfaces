@@ -209,6 +209,8 @@ class TextGenerationModel(AixplainModel):
         pass
 
 class TextGenerationChatModel(TextGenerationModel):
+    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+        pass
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []
