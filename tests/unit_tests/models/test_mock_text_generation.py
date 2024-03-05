@@ -68,7 +68,7 @@ class TestMockTextGenerationChat():
         mock_model = MockChatModel("Mock")
         templatize_output = mock_model.templatize([predict_input])
         for output in templatize_output:
-            assert output["data"] == "mock prompt input"
+            assert dict(output)["data"] == "mock prompt input"
         
 
     def test_predict(self):
