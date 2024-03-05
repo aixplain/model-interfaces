@@ -39,7 +39,7 @@ class TestMockTranslation():
         assert translation_output_dict["details"]["confidence"] == 0.7
 
 class MockModel(TranslationModel):
-    def run_model(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TranslationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

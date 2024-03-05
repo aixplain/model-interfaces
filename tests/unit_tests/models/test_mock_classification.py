@@ -31,7 +31,7 @@ class TestMockClassification():
         assert output_dict["predicted_labels"][0]["confidence"] == 0.7
 
 class MockModel(ClassificationModel):
-    def run_model(self, api_input: Dict[str, List[ClassificationInput]]) -> Dict[str, List[ClassificationOutput]]:
+    def run_model(self, api_input: Dict[str, List[ClassificationInput]], headers: Dict[str, str] = None) -> Dict[str, List[ClassificationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

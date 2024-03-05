@@ -16,7 +16,7 @@ class TestMockTextGeneration():
         language = ""
         prompt = "mock prompt"
         context = "mock context"
-        history = "mock history"
+        history = {}
 
         text_generation_input_dict = {
             "data": data,
@@ -51,7 +51,7 @@ class TestMockTextGenerationChat():
         language = ""
         prompt = "mock prompt"
         context = "mock context"
-        history = "mock history"
+        history = {}
 
         text_generation_input_dict = {
             "data": data,
@@ -68,11 +68,20 @@ class TestMockTextGenerationChat():
         mock_model = MockChatModel("Mock")
         templatize_output = mock_model.templatize([predict_input])
         for output in templatize_output:
-            
+            assert output["data"] == "mock prompt input"
         
 
     def test_predict(self):
+        data = "Hello, how are you?"
+
+        text_generation_input_dict = {
+            "data": data,
+        }
+        predict_input = {"instances": [text_generation_input_dict]}
         
+        mock_model = MockChatModel("Mock")
+        predict_output = mock_model.predict(predict_input)
+        text_generation_output_dict = predict_output["predictions"][0]
 
         assert text_generation_output_dict["data"] == "I am a text generation model."
 
@@ -134,8 +143,8 @@ class MockChatModel(TextGenerationChatModel):
     def count_tokens(self, messages: List[str]) -> List[int]:
         return [5 for _ in messages]
     
-    def templatizetemplatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
-        ret = []
+    def templatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
+        ret_list = []
         for _ in inputs:
-            ret.append(TextInput({"data": "mock prompt input"}))
-        return ret
+            ret_list.append(TextInput(**{"data": "mock prompt input"}))
+        return ret_list
