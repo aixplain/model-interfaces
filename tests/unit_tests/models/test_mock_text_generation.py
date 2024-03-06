@@ -31,7 +31,7 @@ class TestMockTextGeneration():
         assert text_generation_output_dict["data"] == "I am a text generation model."
 
     def test_count_tokens(self):
-        messages = ["mock" for _ in range(20)]
+        messages = messages = [TextInput(**{"data": "mock"}) for _ in range(20)]
         mock_model = MockModel("Mock")
         tokenize_output = mock_model.count_tokens(messages)
         assert tokenize_output == [5 for _ in range(20)]
@@ -80,7 +80,7 @@ class TestMockTextGenerationChat():
         assert text_generation_output_dict["data"] == "I am a text generation model."
 
     def test_count_tokens(self):
-        messages = ["mock" for _ in range(20)]
+        messages = [TextInput(**{"data": "mock"}) for _ in range(20)]
         mock_model = MockModel("Mock")
         tokenize_output = mock_model.count_tokens(messages)
         assert tokenize_output == [5 for _ in range(20)]
@@ -108,7 +108,7 @@ class MockModel(TextGenerationModel):
         predict_output = {"predictions": predictions_list}
         return predict_output
 
-    def count_tokens(self, messages: List[str]) -> List[int]:
+    def count_tokens(self, messages: List[TextInput]) -> List[int]:
         return [5 for _ in messages]
     
 class MockChatModel(TextGenerationChatModel):
@@ -134,7 +134,7 @@ class MockChatModel(TextGenerationChatModel):
         predict_output = {"predictions": predictions_list}
         return predict_output
 
-    def count_tokens(self, messages: List[str]) -> List[int]:
+    def count_tokens(self, messages: List[TextInput]) -> List[int]:
         return [5 for _ in messages]
     
     def templatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
