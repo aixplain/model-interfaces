@@ -185,7 +185,7 @@ class TextToImageGeneration(AixplainModel):
         return text_to_image_generation_output
     
 class TextGenerationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         pass
 
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
@@ -193,8 +193,8 @@ class TextGenerationModel(AixplainModel):
         text_generation_input_list = []
         # Convert JSON serializables into TextGenerationInputs
         for instance in instances:
-            text_generation_input = TextGenerationInput(**instance)
-            text_generation_input_list.append(text_generation_input)
+            text_input = TextInput(**instance)
+            text_generation_input_list.append(text_input)
             
         text_generation_output = self.run_model({"instances": text_generation_input_list})
 

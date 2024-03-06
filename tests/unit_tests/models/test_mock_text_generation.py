@@ -14,19 +14,13 @@ class TestMockTextGeneration():
         function = "text-generation"
         version = ""
         language = ""
-        prompt = "mock prompt"
-        context = "mock context"
-        history = {}
 
         text_generation_input_dict = {
             "data": data,
             "supplier": supplier,
             "function": function,
             "version": version,
-            "language": language,
-            "prompt": prompt,
-            "context": context,
-            "history": history
+            "language": language
         }
         predict_input = {"instances": [text_generation_input_dict]}
         
@@ -92,7 +86,7 @@ class TestMockTextGenerationChat():
         assert tokenize_output == [5 for _ in range(20)]
 
 class MockModel(TextGenerationModel):
-    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.
