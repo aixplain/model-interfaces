@@ -205,12 +205,13 @@ class TextGenerationModel(AixplainModel):
             text_generation_output["predictions"][i] = text_generation_dict
         return text_generation_output
     
-    def count_tokens(self, messages: List[str]) -> List[int]:
+    def count_tokens(self, messages: List[TextInput]) -> List[int]:
         pass
 
 class TextGenerationChatModel(TextGenerationModel):
     def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         pass
+
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []
