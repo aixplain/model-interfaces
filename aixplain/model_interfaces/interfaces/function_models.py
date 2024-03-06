@@ -3,23 +3,26 @@ import tornado.web
 from http import HTTPStatus
 from typing import Dict, List
 
-from aixplain.model_interfaces.schemas.function_input import (
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
+from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
     SpeechRecognitionInput,
     DiacritizationInput,
     ClassificationInput,
     SpeechEnhancementInput,
     SpeechSynthesisInput,
-    TextToImageGenerationInput
+    TextToImageGenerationInput,
+    TextGenerationInput
 )
-from aixplain.model_interfaces.schemas.function_output import (
+from aixplain.model_interfaces.schemas.function.function_output import (
     TranslationOutput,
     SpeechRecognitionOutput,
     DiacritizationOutput,
     ClassificationOutput,
     SpeechEnhancementOutput,
     SpeechSynthesisOutput,
-    TextToImageGenerationOutput
+    TextToImageGenerationOutput,
+    TextGenerationOutput
 )
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
@@ -159,6 +162,7 @@ class SpeechSynthesis(AixplainModel):
             SpeechSynthesisOutput(**speech_synthesis_dict)
             speech_synthesis_output["instances"][i] = speech_synthesis_dict
         return speech_synthesis_output
+
 class TextToImageGeneration(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextToImageGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextToImageGenerationOutput]]:
         pass
@@ -179,3 +183,53 @@ class TextToImageGeneration(AixplainModel):
             TextToImageGenerationOutput(**text_to_image_generation_dict)
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
+    
+class TextGenerationModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_generation_input_list = []
+        # Convert JSON serializables into TextGenerationInputs
+        for instance in instances:
+            text_input = TextInput(**instance)
+            text_generation_input_list.append(text_input)
+            
+        text_generation_output = self.run_model({"instances": text_generation_input_list})
+
+        # Convert JSON serializables into TextGenerationOutputs
+        for i in range(len(text_generation_output["predictions"])):
+            text_generation_dict = text_generation_output["predictions"][i].dict()
+            TextGenerationOutput(**text_generation_dict)
+            text_generation_output["predictions"][i] = text_generation_dict
+        return text_generation_output
+    
+    def count_tokens(self, messages: List[TextInput]) -> List[int]:
+        pass
+
+class TextGenerationChatModel(TextGenerationModel):
+    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_generation_input_list = []
+        # Convert JSON serializables into TextInputs
+        # NOTE: These TextInputs should contain templatized data, which should
+        # have been processed by TEMPLATIZE.
+        for instance in instances:
+            text_generation_input = TextInput(**instance)
+            text_generation_input_list.append(text_generation_input)
+            
+        text_generation_output = self.run_model({"instances": text_generation_input_list})
+
+        # Convert JSON serializables into TextGenerationOutputs
+        for i in range(len(text_generation_output["predictions"])):
+            text_generation_dict = text_generation_output["predictions"][i].dict()
+            TextGenerationOutput(**text_generation_dict)
+            text_generation_output["predictions"][i] = text_generation_dict
+        return text_generation_output
+    
+    def templatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
+        pass

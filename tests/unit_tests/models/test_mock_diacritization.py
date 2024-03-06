@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import DiacritizationInput
-from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, DiacritizationOutput
+from aixplain.model_interfaces.schemas.function.function_input import DiacritizationInput
+from aixplain.model_interfaces.schemas.function.function_output import TextSegmentDetails, DiacritizationOutput
 from aixplain.model_interfaces.interfaces.function_models import DiacritizationModel
 from typing import Dict, List
 
@@ -31,7 +31,7 @@ class TestMockDiacritization():
         assert output_dict["details"]["confidence"] == 0.7
 
 class MockModel(DiacritizationModel):
-    def run_model(self, api_input: Dict[str, List[DiacritizationInput]]) -> Dict[str, List[DiacritizationOutput]]:
+    def run_model(self, api_input: Dict[str, List[DiacritizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[DiacritizationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

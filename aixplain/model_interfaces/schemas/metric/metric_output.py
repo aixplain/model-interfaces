@@ -3,7 +3,7 @@ from typing import Any, Optional, List, Dict, Union
 import tornado.web
 from http import HTTPStatus
 
-from aixplain.model_interfaces.schemas.metric_input import MetricAggregate
+from aixplain.model_interfaces.schemas.metric.metric_input import MetricAggregate
 
 class MetricOutput(BaseModel):
     """The standardized schema of the aiXplain's Metric API Output.

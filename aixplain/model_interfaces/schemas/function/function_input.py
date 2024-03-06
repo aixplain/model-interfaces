@@ -1,42 +1,13 @@
 from enum import Enum
 from http import HTTPStatus
-from typing import Optional, Any
+from typing import Optional,Dict
 
 from pydantic import BaseModel, validator
 import tornado.web
 
 from aixplain.model_interfaces.utils import serialize
-
-class APIInput(BaseModel):
-    """The standardized schema of the aiXplain's API input.
-    
-    :param data:
-        Input data to the model.
-    :type data:
-        Any
-    :param supplier:
-        Supplier name.
-    :type supplier:
-        str
-    :param function:
-        The aixplain function name for the model. 
-    :type function:
-        str 
-    :param version:
-        The version number of the model if the supplier has multiple 
-        models with the same function. Optional.  
-    :type version:
-        str
-    :param language:
-        The language the model processes (if relevant). Optional.
-    :type language:
-        str
-    """
-    data: Any
-    supplier: Optional[str] = ""
-    function: Optional[str] = ""
-    version: Optional[str] = ""
-    language: Optional[str] = ""
+from aixplain.model_interfaces.schemas.api.basic_api_input import APIInput
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
 
 class AudioEncoding(Enum):
     """
@@ -61,6 +32,39 @@ class AudioConfig(BaseModel):
     """
     audio_encoding: AudioEncoding
     sampling_rate: Optional[int]
+
+class DiacritizationInputSchema(APIInput):
+    """The standardized schema of the aiXplain's diacritization API input.
+    
+    :param data:
+        Input data to the model.
+    :type data:
+        Any
+    :param supplier:
+        Supplier name.
+    :type supplier:
+        str
+    :param function:
+        The aixplain function name for the model. 
+    :type function:
+        str 
+    :param version:
+        The version number of the model if the supplier has multiple 
+        models with the same function. Optional.
+    :type version:
+        str
+    :param language:
+        The source language the model processes for diarization.
+    :type language:
+        str
+    :param dialect:
+        The source dialect the model processes (if specified) for diarization.
+        Optional.
+    :type dialect:
+        str
+    """
+    language: str
+    dialect: Optional[str] = ""
 
 class TranslationInputSchema(APIInput):
     """The standardized schema of the aiXplain's Translation API input.
@@ -110,6 +114,17 @@ class TranslationInput(TranslationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into TranslationInput."
+                )
+
+class DiacritizationInput(DiacritizationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into DiacritizationInput."
                 )
 
 class SpeechRecognitionInputSchema(APIInput):
@@ -168,50 +183,6 @@ class SpeechRecognitionInput(SpeechRecognitionInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SpeechRecognitionInput."
-                )
-
-class DiacritizationInputSchema(APIInput):
-    """The standardized schema of the aiXplain's diacritization API input.
-    
-    :param data:
-        Input data to the model.
-    :type data:
-        Any
-    :param supplier:
-        Supplier name.
-    :type supplier:
-        str
-    :param function:
-        The aixplain function name for the model. 
-    :type function:
-        str 
-    :param version:
-        The version number of the model if the supplier has multiple 
-        models with the same function. Optional.
-    :type version:
-        str
-    :param language:
-        The source language the model processes for diarization.
-    :type language:
-        str
-    :param dialect:
-        The source dialect the model processes (if specified) for diarization.
-        Optional.
-    :type dialect:
-        str
-    """
-    language: str
-    dialect: Optional[str] = ""
-
-class DiacritizationInput(DiacritizationInputSchema):
-    def __init__(self, **input):
-        super().__init__(**input)
-        try:
-            super().__init__(**input)
-        except ValueError:
-            raise tornado.web.HTTPError(
-                    status_code=HTTPStatus.BAD_REQUEST,
-                    reason="Incorrect types passed into DiacritizationInput."
                 )
 
 class ClassificationInputSchema(APIInput):
@@ -384,4 +355,39 @@ class TextToImageGenerationInput(TextToImageGenerationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect type passed into TextToImageGenerationInput."
+                )
+        
+class TextGenerationInputSchema(TextInput):
+    """The standardized schema of aiXplains text generation API Input
+
+    :param data:
+        Input data to the model.
+    :type data:
+        str
+    :param prompt: 
+        Prompt for text generation by OpenAI convention.
+    :type prompt:
+        str
+    :param context:
+        Context for text generation by OpenAI convention.
+    :type context:
+        str
+    :param history:
+        History for text generation by OpenAI convention.
+    :type history:
+        Dict
+    """
+    prompt: str
+    context: str
+    history: Dict
+
+class TextGenerationInput(TextGenerationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into TextGenerationInput."
                 )
