@@ -273,7 +273,8 @@ class TextGenerationInputSchema(TextInput):
     top_p: Optional[int] = 0.8
     top_k: Optional[int] = 40
     num_return_sequences: Optional[int] = 1
-    script: Optional[str] = None
+    script: Optional[str]
+    messages: Optional[List[str]]
 
 class TextGenerationInput(TextGenerationInputSchema):
     def __init__(self, **input):

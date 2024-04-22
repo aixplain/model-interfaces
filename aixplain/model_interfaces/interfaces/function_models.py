@@ -1,7 +1,7 @@
 import tornado.web
 
 from http import HTTPStatus
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
@@ -33,6 +33,7 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     FillTextMaskOutput,
     SubtitleTranslationOutput
 )
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
@@ -194,7 +195,7 @@ class TextToImageGeneration(AixplainModel):
         return text_to_image_generation_output
     
 class TextGenerationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Union[Dict[str, List[TextGenerationOutput]], Dict[str, List[List[int]]]]:
         pass
 
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
@@ -205,14 +206,41 @@ class TextGenerationModel(AixplainModel):
             text_generation_input = TextGenerationInput(**instance)
             text_generation_input_list.append(text_generation_input)
             
-        text_generation_output = self.run_model({"instances": text_generation_input_list})
+        if text_generation_input_list[0].messages != None:
+            # If there are messages, call the tokenizer
+            # Call the tokenization endpoint
+            tokenizer_input_batches = []
+            for i in range(len(text_generation_input_list)):
+                tokenizer_input_list = []
+                text_generation_input = text_generation_input_list[i]
+                for message in text_generation_input.messages:
+                    text_input = {
+                        "data": message
+                    }
+                    tokenizer_input_list.append(TextInput(**text_input))
+                tokenizer_input_batches.append(tokenizer_input_list)
+            tokenizer_outputs = []
+            for i in range(len(tokenizer_input_batches)):
+                messages = tokenizer_input_batches[i]
+                token_counts = self.tokenize(messages)
+                tokenizer_outputs.append(token_counts)
+            tokenizer_output_dict = {
+                "token_counts": tokenizer_outputs
+            }
+            return tokenizer_output_dict
+        else:      
+            # Otherwise, run the regular "predict" function    
+            text_generation_output = self.run_model({"instances": text_generation_input_list})
 
-        # Convert JSON serializables into TextGenerationOutputs
-        for i in range(len(text_generation_output["predictions"])):
-            text_generation_dict = text_generation_output["predictions"][i].dict()
-            TextGenerationOutput(**text_generation_dict)
-            text_generation_output["predictions"][i] = text_generation_dict
-        return text_generation_output
+            # Convert JSON serializables into TextGenerationOutputs
+            for i in range(len(text_generation_output["predictions"])):
+                text_generation_dict = text_generation_output["predictions"][i].dict()
+                TextGenerationOutput(**text_generation_dict)
+                text_generation_output["predictions"][i] = text_generation_dict
+            return text_generation_output
+    
+    def tokenize(self, messages: List[TextInput]) -> List[int]:
+        pass
 
 class TextSummarizationModel(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextSummarizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextSummarizationOutput]]:
