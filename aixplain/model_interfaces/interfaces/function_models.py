@@ -206,14 +206,13 @@ class TextGenerationModel(AixplainModel):
             if function_type == "PREDICT":
                 return self._predict
             elif function_type == "TOKENIZE":
-                return self._tokenize
+                return self._run_tokenize
             else:
                 raise ValueError("Invalid function.")
         else:
             return self._predict
 
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
-        instances = request['instances']
         function = self._route(request)
         return function(request, headers)
 
@@ -233,7 +232,7 @@ class TextGenerationModel(AixplainModel):
             text_generation_output["predictions"][i] = text_generation_dict
         return text_generation_output
     
-    def _tokenize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+    def _run_tokenize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         tokenization_input_list = []
         # Convert JSON serializables into TextListInputs
@@ -244,7 +243,7 @@ class TextGenerationModel(AixplainModel):
         tokenizer_outputs = []
         for i in range(len(tokenization_input_list)):
             tokenization_input = tokenization_input_list[i]
-            token_counts = self._tokenize(tokenization_input)
+            token_counts = self.tokenize(tokenization_input)
             tokenizer_outputs.append(token_counts)
         
         tokenizer_output_dict = {
@@ -252,11 +251,28 @@ class TextGenerationModel(AixplainModel):
         }
         return tokenizer_output_dict
     
+    def tokenize(self, messages: TextListInput) -> List[int]:
+        pass
+    
 class TextGenerationChatModel(TextGenerationModel):
     def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
         pass
 
-    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+    def _route(self, request):
+        if "function" in request.keys():
+            function_type = request["function"].upper()
+            if function_type == "PREDICT":
+                return self._predict
+            elif function_type == "TOKENIZE":
+                return self._run_tokenize
+            elif function_type == "TEMPLATIZE":
+                return self._templatize
+            else:
+                raise ValueError("Invalid function.")
+        else:
+            return self._predict
+    
+    def _predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []
         # Convert JSON serializables into TextInputs
@@ -275,7 +291,7 @@ class TextGenerationChatModel(TextGenerationModel):
             text_generation_output["predictions"][i] = text_generation_dict
         return text_generation_output
 
-    def templatize(self, inputs: List[TextGenerationInput]) -> List[TextInput]:
+    def _templatize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         pass
 
 class TextSummarizationModel(AixplainModel):
