@@ -2,6 +2,7 @@ import tornado.web
 
 from http import HTTPStatus
 from typing import Dict, List, Union
+from enum import Enum
 
 from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
@@ -33,7 +34,7 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     FillTextMaskOutput,
     SubtitleTranslationOutput
 )
-from aixplain.model_interfaces.schemas.modality.modality_input import TextInput
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput, TextListInput
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
@@ -193,54 +194,63 @@ class TextToImageGeneration(AixplainModel):
             TextToImageGenerationOutput(**text_to_image_generation_dict)
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
+
     
 class TextGenerationModel(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Union[Dict[str, List[TextGenerationOutput]], Dict[str, List[List[int]]]]:
         pass
+    
+    def _route(self, request):
+        if "function" in request.keys():
+            function_type = request["function"].upper()
+            if function_type == "PREDICT":
+                return self._predict
+            elif function_type == "TOKENIZE":
+                return self._tokenize
+            else:
+                raise ValueError("Invalid function.")
+        else:
+            return self._predict
 
     def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        function = self._route(request)
+        return function(request, headers)
+
+    def _predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
         instances = request['instances']
         text_generation_input_list = []
         # Convert JSON serializables into TextGenerationInputs
         for instance in instances:
             text_generation_input = TextGenerationInput(**instance)
             text_generation_input_list.append(text_generation_input)
-            
-        if text_generation_input_list[0].messages != None:
-            # If there are messages, call the tokenizer
-            # Call the tokenization endpoint
-            tokenizer_input_batches = []
-            for i in range(len(text_generation_input_list)):
-                tokenizer_input_list = []
-                text_generation_input = text_generation_input_list[i]
-                for message in text_generation_input.messages:
-                    text_input = {
-                        "data": message
-                    }
-                    tokenizer_input_list.append(TextInput(**text_input))
-                tokenizer_input_batches.append(tokenizer_input_list)
-            tokenizer_outputs = []
-            for i in range(len(tokenizer_input_batches)):
-                messages = tokenizer_input_batches[i]
-                token_counts = self.tokenize(messages)
-                tokenizer_outputs.append(token_counts)
-            tokenizer_output_dict = {
-                "token_counts": tokenizer_outputs
-            }
-            return tokenizer_output_dict
-        else:      
-            # Otherwise, run the regular "predict" function    
-            text_generation_output = self.run_model({"instances": text_generation_input_list})
+        text_generation_output = self.run_model({"instances": text_generation_input_list})
 
-            # Convert JSON serializables into TextGenerationOutputs
-            for i in range(len(text_generation_output["predictions"])):
-                text_generation_dict = text_generation_output["predictions"][i].dict()
-                TextGenerationOutput(**text_generation_dict)
-                text_generation_output["predictions"][i] = text_generation_dict
-            return text_generation_output
+        # Convert JSON serializables into TextGenerationOutputs
+        for i in range(len(text_generation_output["predictions"])):
+            text_generation_dict = text_generation_output["predictions"][i].dict()
+            TextGenerationOutput(**text_generation_dict)
+            text_generation_output["predictions"][i] = text_generation_dict
+        return text_generation_output
     
-    def tokenize(self, messages: List[TextInput]) -> List[int]:
-        pass
+    def _tokenize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        tokenization_input_list = []
+        # Convert JSON serializables into TextListInputs
+        for instance in instances:
+            tokenization_input = TextListInput(**instance)
+            tokenization_input_list.append(tokenization_input)
+            
+        tokenizer_outputs = []
+        for i in range(len(tokenization_input_list)):
+            tokenization_input = tokenization_input_list[i]
+            token_counts = self._tokenize(tokenization_input)
+            tokenizer_outputs.append(token_counts)
+        
+        tokenizer_output_dict = {
+                "token_counts": tokenizer_outputs
+        }
+        return tokenizer_output_dict
     
 class TextGenerationChatModel(TextGenerationModel):
     def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
