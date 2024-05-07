@@ -221,7 +221,7 @@ class SpeechSynthesisInputSchema(BaseModel):
     audio: str = ""
     text: str
     text_language: str = "en"
-    audio_config: AudioConfig = AudioConfig(audio_encoding = AudioEncoding.WAV)
+    audio_config: AudioConfig
 
 class SpeechSynthesisInput(SpeechSynthesisInputSchema):
     def __init__(self, **input):
@@ -268,13 +268,12 @@ class TextGenerationInputSchema(TextInput):
 
 
     """
-    temperature: Optional[int] = 1.0
+    temperature: Optional[float] = 1.0
     max_new_tokens: Optional[int] = 200
-    top_p: Optional[int] = 0.8
+    top_p: Optional[float] = 0.8
     top_k: Optional[int] = 40
     num_return_sequences: Optional[int] = 1
-    script: Optional[str]
-    messages: Optional[List[str]]
+    script: Optional[str] = ""
 
 class TextGenerationInput(TextGenerationInputSchema):
     def __init__(self, **input):

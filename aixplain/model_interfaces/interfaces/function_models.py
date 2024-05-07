@@ -1,8 +1,9 @@
 import tornado.web
 
 from http import HTTPStatus
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Optional, Text
 from enum import Enum
+from pydantic import BaseModel, validate_call
 
 from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
@@ -196,63 +197,43 @@ class TextToImageGeneration(AixplainModel):
         return text_to_image_generation_output
 
     
+class TextGenerationPredictInput(BaseModel):
+    instances: Union[List[TextGenerationInput], List[TextListInput]]
+    function: Optional[Text] = "PREDICT"
+
+class TextGenerationRunModelOutput(BaseModel):
+    predictions: List[TextGenerationOutput]
+
+class TextGenerationTokenizeOutput(BaseModel):
+    token_counts: List[List[int]]
+
 class TextGenerationModel(AixplainModel):
-    def run_model(self, api_input: Dict[str, List[TextGenerationInput]], headers: Dict[str, str] = None) -> Union[Dict[str, List[TextGenerationOutput]], Dict[str, List[List[int]]]]:
-        pass
-    
-    def _route(self, request):
-        if "function" in request.keys():
-            function_type = request["function"].upper()
-            if function_type == "PREDICT":
-                return self._predict
-            elif function_type == "TOKENIZE":
-                return self._run_tokenize
-            else:
-                raise ValueError("Invalid function.")
+    @validate_call
+    # def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Union[TextGenerationRunModelOutput, TextGenerationTokenizeOutput]:
+    def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
+        instances = request.instances
+        if request.function.upper() == "PREDICT":
+            predict_output = {
+                "predictions": self.run_model(instances, headers)
+            }
+            # return TextGenerationRunModelOutput(**predict_output)
+            return predict_output
+        elif request.function.upper() == "TOKENIZE":
+            token_counts_output = {
+                "token_counts": self.tokenize(instances, headers)
+            }
+            # return TextGenerationTokenizeOutput(**token_counts_output)
+            return token_counts_output
         else:
-            return self._predict
+            raise ValueError("Invalid function.")
 
-    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
-        function = self._route(request)
-        return function(request, headers)
+    @validate_call
+    def run_model(self, api_input: List[TextGenerationInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
+        raise NotImplementedError
 
-    def _predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
-        instances = request['instances']
-        text_generation_input_list = []
-        # Convert JSON serializables into TextGenerationInputs
-        for instance in instances:
-            text_generation_input = TextGenerationInput(**instance)
-            text_generation_input_list.append(text_generation_input)
-        text_generation_output = self.run_model({"instances": text_generation_input_list})
-
-        # Convert JSON serializables into TextGenerationOutputs
-        for i in range(len(text_generation_output["predictions"])):
-            text_generation_dict = text_generation_output["predictions"][i].dict()
-            TextGenerationOutput(**text_generation_dict)
-            text_generation_output["predictions"][i] = text_generation_dict
-        return text_generation_output
-    
-    def _run_tokenize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
-        instances = request['instances']
-        tokenization_input_list = []
-        # Convert JSON serializables into TextListInputs
-        for instance in instances:
-            tokenization_input = TextListInput(**instance)
-            tokenization_input_list.append(tokenization_input)
-            
-        tokenizer_outputs = []
-        for i in range(len(tokenization_input_list)):
-            tokenization_input = tokenization_input_list[i]
-            token_counts = self.tokenize(tokenization_input)
-            tokenizer_outputs.append(token_counts)
-        
-        tokenizer_output_dict = {
-                "token_counts": tokenizer_outputs
-        }
-        return tokenizer_output_dict
-    
-    def tokenize(self, messages: TextListInput) -> List[int]:
-        pass
+    @validate_call    
+    def tokenize(self, api_input: List[TextListInput], headers: Dict[str, str] = None) -> List[List[int]]:
+        raise NotImplementedError
     
 class TextGenerationChatModel(TextGenerationModel):
     def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
