@@ -36,6 +36,7 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     SubtitleTranslationOutput
 )
 from aixplain.model_interfaces.schemas.modality.modality_input import TextInput, TextListInput
+from aixplain.model_interfaces.schemas.modality.modality_output import TextListOutput
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
@@ -209,20 +210,17 @@ class TextGenerationTokenizeOutput(BaseModel):
 
 class TextGenerationModel(AixplainModel):
     @validate_call
-    # def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Union[TextGenerationRunModelOutput, TextGenerationTokenizeOutput]:
     def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
         instances = request.instances
         if request.function.upper() == "PREDICT":
             predict_output = {
                 "predictions": self.run_model(instances, headers)
             }
-            # return TextGenerationRunModelOutput(**predict_output)
             return predict_output
         elif request.function.upper() == "TOKENIZE":
             token_counts_output = {
                 "token_counts": self.tokenize(instances, headers)
             }
-            # return TextGenerationTokenizeOutput(**token_counts_output)
             return token_counts_output
         else:
             raise ValueError("Invalid function.")
@@ -236,43 +234,32 @@ class TextGenerationModel(AixplainModel):
         raise NotImplementedError
     
 class TextGenerationChatModel(TextGenerationModel):
-    def run_model(self, api_input: Dict[str, List[TextInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextGenerationOutput]]:
-        pass
-
-    def _route(self, request):
-        if "function" in request.keys():
-            function_type = request["function"].upper()
-            if function_type == "PREDICT":
-                return self._predict
-            elif function_type == "TOKENIZE":
-                return self._run_tokenize
-            elif function_type == "TEMPLATIZE":
-                return self._templatize
-            else:
-                raise ValueError("Invalid function.")
-        else:
-            return self._predict
+    @validate_call
+    def run_model(self, api_input: List[TextInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
+        raise NotImplementedError
     
-    def _predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
-        instances = request['instances']
-        text_generation_input_list = []
-        # Convert JSON serializables into TextInputs
-        # NOTE: These TextInputs should contain templatized data, which should
-        # have been processed by TEMPLATIZE.
-        for instance in instances:
-            text_generation_input = TextInput(**instance)
-            text_generation_input_list.append(text_generation_input)
+    @validate_call
+    def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
+        instances = request.instances
+        if request.function.upper() == "PREDICT":
+            predict_output = {
+                "predictions": self.run_model(instances, headers)
+            }
+            return predict_output
+        elif request.function.upper() == "TOKENIZE":
+            token_counts_output = {
+                "token_counts": self.tokenize(instances, headers)
+            }
+            return token_counts_output
+        elif request.function.upper() == "TEMPLATIZE":
+            templatize_output = {
+                "data": self.templatize(instances, headers)
+            }
+        else:
+            raise ValueError("Invalid function.")
 
-        text_generation_output = self.run_model({"instances": text_generation_input_list})
-
-        # Convert JSON serializables into TextGenerationOutputs
-        for i in range(len(text_generation_output["predictions"])):
-            text_generation_dict = text_generation_output["predictions"][i].dict()
-            TextGenerationOutput(**text_generation_dict)
-            text_generation_output["predictions"][i] = text_generation_dict
-        return text_generation_output
-
-    def _templatize(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+    @validate_call
+    def templatize(self, api_input: List[TextListInput], headers: Dict[str, str] = None) -> List[TextListOutput]:
         pass
 
 class TextSummarizationModel(AixplainModel):

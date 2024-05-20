@@ -22,6 +22,6 @@ class TextListInput(APIInput):
     :param data:
         Input data to the model.
     :type data:
-        str
+       List[str]
     """
     data: List[str]

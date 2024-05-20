@@ -10,8 +10,18 @@ class TextOutput(APIOutput):
     """The standardized schema of the aiXplain's text API outputs.
 
     :param data:
-        Input data to the model.
+        Output data from the model.
     :type data:
         str
     """
     data: str
+
+class TextListOutput(APIInput):
+    """The standardized schema of the aiXplain's text list API utputs.
+
+    :param data:
+        Output data from the model.
+    :type data:
+        List[str]
+    """
+    data: List[str]
