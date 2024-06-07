@@ -255,7 +255,7 @@ class TextGenerationChatModel(TextGenerationModel):
             templatize_output = {
                 "data": self.templatize(instances, headers)
             }
-            return templateize_output
+            return templatize_output
         else:
             raise ValueError("Invalid function.")
 
