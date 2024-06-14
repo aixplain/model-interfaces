@@ -8,6 +8,8 @@ class AixplainProjectNode(Model):
     def __init__(self, name, *args, **kwargs):
         self.name = name
         self.ready = False
+        ready = self.load()
+        assert ready
 
     def predict(self, request: Dict[str, Dict], headers: Dict[str, str] = None) -> Dict[str, Dict]:
         return self.run_script(request, headers)
