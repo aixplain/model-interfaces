@@ -197,9 +197,11 @@ class TextToImageGeneration(AixplainModel):
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
 
-    
+class TextGenerationChatTemplatizeInput(BaseModel):
+    data: List[Dict]
+
 class TextGenerationPredictInput(BaseModel):
-    instances: Union[List[TextGenerationInput], List[TextListInput]]
+    instances: Union[List[TextGenerationInput], List[TextListInput], List[TextGenerationChatTemplatizeInput]]
     function: Optional[Text] = "PREDICT"
 
 class TextGenerationRunModelOutput(BaseModel):
@@ -253,14 +255,14 @@ class TextGenerationChatModel(TextGenerationModel):
             return token_counts_output
         elif request.function.upper() == "TEMPLATIZE":
             templatize_output = {
-                "data": self.templatize(instances, headers)
+                "prompts": self.templatize(instances, headers)
             }
             return templatize_output
         else:
             raise ValueError("Invalid function.")
 
     @validate_call
-    def templatize(self, api_input: List[TextListInput], headers: Dict[str, str] = None) -> List[TextListOutput]:
+    def templatize(self, api_input: List[TextGenerationChatTemplatizeInput], headers: Dict[str, str] = None) -> List[Text]:
         pass
 
 class TextSummarizationModel(AixplainModel):
