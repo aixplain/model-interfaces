@@ -2,10 +2,13 @@ __author__='aiXplain'
 
 from abc import abstractmethod
 from kserve.model import Model
-from typing import Dict, List
+from typing import Dict, List, Any
 from pydantic import validate_call
 
-class AixplainProjectNode(Model):
+from aixplain.model_interfaces.schemas.function.script_input import ScriptInput
+from aixplain.model_interfaces.schemas.function.script_output import ScriptOutput
+
+class ProjectNode(Model):
     def __init__(self, name, *args, **kwargs):
         super().__init__(name)
         self.name = name
@@ -15,12 +18,19 @@ class AixplainProjectNode(Model):
         assert ready
 
     @validate_call
-    def predict(self, request: Dict[str, Dict], headers: Dict[str, str] = None) -> Dict[str, List]:
-        print("Calling predict")
-        return self.run_script(request)
+    def predict(self, request: Dict[str, List[ScriptInput]], headers: Dict[str, str] = None) -> Dict[str, List[ScriptOutput]]:
+        instances = request["instances"]
+        results = []
+        for instance in instances:
+            result = self.run_script(instance)
+            results.append(result)
+        predictions =  {
+            "predictions": results
+        }
+        return predictions
 
     @validate_call
-    def run_script(self, input: Dict[str, Dict]) -> Dict[str, List]:
+    def run_script(self, input: Any) -> Any:
         raise NotImplementedError
 
     def load(self) -> bool:

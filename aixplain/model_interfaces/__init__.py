@@ -60,6 +60,14 @@ from aixplain.model_interfaces.schemas.metric.metric_output import(
     NamedEntityRecognitionMetricOutput
 )
 
+from aixplain.model_interfaces.schemas.metric.script_input import(
+    ScriptInput
+)
+
+from aixplain.model_interfaces.schemas.metric.script_output import(
+    ScriptOutput
+)
+
 from aixplain.model_interfaces.interfaces.function_models import(
     TranslationModel,
     SpeechRecognitionModel,
@@ -84,6 +92,10 @@ from aixplain.model_interfaces.interfaces.metric_models import(
     AudioGenerationMetric,
     ReferencelessAudioGenerationMetric,
     NamedEntityRecognitionMetric
+)
+
+from aixplain.model_interfaces.interfaces.project_node import(
+    ProjectNode
 )
 
 function_classes = [
@@ -140,7 +152,17 @@ metric_classes = [
     NamedEntityRecognitionMetric
 ]
 
+script_classes_input = [
+    ScriptInput
+]
+
+script_classes = [
+    ProjectNode
+]
+
 function_input_interface_map = {clazz.__name__.replace("Input", ""): clazz for clazz in function_classes_input}
 metric_input_interface_map = {clazz.__name__.replace("Input", ""): clazz for clazz in metric_classes_input}
+script_input_interface_map = {clazz.__name__.replace("Input", ""): clazz for clazz in script_classes_input}
 function_interface_map = {clazz.__name__: clazz for clazz in function_classes}
 metric_interface_map = {clazz.__name__: clazz for clazz in metric_classes}
+script_interface_map = {clazz.__name__: clazz for clazz in script_classes}
