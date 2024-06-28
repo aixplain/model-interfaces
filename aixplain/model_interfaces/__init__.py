@@ -60,11 +60,11 @@ from aixplain.model_interfaces.schemas.metric.metric_output import(
     NamedEntityRecognitionMetricOutput
 )
 
-from aixplain.model_interfaces.schemas.metric.script_input import(
+from aixplain.model_interfaces.schemas.script.script_input import(
     ScriptInput
 )
 
-from aixplain.model_interfaces.schemas.metric.script_output import(
+from aixplain.model_interfaces.schemas.script.script_output import(
     ScriptOutput
 )
 
