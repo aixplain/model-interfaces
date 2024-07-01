@@ -5,8 +5,8 @@ from kserve.model import Model
 from typing import Dict, List, Any
 from pydantic import validate_call
 
-from aixplain.model_interfaces.schemas.function.script_input import ScriptInput
-from aixplain.model_interfaces.schemas.function.script_output import ScriptOutput
+from aixplain.model_interfaces.schemas.script.script_input import ScriptInput
+from aixplain.model_interfaces.schemas.script.script_output import ScriptOutput
 
 class ProjectNode(Model):
     def __init__(self, name, *args, **kwargs):
