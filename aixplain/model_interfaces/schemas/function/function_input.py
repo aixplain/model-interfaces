@@ -1,6 +1,6 @@
 from enum import Enum
 from http import HTTPStatus
-from typing import Optional, Any, List
+from typing import Optional, Any, List, Union
 
 from pydantic import BaseModel, validator
 import tornado.web
