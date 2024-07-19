@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import ClassificationInput
-from aixplain.model_interfaces.schemas.function_output import Label, ClassificationOutput
+from aixplain.model_interfaces.schemas.function.function_input import ClassificationInput
+from aixplain.model_interfaces.schemas.function.function_output import Label, ClassificationOutput
 from aixplain.model_interfaces.interfaces.function_models import ClassificationModel
 from typing import Dict, List
 
@@ -31,7 +31,7 @@ class TestMockClassification():
         assert output_dict["predicted_labels"][0]["confidence"] == 0.7
 
 class MockModel(ClassificationModel):
-    def run_model(self, api_input: Dict[str, List[ClassificationInput]]) -> Dict[str, List[ClassificationOutput]]:
+    def run_model(self, api_input: Dict[str, List[ClassificationInput]], headers: Dict[str, str] = None) -> Dict[str, List[ClassificationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.

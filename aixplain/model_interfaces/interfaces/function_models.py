@@ -1,26 +1,42 @@
 import tornado.web
 
 from http import HTTPStatus
-from typing import Dict, List
+from typing import Dict, List, Union, Optional, Text
+from enum import Enum
+from pydantic import BaseModel, validate_call
 
-from aixplain.model_interfaces.schemas.function_input import (
+from aixplain.model_interfaces.schemas.function.function_input import (
     TranslationInput,
     SpeechRecognitionInput,
     DiacritizationInput,
     ClassificationInput,
     SpeechEnhancementInput,
     SpeechSynthesisInput,
-    TextToImageGenerationInput
+    TextToImageGenerationInput,
+    TextGenerationInput,
+    TextSummarizationInput,
+    SearchInput,
+    TextReconstructionInput,
+    FillTextMaskInput,
+    SubtitleTranslationInput
 )
-from aixplain.model_interfaces.schemas.function_output import (
+from aixplain.model_interfaces.schemas.function.function_output import (
     TranslationOutput,
     SpeechRecognitionOutput,
     DiacritizationOutput,
     ClassificationOutput,
     SpeechEnhancementOutput,
     SpeechSynthesisOutput,
-    TextToImageGenerationOutput
+    TextToImageGenerationOutput,
+    TextGenerationOutput,
+    TextSummarizationOutput,
+    SearchOutput,
+    TextReconstructionOutput,
+    FillTextMaskOutput,
+    SubtitleTranslationOutput
 )
+from aixplain.model_interfaces.schemas.modality.modality_input import TextInput, TextListInput
+from aixplain.model_interfaces.schemas.modality.modality_output import TextListOutput
 from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
@@ -159,6 +175,7 @@ class SpeechSynthesis(AixplainModel):
             SpeechSynthesisOutput(**speech_synthesis_dict)
             speech_synthesis_output["instances"][i] = speech_synthesis_dict
         return speech_synthesis_output
+
 class TextToImageGeneration(AixplainModel):
     def run_model(self, api_input: Dict[str, List[TextToImageGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextToImageGenerationOutput]]:
         pass
@@ -179,3 +196,176 @@ class TextToImageGeneration(AixplainModel):
             TextToImageGenerationOutput(**text_to_image_generation_dict)
             text_to_image_generation_output["predictions"][i] = text_to_image_generation_dict
         return text_to_image_generation_output
+
+class TextGenerationChatTemplatizeInput(BaseModel):
+    data: List[Dict]
+
+class TextGenerationPredictInput(BaseModel):
+    instances: Union[List[TextGenerationInput], List[TextListInput], List[TextGenerationChatTemplatizeInput]]
+    function: Optional[Text] = "PREDICT"
+
+class TextGenerationRunModelOutput(BaseModel):
+    predictions: List[TextGenerationOutput]
+
+class TextGenerationTokenizeOutput(BaseModel):
+    token_counts: List[List[int]]
+
+class TextGenerationModel(AixplainModel):
+    @validate_call
+    def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
+        instances = request.instances
+        if request.function.upper() == "PREDICT":
+            predict_output = {
+                "predictions": self.run_model(instances, headers)
+            }
+            return predict_output
+        elif request.function.upper() == "TOKENIZE":
+            token_counts_output = {
+                "token_counts": self.tokenize(instances, headers)
+            }
+            return token_counts_output
+        else:
+            raise ValueError("Invalid function.")
+
+    @validate_call
+    def run_model(self, api_input: List[TextGenerationInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
+        raise NotImplementedError
+
+    @validate_call    
+    def tokenize(self, api_input: List[TextListInput], headers: Dict[str, str] = None) -> List[List[int]]:
+        raise NotImplementedError
+    
+class TextGenerationChatModel(TextGenerationModel):
+    @validate_call
+    def run_model(self, api_input: List[TextInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
+        raise NotImplementedError
+    
+    @validate_call
+    def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
+        instances = request.instances
+        if request.function.upper() == "PREDICT":
+            predict_output = {
+                "predictions": self.run_model(instances, headers)
+            }
+            return predict_output
+        elif request.function.upper() == "TOKENIZE":
+            token_counts_output = {
+                "token_counts": self.tokenize(instances, headers)
+            }
+            return token_counts_output
+        elif request.function.upper() == "TEMPLATIZE":
+            templatize_output = {
+                "prompts": self.templatize(instances, headers)
+            }
+            return templatize_output
+        else:
+            raise ValueError("Invalid function.")
+
+    @validate_call
+    def templatize(self, api_input: List[TextGenerationChatTemplatizeInput], headers: Dict[str, str] = None) -> List[Text]:
+        pass
+
+class TextSummarizationModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[TextSummarizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextSummarizationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_summarization_input_list = []
+        # Convert JSON serializables into TextSummarizationInputs
+        for instance in instances:
+            text_summarization_input = TextSummarizationInput(**instance)
+            text_summarization_input_list.append(text_summarization_input)
+            
+        text_summarization_output = self.run_model({"instances": text_summarization_input_list})
+
+        # Convert JSON serializables into TextSummarizationOutputs
+        for i in range(len(text_summarization_output["predictions"])):
+            text_summarization_dict = text_summarization_output["predictions"][i].dict()
+            TextSummarizationOutput(**text_summarization_dict)
+            text_summarization_output["predictions"][i] = text_summarization_dict
+        return text_summarization_output
+    
+class SearchModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SearchInput]], headers: Dict[str, str] = None) -> Dict[str, List[SearchOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        search_input_list = []
+        # Convert JSON serializables into SearchInputs
+        for instance in instances:
+            search_input = SearchInput(**instance)
+            search_input_list.append(search_input)
+            
+        search_output = self.run_model({"instances": search_input_list})
+
+        # Convert JSON serializables into SearchOutputs
+        for i in range(len(search_output["predictions"])):
+            search_dict = search_output["predictions"][i].dict()
+            SearchOutput(**search_dict)
+            search_output["predictions"][i] = search_dict
+        return search_output
+    
+class TextReconstructionModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[TextReconstructionInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextReconstructionInput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        text_reconstruction_input_list = []
+        # Convert JSON serializables into TextReconstructionInputs
+        for instance in instances:
+            text_reconstruction_input = TextReconstructionInput(**instance)
+            text_reconstruction_input_list.append(text_reconstruction_input)
+            
+        text_reconstruction_output = self.run_model({"instances": text_reconstruction_input_list})
+
+        # Convert JSON serializables into TextReconstructionOutputs
+        for i in range(len(text_reconstruction_output["predictions"])):
+            text_reconstruction_dict = text_reconstruction_output["predictions"][i].dict()
+            TextReconstructionOutput(**text_reconstruction_dict)
+            text_reconstruction_output["predictions"][i] = text_reconstruction_dict
+        return text_reconstruction_output
+    
+class FillTextMaskModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[FillTextMaskInput]], headers: Dict[str, str] = None) -> Dict[str, List[FillTextMaskOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        fill_text_mask_input_list = []
+        # Convert JSON serializables into FillTextMaskInputs
+        for instance in instances:
+            fill_text_mask_input = FillTextMaskInput(**instance)
+            fill_text_mask_input_list.append(fill_text_mask_input)
+            
+        fill_text_mask_output = self.run_model({"instances": fill_text_mask_input_list})
+
+        # Convert JSON serializables into FillTextMaskOutputs
+        for i in range(len(fill_text_mask_output["predictions"])):
+            fill_text_mask_dict = fill_text_mask_output["predictions"][i].dict()
+            FillTextMaskOutput(**fill_text_mask_dict)
+            fill_text_mask_output["predictions"][i] = fill_text_mask_dict
+        return fill_text_mask_output
+    
+class SubtitleTranslationModel(AixplainModel):
+    def run_model(self, api_input: Dict[str, List[SubtitleTranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[SubtitleTranslationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str], headers: Dict[str, str] = None) -> Dict:
+        instances = request['instances']
+        subtitle_translation_input_list = []
+        # Convert JSON serializables into SubtitleTranslationInputs
+        for instance in instances:
+            subtitle_translation_input = SubtitleTranslationInput(**instance)
+            subtitle_translation_input_list.append(subtitle_translation_input)
+            
+        subtitle_translation_output = self.run_model({"instances": subtitle_translation_input_list})
+
+        # Convert JSON serializables into SubtitleTranslationOutput
+        for i in range(len(subtitle_translation_output["predictions"])):
+            subtitle_translation_dict = subtitle_translation_output["predictions"][i].dict()
+            SubtitleTranslationOutput(**subtitle_translation_dict)
+            subtitle_translation_output["predictions"][i] = subtitle_translation_dict
+        return subtitle_translation_output

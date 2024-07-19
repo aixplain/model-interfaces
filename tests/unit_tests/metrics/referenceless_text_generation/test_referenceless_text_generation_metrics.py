@@ -8,7 +8,7 @@ import tempfile
 from aixplain.model_interfaces.interfaces.metric_models import (
     ReferencelessTextGenerationMetric
 )
-from aixplain.model_interfaces.schemas.metric_input import ReferencelessTextGenerationMetricInput
+from aixplain.model_interfaces.schemas.metric.metric_input import ReferencelessTextGenerationMetricInput
 import os
 
 INPUTS_PATH="tests/unit_tests/metrics/referenceless_text_generation/inputs.json"

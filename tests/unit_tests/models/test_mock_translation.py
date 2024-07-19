@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from aixplain.model_interfaces.schemas.function_input import TranslationInput
-from aixplain.model_interfaces.schemas.function_output import TextSegmentDetails, TranslationOutput 
+from aixplain.model_interfaces.schemas.function.function_input import TranslationInput
+from aixplain.model_interfaces.schemas.function.function_output import TextSegmentDetails, TranslationOutput 
 from aixplain.model_interfaces.interfaces.function_models import TranslationModel
 from typing import Dict, List
 
@@ -39,7 +39,7 @@ class TestMockTranslation():
         assert translation_output_dict["details"]["confidence"] == 0.7
 
 class MockModel(TranslationModel):
-    def run_model(self, api_input: Dict[str, List[TranslationInput]]) -> Dict[str, List[TranslationOutput]]:
+    def run_model(self, api_input: Dict[str, List[TranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TranslationOutput]]:
         instances = api_input["instances"]
         predictions_list = []
         # There's only 1 instance in this case.
