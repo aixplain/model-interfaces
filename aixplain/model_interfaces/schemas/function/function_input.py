@@ -262,6 +262,29 @@ class TextToImageGenerationInput(TextToImageGenerationInputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect type passed into TextToImageGenerationInput."
                 )
+
+class Segment(BaseModel):
+    """Segment information with optional url field. If the url field populated
+    this means the segmentation performed and the regarding segment uploaded
+    to the defined location under `url` field.
+    """
+    segment_id: int
+    start: Union[float, int, Tuple[int, int]]
+    end: Union[float, int, Tuple[int, int]]
+    url: Optional[str]
+
+class SegmentationInputSchema(APIInput):
+    """The standardized schema of the aiXplain's Segmenation API input.
+
+    :param details:
+        List of segments in Segment type.
+    :type data:
+        Segment
+    """
+    details: Optional[Union[List[Segment], str]]
+
+class SegmentationInput(SegmentationInputSchema):
+    pass
         
 class TextGenerationInputSchema(TextInput):
     """The standardized schema of aiXplains text generation API Input

@@ -3,7 +3,7 @@ from typing import Any, Optional, List, Dict, Union
 import tornado.web
 from http import HTTPStatus
 
-from aixplain.model_interfaces.schemas.function.function_input import AudioConfig, AudioEncoding
+from aixplain.model_interfaces.schemas.function.function_input import AudioConfig, AudioEncoding, SegmentationInputSchema
 from aixplain.model_interfaces.utils import serialize
 from aixplain.model_interfaces.schemas.api.basic_api_output import APIOutput
 from aixplain.model_interfaces.schemas.modality.modality_output import TextOutput
@@ -372,3 +372,13 @@ class SubtitleTranslationOutput(SubtitleTranslationOutputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SubtitleTranslationOutput"
                 )
+
+class SegmentationOutput(SegmentationInputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                status_code=HTTPStatus.BAD_REQUEST,
+                reason="Incorrect type passed into SegmentationInputSchema."
+            )
