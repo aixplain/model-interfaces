@@ -2,7 +2,7 @@
 
 ## Model development
 
-The aixplain-models package organizes your model's code in a standardized format in order to deploy these models on aixplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
+The model-interfaces package organizes your model's code in a standardized format in order to deploy these models on aiXplain model hosting instances. The following description covers how to organize your aiXplain hosted model.
 
 ### Model directory structure
 
@@ -15,17 +15,17 @@ src
 |   Addtional files required by your code [Optional]
 ```
 
-### The model artefact directory
+### The model artifact directory
 
-The hosted model might depend on files for loading parameters, configurations or other model assets. Create a model directory having the same name as the value provided in `ASSET_URI` and place all your dependant model assets in this directory.
+The hosted model might depend on files for loading parameters, configurations or other model assets. Create a model directory having the same name as the value provided in `ASSET_URI` and place all your dependent model assets in this directory.
 
 Note:
-1. The contents of this directory would be accessed or loaded by the model class' load function. 
+1. The contents of this directory would be accessed or loaded by the model class's load function. 
 2. The environment variable `ASSET_URI` defaults to the value `asset`.
 
 ### Implementing the model.py file
 
-Each hosted model needs to be an instance of a function based aiXplain model. If the model that your are building is a translation model, for example, the model class implementation should inherit the TranslationModel class interface as shown below.
+Each hosted model needs to be an instance of a function-based aiXplain model. If the model that your are building is a translation model, for example, the model class implementation should inherit the TranslationModel class interface as shown below.
 
 ```
 from aixplain.model_interfaces.interfaces.function_models import TranslationModel
@@ -39,7 +39,7 @@ To implement the model interface, define the following functions:
 
 #### Load function
 
-Implement the load function to load all model artefacts from the model directory specified in `ASSET_URI`. The model artefacts loaded here can be used by the model during prediction time, i.e. executing run_model().
+Implement the load function to load all model artifacts from the model directory specified in `ASSET_URI`. The model artifacts loaded here can be used by the model during prediction time, i.e. executing run_model().
 Set the value self.ready as 'True' to indicate that loading has successfully executed.
 
 ```
@@ -56,10 +56,10 @@ Set the value self.ready as 'True' to indicate that loading has successfully exe
 The run model function should contain the business logic to obtain a prediction from the loaded model.
 
 Input:  
-The input to the run model function is a dictionary. This dictionary has a key "instances" having values in a list containing AI function based subclass of APIInput values, for example TranslationInput.
+The input to the run model function is a dictionary. This dictionary possesses a key ("instances") containing values in a list containing AI function based subclass of APIInput values like, for example, TranslationInput.
 
 Output:  
-The output to the run model function is a dictionary. This dictionary has a key "predictions" having values in a list containing AI function based subclass of APIOutput values, for example TranslationOutput.  
+The output to the run model function is a dictionary. This dictionary possesses a key ("predictions") containing values in a list containing an AI function-based subclass of APIOutput values like, for example, TranslationOutput.  
 The output is expected to return the predictions from the model in the same order as the input instances were received.
 
 ```
@@ -105,7 +105,7 @@ pip freeze >> requirements.txt
 
 Run your model with the following command:
 ```
-ASSET_DIR=<path/to/model_artefacts_dir> ASSET_URI=<asset_uri> python -m model
+ASSET_DIR=<path/to/model_artifacts_dir> ASSET_URI=<asset_uri> python -m model
 ```
 
 Make an inference call:
@@ -115,7 +115,7 @@ ASSET_URI=<asset_uri>
 curl -v -H http://localhost:8080/v1/models/$ASSET_URI:predict -d '{"instances": [{"supplier": <supplier>, "function": <function>, "data": <data>}]}'
 ```
 
-The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/aixplain/model_interfaces/schemas/function_input.py)
+The input parameter in request above needs to be modified according to the target model's function input. Refer to the [function input definition documentation.](/aixplain/model_interfaces/schemas/function/function_input.py)
 
 ### Dockerfile
 Create an image using the following sample Dockerfile. Add features as needed:
@@ -136,5 +136,5 @@ CMD python -m model
 
 ### The environment variables
 
- - `ASSET_DIR`: The relative or absolute path of the model artefacts directory (ASSET_URI) on your system. This defaults to current directory.
- - `ASSET_URI`: The name of the model artefacts directory. The default name is `asset`.
+ - `ASSET_DIR`: The relative or absolute path of the model artifacts directory (ASSET_URI) on your system. This defaults to current directory.
+ - `ASSET_URI`: The name of the model artifacts directory. The default name is `asset`.
