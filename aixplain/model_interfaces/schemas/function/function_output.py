@@ -27,8 +27,8 @@ class WordDetails(BaseModel):
         Dict
     """
     word: str
-    confidence: Optional[float]
-    details: Optional[Dict[str, Any]]
+    confidence: Optional[float] = None 
+    details: Optional[Dict[str, Any]] = None 
 
 class TextSegmentDetails(BaseModel):
     """The standardized schema of the aiXplain's representation of text
@@ -48,8 +48,8 @@ class TextSegmentDetails(BaseModel):
         WordDetails
     """
     text: str
-    confidence: Optional[float]
-    word_details: Optional[List[WordDetails]]
+    confidence: Optional[float] = None 
+    word_details: Optional[List[WordDetails]] = None 
 
 class Label(BaseModel):
     """The standardized schema of the aiXplain's representation of label
@@ -65,7 +65,7 @@ class Label(BaseModel):
         float
     """
     label: str
-    confidence: Optional[float]
+    confidence: Optional[float] = None 
 
 class TranslationOutputSchema(APIOutput):
     """The standardized schema of the aiXplain's Translation Output.
@@ -127,7 +127,7 @@ class ClassificationOutput(APIOutput):
         List[Label]
     """ 
     predicted_labels: List[Label]
-    all_labels: Optional[List[Label]]
+    all_labels: Optional[List[Label]] = None 
 
 class SpeechEnhancementOutputSchema(APIOutput):
     """The standardized schema of the aiXplain's Speech Enhancement Output.
@@ -245,7 +245,7 @@ class TextSummarizationOutputSchema(TextOutput):
     :type details:
         Any. Optional.
     """ 
-    details: Optional[Any]
+    details: Optional[Any] = None 
 
 class TextSummarizationOutput(TextSummarizationOutputSchema):
     def __init__(self, **input):
@@ -269,7 +269,7 @@ class SearchOutputSchema(TextOutput):
     :type details:
         Any. Optional.
     """
-    details: Optional[Any]
+    details: Optional[Any] = None 
 
 class SearchOutput(SearchOutputSchema):
     def __init__(self, **input):
@@ -315,7 +315,7 @@ class TextReconstructionOutputSchema(TextOutput):
     :type details:
         TextSegmentDetails
     """ 
-    details: Optional[TextSegmentDetails]
+    details: Optional[TextSegmentDetails] = None 
 
 class TextReconstructionOutput(TextReconstructionOutputSchema):
     def __init__(self, **input):
@@ -338,7 +338,7 @@ class FillTextMaskOutputSchema(TextOutput):
     :type details:
         TextSegmentDetails
     """ 
-    details: Optional[TextSegmentDetails]
+    details: Optional[TextSegmentDetails] = None 
 
 class FillTextMaskOutput(FillTextMaskOutputSchema):
     def __init__(self, **input):
@@ -361,7 +361,7 @@ class SubtitleTranslationOutputSchema(TextOutput):
     :type details:
         TextSegmentDetails
     """ 
-    details: Optional[TextSegmentDetails]
+    details: Optional[TextSegmentDetails] = None 
 
 class SubtitleTranslationOutput(SubtitleTranslationOutputSchema):
     def __init__(self, **input):
