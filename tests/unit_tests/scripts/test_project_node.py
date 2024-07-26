@@ -22,13 +22,11 @@ class TestProjectNode():
                         "type": "audio",
                         "node_id": 2,
                         "language": "en",
-                        "segment": "https://modelserving-data.s3.amazonaws.com/temp/9e5f5f52-c431-4b7e-99bf-0a3271982676.wav",
                         "is_url": True
                     }
                 ],
                 "attributes": {
-                    "data": "https://aixplain-light-script-node-dev.s3.amazonaws.com/asr_script/audio.mp3?AWSAccessKeyId=AKIAXZSG5AU6Y4QVBO2W&Signature=8sYFcZ%2BfKmwB8r0xcu5qA9rxduE%3D&Expires=1711708650",
-                    "input": "https://aixplain-light-script-node-dev.s3.amazonaws.com/asr_script/audio.mp3?AWSAccessKeyId=AKIAXZSG5AU6Y4QVBO2W&Signature=8sYFcZ%2BfKmwB8r0xcu5qA9rxduE%3D&Expires=1711708650"
+                    "data": "mockData"
                 }
             }
         ]
@@ -49,13 +47,11 @@ class TestProjectNode():
                         "type": "audio",
                         "node_id": 2,
                         "language": "en",
-                        "segment": "https://modelserving-data.s3.amazonaws.com/temp/9e5f5f52-c431-4b7e-99bf-0a3271982676.wav",
                         "is_url": True
                     }
                 ],
                 "attributes": {
-                    "data": "https://aixplain-light-script-node-dev.s3.amazonaws.com/asr_script/audio.mp3?AWSAccessKeyId=AKIAXZSG5AU6Y4QVBO2W&Signature=8sYFcZ%2BfKmwB8r0xcu5qA9rxduE%3D&Expires=1711708650",
-                    "input": "https://aixplain-light-script-node-dev.s3.amazonaws.com/asr_script/audio.mp3?AWSAccessKeyId=AKIAXZSG5AU6Y4QVBO2W&Signature=8sYFcZ%2BfKmwB8r0xcu5qA9rxduE%3D&Expires=1711708650"
+                    "data": "mockData"
                 }
             }
         ]
