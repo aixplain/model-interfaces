@@ -6,6 +6,7 @@ from enum import Enum
 from pydantic import BaseModel, validate_call
 
 from aixplain.model_interfaces.schemas.function.function_input import (
+    SegmentationInput,
     TranslationInput,
     SpeechRecognitionInput,
     DiacritizationInput,
@@ -21,6 +22,7 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     SubtitleTranslationInput
 )
 from aixplain.model_interfaces.schemas.function.function_output import (
+    SegmentationOutput,
     TranslationOutput,
     SpeechRecognitionOutput,
     DiacritizationOutput,
@@ -369,3 +371,26 @@ class SubtitleTranslationModel(AixplainModel):
             SubtitleTranslationOutput(**subtitle_translation_dict)
             subtitle_translation_output["predictions"][i] = subtitle_translation_dict
         return subtitle_translation_output
+
+class SegmentationModel(AixplainModel):
+    def run_model(
+        self,
+        api_input: Dict[str, List[SegmentationInput]],
+        headers: Dict[str, str] = None
+    ) -> Dict[str, List[SegmentationOutput]]:
+        pass
+
+    def predict(self, request: Dict[str, str],
+                headers: Dict[str, str] = None) -> dict:
+        instances = []
+
+        for instance in request['instances']:
+            segmentation_input = SegmentationInput(**instance)
+            instances.append(segmentation_input)
+
+        output = self.run_model({"instances": instances}, headers)
+
+        for i, prediction in enumerate(output["predictions"]):
+            output["predictions"][i] = prediction.dict()
+
+        return output
