@@ -4,6 +4,7 @@ from http import HTTPStatus
 from typing import Dict, List, Union, Optional, Text
 from enum import Enum
 from pydantic import BaseModel, validate_call
+from abc import abstractmethod
 
 from aixplain.model_interfaces.schemas.function.function_input import (
     SegmentationInput,
@@ -43,6 +44,7 @@ from aixplain.model_interfaces.interfaces.aixplain_model import AixplainModel
 
 class TranslationModel(AixplainModel):
 
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[TranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TranslationOutput]]:
         pass
 
@@ -64,6 +66,7 @@ class TranslationModel(AixplainModel):
 
 class SpeechRecognitionModel(AixplainModel):
 
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechRecognitionOutput]]:
         pass
 
@@ -87,6 +90,7 @@ class SpeechRecognitionModel(AixplainModel):
 
 class DiacritizationModel(AixplainModel):
 
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[DiacritizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[DiacritizationOutput]]:
         pass
 
@@ -107,6 +111,8 @@ class DiacritizationModel(AixplainModel):
         return diacritiztn_output
 
 class ClassificationModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[ClassificationInput]], headers: Dict[str, str] = None) -> Dict[str, List[ClassificationOutput]]:
         pass
 
@@ -128,6 +134,7 @@ class ClassificationModel(AixplainModel):
 
 class SpeechEnhancementModel(AixplainModel):
 
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[SpeechEnhancementInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechEnhancementOutput]]:
         pass
 
@@ -157,6 +164,8 @@ class SpeechEnhancementModel(AixplainModel):
 
 
 class SpeechSynthesis(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[SpeechSynthesisInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechSynthesisOutput]]:
         pass
 
@@ -179,6 +188,8 @@ class SpeechSynthesis(AixplainModel):
         return speech_synthesis_output
 
 class TextToImageGeneration(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[TextToImageGenerationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextToImageGenerationOutput]]:
         pass
 
@@ -213,6 +224,7 @@ class TextGenerationTokenizeOutput(BaseModel):
     token_counts: List[List[int]]
 
 class TextGenerationModel(AixplainModel):
+
     @validate_call
     def predict(self, request: TextGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
         instances = request.instances
@@ -229,15 +241,19 @@ class TextGenerationModel(AixplainModel):
         else:
             raise ValueError("Invalid function.")
 
+    @abstractmethod
     @validate_call
     def run_model(self, api_input: List[TextGenerationInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
         raise NotImplementedError
 
+    @abstractmethod
     @validate_call    
     def tokenize(self, api_input: List[TextListInput], headers: Dict[str, str] = None) -> List[List[int]]:
         raise NotImplementedError
     
 class TextGenerationChatModel(TextGenerationModel):
+
+    @abstractmethod
     @validate_call
     def run_model(self, api_input: List[TextInput], headers: Dict[str, str] = None) -> List[TextGenerationOutput]:
         raise NotImplementedError
@@ -263,11 +279,17 @@ class TextGenerationChatModel(TextGenerationModel):
         else:
             raise ValueError("Invalid function.")
 
+    @abstractmethod
     @validate_call
     def templatize(self, api_input: List[TextGenerationChatTemplatizeInput], headers: Dict[str, str] = None) -> List[Text]:
-        pass
+        raise NotImplementedError
+
+    # NOTE: TOKENIZE is inherited from TextGenerationModel and must also be 
+    # implemented. See method signature above.
 
 class TextSummarizationModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[TextSummarizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextSummarizationOutput]]:
         pass
 
@@ -289,6 +311,8 @@ class TextSummarizationModel(AixplainModel):
         return text_summarization_output
     
 class SearchModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[SearchInput]], headers: Dict[str, str] = None) -> Dict[str, List[SearchOutput]]:
         pass
 
@@ -310,6 +334,8 @@ class SearchModel(AixplainModel):
         return search_output
     
 class TextReconstructionModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[TextReconstructionInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextReconstructionInput]]:
         pass
 
@@ -331,6 +357,8 @@ class TextReconstructionModel(AixplainModel):
         return text_reconstruction_output
     
 class FillTextMaskModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[FillTextMaskInput]], headers: Dict[str, str] = None) -> Dict[str, List[FillTextMaskOutput]]:
         pass
 
@@ -352,6 +380,8 @@ class FillTextMaskModel(AixplainModel):
         return fill_text_mask_output
     
 class SubtitleTranslationModel(AixplainModel):
+
+    @abstractmethod
     def run_model(self, api_input: Dict[str, List[SubtitleTranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[SubtitleTranslationOutput]]:
         pass
 
@@ -373,6 +403,8 @@ class SubtitleTranslationModel(AixplainModel):
         return subtitle_translation_output
 
 class SegmentationModel(AixplainModel):
+
+    @abstractmethod
     def run_model(
         self,
         api_input: Dict[str, List[SegmentationInput]],
