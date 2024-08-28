@@ -1,7 +1,7 @@
 __title__ = "model-interfaces"
 __description__ = "model-interfaces is the interface to host your models on aiXplain"
 __url__ = "https://github.com/aixplain/aixplain-models/tree/main/docs"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __author__ = "Duraikrishna Selvaraju and Michael Lam"
 __author_email__ = "krishna.durai@aixplain.com"
 __license__ = "http://www.apache.org/licenses/LICENSE-2.0"
