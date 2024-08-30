@@ -31,7 +31,7 @@ class TestMockTextSummarization():
         predict_output = mock_model.predict(predict_input)
         summarization_output_dict = predict_output["predictions"][0]
 
-        assert summarization_output_dict["data"] == "This is a summary"
+        assert summarization_output_dict.data == "This is a summary"
 
 class MockModel(TextSummarizationModel):
     def run_model(self, api_input: Dict[str, List[TextSummarizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextSummarizationOutput]]:

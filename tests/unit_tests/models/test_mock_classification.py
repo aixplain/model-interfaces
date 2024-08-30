@@ -26,13 +26,13 @@ class TestMockClassification():
         predict_output = mock_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
 
-        assert output_dict["data"] == "positive"
-        assert output_dict["predicted_labels"][0]["label"] == "positive"
-        assert output_dict["predicted_labels"][0]["confidence"] == 0.7
+        assert output_dict.data == "positive"
+        assert output_dict.predicted_labels[0].label == "positive"
+        assert output_dict.predicted_labels[0].confidence == 0.7
 
 class MockModel(ClassificationModel):
-    def run_model(self, api_input: Dict[str, List[ClassificationInput]], headers: Dict[str, str] = None) -> Dict[str, List[ClassificationOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[ClassificationInput], headers: Dict[str, str] = None) -> List[ClassificationOutput]:
+        instances = api_input
         predictions_list = []
         # There's only 1 instance in this case.
         for instance in instances:
@@ -50,7 +50,6 @@ class MockModel(ClassificationModel):
                 "data": data,
                 "predicted_labels": labels
             }
-            speech_recognition_output = ClassificationOutput(**output_dict)
-            predictions_list.append(speech_recognition_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+            classification_output = ClassificationOutput(**output_dict)
+            predictions_list.append(classification_output)
+        return predictions_list

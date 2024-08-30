@@ -26,16 +26,15 @@ class TestMockDiacritization():
         predict_output = mock_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
 
-        assert output_dict["data"] == "السَّلَامُ عَلَيْكُمْ"
-        assert output_dict["details"]["text"] == "السَّلَامُ عَلَيْكُمْ"
-        assert output_dict["details"]["confidence"] == 0.7
+        assert output_dict.data == "السَّلَامُ عَلَيْكُمْ"
+        assert output_dict.details.text == "السَّلَامُ عَلَيْكُمْ"
+        assert output_dict.details.confidence == 0.7
 
 class MockModel(DiacritizationModel):
-    def run_model(self, api_input: Dict[str, List[DiacritizationInput]], headers: Dict[str, str] = None) -> Dict[str, List[DiacritizationOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[DiacritizationInput], headers: Dict[str, str] = None) -> List[DiacritizationOutput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = ("السَّلَامُ عَلَيْكُمْ", 0.7)
@@ -52,5 +51,4 @@ class MockModel(DiacritizationModel):
             }
             speech_recognition_output = DiacritizationOutput(**output_dict)
             predictions_list.append(speech_recognition_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list

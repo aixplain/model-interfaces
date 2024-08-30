@@ -35,16 +35,15 @@ class TestMockSpeechRecognition():
         predict_output = mock_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
 
-        assert output_dict["data"] == "This is a test transcription"
-        assert output_dict["details"]["text"] == "This is a test transcription"
-        assert output_dict["details"]["confidence"] == 0.7
+        assert output_dict.data == "This is a test transcription"
+        assert output_dict.details.text == "This is a test transcription"
+        assert output_dict.details.confidence == 0.7
 
 class MockModel(SpeechRecognitionModel):
-    def run_model(self, api_input: Dict[str, List[SpeechRecognitionInput]], headers: Dict[str, str] = None) -> Dict[str, List[SpeechRecognitionOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[SpeechRecognitionInput], headers: Dict[str, str] = None) -> List[SpeechRecognitionOutput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = ("This is a test transcription", 0.7)
@@ -61,5 +60,4 @@ class MockModel(SpeechRecognitionModel):
             }
             speech_recognition_output = SpeechRecognitionOutput(**output_dict)
             predictions_list.append(speech_recognition_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list

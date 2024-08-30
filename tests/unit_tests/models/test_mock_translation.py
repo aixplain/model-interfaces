@@ -34,16 +34,15 @@ class TestMockTranslation():
         predict_output = mock_model.predict(predict_input)
         translation_output_dict = predict_output["predictions"][0]
 
-        assert translation_output_dict["data"] == "Hola, como estas?"
-        assert translation_output_dict["details"]["text"] == "Hola, como estas?"
-        assert translation_output_dict["details"]["confidence"] == 0.7
+        assert translation_output_dict.data == "Hola, como estas?"
+        assert translation_output_dict.details.text == "Hola, como estas?"
+        assert translation_output_dict.details.confidence == 0.7
 
 class MockModel(TranslationModel):
-    def run_model(self, api_input: Dict[str, List[TranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[TranslationOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[TranslationInput], headers: Dict[str, str] = None) -> List[TranslationOutput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = ("Hola, como estas?", 0.7)
@@ -60,5 +59,4 @@ class MockModel(TranslationModel):
             }
             translation_output = TranslationOutput(**output_dict)
             predictions_list.append(translation_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list
