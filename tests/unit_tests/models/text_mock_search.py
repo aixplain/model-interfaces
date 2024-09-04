@@ -29,16 +29,15 @@ class TestMockSearch():
         
         mock_model = MockModel("Mock")
         predict_output = mock_model.predict(predict_input)
-        output_dict = predict_output["predictions"][0]
+        output_dict = predict_output.predictions[0]
 
-        assert output_dict["data"] == "This is a search output."
+        assert output_dict.data == "This is a search output."
 
 class MockModel(SearchModel):
-    def run_model(self, api_input: Dict[str, List[SearchInput]], headers: Dict[str, str] = None) -> Dict[str, List[SearchOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[SearchInput], headers: Dict[str, str] = None) -> List[SearchOutput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = "This is a search output."
@@ -53,5 +52,4 @@ class MockModel(SearchModel):
             }
             search_output = SearchOutput(**output_dict)
             predictions_list.append(search_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list

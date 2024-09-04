@@ -33,14 +33,13 @@ class TestMockSearch():
         predict_output = mock_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
 
-        assert output_dict["data"] == "This is a subtitle translation."
+        assert output_dict.data == "This is a subtitle translation."
 
 class MockModel(SubtitleTranslationModel):
-    def run_model(self, api_input: Dict[str, List[SubtitleTranslationInput]], headers: Dict[str, str] = None) -> Dict[str, List[SubtitleTranslationOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[SubtitleTranslationInput], headers: Dict[str, str] = None) -> List[SubtitleTranslationOutput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = "This is a subtitle translation."
@@ -55,5 +54,4 @@ class MockModel(SubtitleTranslationModel):
             }
             search_output = SubtitleTranslationOutput(**output_dict)
             predictions_list.append(search_output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list

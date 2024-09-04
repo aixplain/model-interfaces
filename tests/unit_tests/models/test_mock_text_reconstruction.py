@@ -27,14 +27,13 @@ class TestMockTextReconstruction():
         predict_output = mock_model.predict(predict_input)
         output_dict = predict_output["predictions"][0]
 
-        assert output_dict["data"] == "This is a text reconstruction."
+        assert output_dict.data == "This is a text reconstruction."
 
 class MockModel(TextReconstructionModel):
-    def run_model(self, api_input: Dict[str, List[TextReconstructionInput]], headers: Dict[str, str] = None) -> Dict[str, List[TextReconstructionOutput]]:
-        instances = api_input["instances"]
+    def run_model(self, api_input: List[TextReconstructionInput], headers: Dict[str, str] = None) -> List[TextReconstructionInput]:
         predictions_list = []
         # There's only 1 instance in this case.
-        for instance in instances:
+        for instance in api_input:
             instance_data = instance.dict()
             model_instance = Mock()
             model_instance.process_data.return_value = "This is a text reconstruction."
@@ -49,5 +48,4 @@ class MockModel(TextReconstructionModel):
             }
             output = TextReconstructionOutput(**output_dict)
             predictions_list.append(output)
-        predict_output = {"predictions": predictions_list}
-        return predict_output
+        return predictions_list
