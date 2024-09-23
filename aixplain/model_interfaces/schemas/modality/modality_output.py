@@ -3,6 +3,7 @@ Modality output classes for modality-based model classification
 """
 from http import HTTPStatus
 from typing import Optional, Any, List
+from numpy import ndarray
 
 from aixplain.model_interfaces.schemas.api.basic_api_output import APIOutput
 
@@ -25,3 +26,13 @@ class TextListOutput(APIOutput):
         List[str]
     """
     data: List[str]
+
+class ArrayOutput(APIOutput):
+    """The standardized schema of the aiXplain's text API outputs.
+
+    :param data:
+        Output data from the model.
+    :type data:
+        ndarray
+    """
+    data: ndarray

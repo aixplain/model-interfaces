@@ -633,3 +633,109 @@ class SubtitleTranslationInput(SubtitleTranslationInputSchema):
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SubtitleTranslationInput."
                 )
+
+class AutoMaskGenerationInputSchema(TextInput):
+    """The standardized schema of the aiXplain's automatic image masking function.
+    Note that most of these fields are catered specifically toward SAM2 and do 
+    not all all have to be implemented. Documentation from 
+    https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
+
+    :param data:
+        Input data to the model.
+    :type data:
+        Text
+    :param points_per_side:
+        The number of points to be sampled along one side of the image. The 
+        total number of points is points_per_side**2. If None, 'point_grids' 
+        must provide explicit point sampling.
+    :type points_per_side:
+        int
+    :param points_per_batch:
+        Sets the number of points run simultaneously by the model. Higher 
+        numbers may be faster but use more GPU memory.
+    :type points_per_batch:
+        int
+    :param pred_iou_thresh:
+        A filtering threshold in [0,1], using the model's predicted mask 
+        quality.
+    :type pred_iou_thresh:
+        float
+    :param stability_score_thresh:
+        A filtering threshold in [0,1], using the stability of the mask under 
+        changes to the cutoff used to binarize the model's mask predictions.
+    :type stability_score_thresh:
+        float
+    :param stability_score_offset:
+        The amount to shift the cutoff when calculated the stability score.
+    :type stability_score_offset:
+        float
+    :param box_nms_thresh:
+        The box IoU cutoff used by non-maximal suppression to filter duplicate 
+        masks.
+    :type box_nms_thresh:
+        float
+    :param crop_n_layers:
+        If >0, mask prediction will be run again on crops of the image. Sets 
+        the number of layers to run, where each layer has 2**i_layer number of 
+        image crops.
+    :type crop_n_layers:
+        int
+    :param crop_nms_thresh:
+        The box IoU cutoff used by non-maximal suppression to filter duplicate 
+        masks between different crops.
+    :type crop_nms_thresh:
+        float
+    :param crop_overlap_ratio:
+        Sets the degree to which crops overlap. In the first crop layer, crops 
+        will overlap by this fraction of the image length. Later layers with 
+        more crops scale down this overlap.
+    :type crop_overlap_ratio:
+        float
+    :param crop_n_points_downscale_factor:
+        The number of points-per-side sampled in layer n is scaled down by 
+        crop_n_points_downscale_factor**n.
+    :type crop_n_points_downscale_factor:
+        int
+    :param point_grids:
+        A list over explicit grids of points used for sampling, normalized to 
+        [0,1]. The nth grid in the list is used in the nth crop layer. 
+        Exclusive with points_per_side.
+    :type point_grids:
+        List[ndarray]
+    :param min_mask_region_area:
+        If >0, postprocessing will be applied to remove disconnected regions 
+        and holes in masks with area smaller than min_mask_region_area. 
+        Requires opencv.
+    :type min_mask_region_area:
+        int
+    :param output_mode:
+        The form masks are returned in. Can be 'binary_mask', 
+        'uncompressed_rle', or 'coco_rle'. 'coco_rle' requires pycocotools. For 
+        large resolutions, 'binary_mask' may consume large amounts of memory.
+    :type output_mode:
+        str
+    """
+    points_per_side: Optional[int] = 32
+    points_per_batch: Optional[int] = 64
+    pred_iou_thresh: Optional[float] = 0.88
+    stability_score_thresh: Optional[float] = 0.95
+    stability_score_offset: Optional[float] = 1.0
+    box_nms_thresh: Optional[float] = 0.7
+    crop_n_layers: Optional[int] = 0
+    crop_nms_thresh: Optional[float] = 0.7
+    crop_overlap_ratio: Optional[float] = 512 / 1500
+    crop_n_points_downscale_factor: Optional[int] = 1
+    point_grids: Optional[List[np.ndarray]] = None
+    min_mask_region_area: Optional[int] = 0
+    output_mode: Optional[str] = "binary_mask"
+
+class AutoMaskGenerationInput(AutoMaskGenerationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into TextGenerationInput."
+                )

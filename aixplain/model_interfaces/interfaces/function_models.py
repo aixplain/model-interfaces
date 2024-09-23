@@ -20,7 +20,8 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     SearchInput,
     TextReconstructionInput,
     FillTextMaskInput,
-    SubtitleTranslationInput
+    SubtitleTranslationInput,
+    AutoMaskGenerationInput
 )
 from aixplain.model_interfaces.schemas.function.function_output import (
     SegmentationOutput,
@@ -36,7 +37,8 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     SearchOutput,
     TextReconstructionOutput,
     FillTextMaskOutput,
-    SubtitleTranslationOutput
+    SubtitleTranslationOutput,
+    AutoMaskGenerationOutput
 )
 from aixplain.model_interfaces.schemas.modality.modality_input import TextInput, TextListInput
 from aixplain.model_interfaces.schemas.modality.modality_output import TextListOutput
@@ -341,6 +343,23 @@ class SegmentationModel(AixplainModel):
     @validate_call
     def predict(self, request: SegmentationPredictInput,
                 headers: Dict[str, str] = None) -> dict:
+        predict_output = {
+            "predictions": self.run_model(request.instances, headers)
+        }
+        return predict_output
+
+class AutoMaskGenerationPredictInput(BaseModel):
+    instances: List[AutoMaskGenerationInput]
+
+class AutoMaskGenerationModel(AixplainModel):
+
+    @abstractmethod
+    @validate_call
+    def run_model(self, api_input: List[AutoMaskGenerationInput], headers: Dict[str, str] = None) -> List[AutoMaskGenerationOutput]:
+        pass
+
+    @validate_call
+    def predict(self, request: AutoMaskGenerationPredictInput, headers: Dict[str, str] = None) -> Dict:
         predict_output = {
             "predictions": self.run_model(request.instances, headers)
         }

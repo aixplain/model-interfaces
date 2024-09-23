@@ -6,7 +6,7 @@ from http import HTTPStatus
 from aixplain.model_interfaces.schemas.function.function_input import AudioConfig, AudioEncoding, SegmentationInputSchema
 from aixplain.model_interfaces.utils import serialize
 from aixplain.model_interfaces.schemas.api.basic_api_output import APIOutput
-from aixplain.model_interfaces.schemas.modality.modality_output import TextOutput
+from aixplain.model_interfaces.schemas.modality.modality_output import TextOutput, ArrayOutput
 
 class WordDetails(BaseModel):
     """The standardized schema of the aiXplain's representation of word
@@ -382,3 +382,56 @@ class SegmentationOutput(SegmentationInputSchema):
                 status_code=HTTPStatus.BAD_REQUEST,
                 reason="Incorrect type passed into SegmentationInputSchema."
             )
+
+class AutoMaskGenerationOutputSchema(ArrayOutput):
+    """The standardized schema of the aiXplain's automatic image masking function.
+    Note that most of these fields are catered specifically toward SAM2 and do 
+    not all all have to be implemented. Documentation from 
+    https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
+
+    :param data:
+        Processed output data from supplier model.
+    :type data:
+        ndarray
+    :param area:
+        The area in pixels of the mask.
+    :type area:
+        int
+    :param bbox:
+        The box around the mask, in XYWH format.
+    :type bbox:
+        TextSegmentDetails
+    :param predicted_iou:
+        The model's own prediction of the mask's quality. 
+    :type predicted_iou:
+        float
+    :param point_coords:
+        The point coordinates input to the model to generate this mask.
+    :type point_coords:
+        List[List]
+    :param stability_score:
+        A measure of the mask's quality.
+    :type stability_score:
+        float
+    :param crop_box:
+        The crop of the image used to generate the mask, given in XYWH format.
+    :type crop_box:
+        List
+    """
+    area: Optional[int] = None
+    bbox: Optional[List] = None
+    predicted_iou: Optional[float] = None
+    point_coords: Optional[List[List]] = None
+    stability_score: Optional[float] = None
+    crop_box: Optional[List] = None
+
+class AutoMaskGenerationOutput(AutoMaskGenerationOutputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into AutoMaskGenerationOutput."
+                )
