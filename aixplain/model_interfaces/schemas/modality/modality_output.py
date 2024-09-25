@@ -3,7 +3,6 @@ Modality output classes for modality-based model classification
 """
 from http import HTTPStatus
 from typing import Optional, Any, List
-from numpy import ndarray
 
 from aixplain.model_interfaces.schemas.api.basic_api_output import APIOutput
 
@@ -35,4 +34,4 @@ class ArrayOutput(APIOutput):
     :type data:
         ndarray
     """
-    data: ndarray
+    data: List

@@ -1,6 +1,7 @@
 from enum import Enum
 from http import HTTPStatus
 from typing import Optional, Any, List, Union, Tuple
+import numpy as np
 
 from pydantic import BaseModel, validator
 import tornado.web
@@ -725,7 +726,7 @@ class AutoMaskGenerationInputSchema(TextInput):
     crop_nms_thresh: Optional[float] = 0.7
     crop_overlap_ratio: Optional[float] = 512 / 1500
     crop_n_points_downscale_factor: Optional[int] = 1
-    point_grids: Optional[List[np.ndarray]] = None
+    point_grids: Optional[List[List]] = None
     min_mask_region_area: Optional[int] = 0
     output_mode: Optional[str] = "binary_mask"
 
