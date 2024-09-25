@@ -1,7 +1,7 @@
 import tornado.web
 
 from http import HTTPStatus
-from typing import Dict, List, Union, Optional, Text
+from typing import Dict, List, Union, Optional, Text, List
 from enum import Enum
 from pydantic import BaseModel, validate_call
 from abc import abstractmethod
