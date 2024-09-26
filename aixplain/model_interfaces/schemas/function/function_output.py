@@ -436,7 +436,7 @@ class MaskOutput(MaskOutputSchema):
                     reason="Incorrect type passed into AutoMaskGenerationOutput."
                 )
 
-class AutoMaskGenerationOutputSchema():
+class AutoMaskGenerationOutputSchema(APIOutput):
     """
     """
     data: List[MaskOutput]
