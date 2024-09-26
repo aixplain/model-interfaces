@@ -383,7 +383,7 @@ class SegmentationOutput(SegmentationInputSchema):
                 reason="Incorrect type passed into SegmentationInputSchema."
             )
 
-class AutoMaskGenerationOutputSchema(ArrayOutput):
+class MaskOutputSchema(ArrayOutput):
     """The standardized schema of the aiXplain's automatic image masking function.
     Note that most of these fields are catered specifically toward SAM2 and do 
     not all all have to be implemented. Documentation from 
@@ -424,6 +424,22 @@ class AutoMaskGenerationOutputSchema(ArrayOutput):
     point_coords: Optional[List[List]] = None
     stability_score: Optional[float] = None
     crop_box: Optional[List] = None
+
+class MaskOutput(MaskOutputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect type passed into AutoMaskGenerationOutput."
+                )
+
+class AutoMaskGenerationOutputSchema():
+    """
+    """
+    data: List[MaskOutput]
 
 class AutoMaskGenerationOutput(AutoMaskGenerationOutputSchema):
     def __init__(self, **input):
