@@ -443,7 +443,6 @@ class AutoMaskGenerationOutputSchema():
 
 class AutoMaskGenerationOutput(AutoMaskGenerationOutputSchema):
     def __init__(self, **input):
-        super().__init__(**input)
         try:
             super().__init__(**input)
         except ValueError:
