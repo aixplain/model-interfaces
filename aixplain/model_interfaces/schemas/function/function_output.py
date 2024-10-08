@@ -383,16 +383,11 @@ class SegmentationOutput(SegmentationInputSchema):
                 reason="Incorrect type passed into SegmentationInputSchema."
             )
 
-class MaskOutputSchema(ArrayOutput):
+class MaskOutputSchema(BaseModel):
     """The standardized schema of the aiXplain's automatic image masking function.
     Note that most of these fields are catered specifically toward SAM2 and do 
     not all all have to be implemented. Documentation from 
     https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
-
-    :param data:
-        Presigned S3 URI to which masks have been stored.
-    :type data:
-        Text
     :param area:
         The area in pixels of the mask.
     :type area:
@@ -436,10 +431,22 @@ class MaskOutput(MaskOutputSchema):
                     reason="Incorrect type passed into AutoMaskGenerationOutput."
                 )
 
-class AutoMaskGenerationOutputSchema(APIOutput):
+class AutoMaskGenerationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's automatic image masking function.
+    Note that most of these fields are catered specifically toward SAM2 and do 
+    not all all have to be implemented. Documentation from 
+    https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
+
+    :param data:
+        Presigned S3 URI to which all masks will be stored.
+    :type data:
+        Text
+    :param details:
+        The metadata corresponding to each individual mask.
+    :type details:
+        List[MaskOutput]
     """
-    """
-    data: List[MaskOutput]
+    details: List[MaskOutput]
 
 class AutoMaskGenerationOutput(AutoMaskGenerationOutputSchema):
     def __init__(self, **input):
