@@ -390,9 +390,9 @@ class MaskOutputSchema(ArrayOutput):
     https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
 
     :param data:
-        Processed output data from supplier model.
+        Presigned S3 URI to which masks have been stored.
     :type data:
-        ndarray
+        Text
     :param area:
         The area in pixels of the mask.
     :type area:
