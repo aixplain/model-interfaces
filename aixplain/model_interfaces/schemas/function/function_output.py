@@ -438,7 +438,8 @@ class AutoMaskGenerationOutputSchema(TextOutput):
     https://github.com/facebookresearch/segment-anything/blob/main/segment_anything/automatic_mask_generator.py
 
     :param data:
-        Presigned S3 URI to which all masks will be stored.
+        If stored on S3, this is the presigned S3 URI to which all masks will be stored. Otherwise
+        these are the raw masks in text format.
     :type data:
         Text
     :param details:

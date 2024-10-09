@@ -645,10 +645,6 @@ class AutoMaskGenerationInputSchema(TextInput):
         Input data to the model.
     :type data:
         Text
-    :param presigned_s3_uri:
-        The URI to which the masks will be stored.
-    :type presigned_s3_uri:
-        Text
     :param points_per_side:
         The number of points to be sampled along one side of the image. The 
         total number of points is points_per_side**2. If None, 'point_grids' 
@@ -720,7 +716,6 @@ class AutoMaskGenerationInputSchema(TextInput):
     :type output_mode:
         str
     """
-    presigned_s3_uri: Text
     points_per_side: Optional[int] = 32
     points_per_batch: Optional[int] = 64
     pred_iou_thresh: Optional[float] = 0.88
