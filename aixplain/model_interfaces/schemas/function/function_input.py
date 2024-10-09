@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import Optional, Any, List, Union, Tuple
 import numpy as np
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Extra
 import tornado.web
 
 from aixplain.model_interfaces.utils import serialize
@@ -635,7 +635,7 @@ class SubtitleTranslationInput(SubtitleTranslationInputSchema):
                     reason="Incorrect types passed into SubtitleTranslationInput."
                 )
 
-class AutoMaskGenerationInputSchema(TextInput):
+class AutoMaskGenerationInputSchema(TextInput, extra=Extra.allow):
     """The standardized schema of the aiXplain's automatic image masking function.
     Note that most of these fields are catered specifically toward SAM2 and do 
     not all all have to be implemented. Documentation from 
