@@ -382,3 +382,27 @@ class SegmentationOutput(SegmentationInputSchema):
                 status_code=HTTPStatus.BAD_REQUEST,
                 reason="Incorrect type passed into SegmentationInputSchema."
             )
+
+class VideoGenerationOutputSchema(TextOutput):
+    """The standardized schema of the aiXplain's video generation output.
+
+    :param data:
+        Processed output S3 URI link to generation video.
+    :type data:
+        str
+    :param details:
+        Other video generaiton details.
+    :type details:
+        Any
+    """ 
+    details: Optional[Any] = None 
+
+class VideoGenerationOutput(VideoGenerationOutputSchema):
+    def __init__(self, **input):
+        try:
+            super().__init__(**input)
+        except ValueError:
+             raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into VideoGenerationOutputSchema"
+                )

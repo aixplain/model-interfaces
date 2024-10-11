@@ -15,7 +15,8 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     TextReconstructionInput,
     FillTextMaskInput,
     SubtitleTranslationInput,
-    SegmentationInput
+    SegmentationInput,
+    VideoGenerationInput
 )
 
 from aixplain.model_interfaces.schemas.function.function_output import(
@@ -35,7 +36,8 @@ from aixplain.model_interfaces.schemas.function.function_output import(
     TextReconstructionOutput,
     FillTextMaskOutput,
     SubtitleTranslationOutput,
-    SegmentationOutput
+    SegmentationOutput,
+    VideoGenerationOutput
 )
 
 from aixplain.model_interfaces.schemas.metric.metric_input import(
@@ -85,7 +87,8 @@ from aixplain.model_interfaces.interfaces.function_models import(
     TextReconstructionModel,
     FillTextMaskModel,
     SubtitleTranslationModel,
-    SegmentationModel
+    SegmentationModel,
+    VideoGenerationModel
 )
 
 from aixplain.model_interfaces.interfaces.metric_models import(
@@ -116,7 +119,8 @@ function_classes = [
     TextReconstructionModel,
     FillTextMaskModel,
     SubtitleTranslationModel,
-    SegmentationModel
+    SegmentationModel,
+    VideoGenerationModel
 ]
 
 function_classes_input = [
@@ -131,7 +135,8 @@ function_classes_input = [
     SpeechSynthesisInput,
     TextToImageGenerationInput,
     TextGenerationInput,
-    SegmentationInput
+    SegmentationInput,
+    VideoGenerationInput
 ]
 
 metric_classes_input = [

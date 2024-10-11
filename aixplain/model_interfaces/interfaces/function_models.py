@@ -20,7 +20,8 @@ from aixplain.model_interfaces.schemas.function.function_input import (
     SearchInput,
     TextReconstructionInput,
     FillTextMaskInput,
-    SubtitleTranslationInput
+    SubtitleTranslationInput,
+    VideoGenerationInput
 )
 from aixplain.model_interfaces.schemas.function.function_output import (
     SegmentationOutput,
@@ -36,7 +37,8 @@ from aixplain.model_interfaces.schemas.function.function_output import (
     SearchOutput,
     TextReconstructionOutput,
     FillTextMaskOutput,
-    SubtitleTranslationOutput
+    SubtitleTranslationOutput,
+    VideoGenerationOutput
 )
 from aixplain.model_interfaces.schemas.modality.modality_input import TextInput, TextListInput
 from aixplain.model_interfaces.schemas.modality.modality_output import TextListOutput
@@ -340,6 +342,28 @@ class SegmentationModel(AixplainModel):
 
     @validate_call
     def predict(self, request: SegmentationPredictInput,
+                headers: Dict[str, str] = None) -> dict:
+        predict_output = {
+            "predictions": self.run_model(request.instances, headers)
+        }
+        return predict_output
+
+class VideoGenerationPredictInput(BaseModel):
+    instances: List[VideoGenerationInput]
+
+class VideoGenerationModel(AixplainModel):
+
+    @abstractmethod
+    @validate_call
+    def run_model(
+        self,
+        api_input: List[VideoGenerationInput],
+        headers: Dict[str, str] = None
+    ) -> List[VideoGenerationOutput]:
+        raise NotImplementedError
+
+    @validate_call
+    def predict(self, request: VideoGenerationPredictInput,
                 headers: Dict[str, str] = None) -> dict:
         predict_output = {
             "predictions": self.run_model(request.instances, headers)

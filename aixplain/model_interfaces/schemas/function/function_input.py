@@ -2,7 +2,7 @@ from enum import Enum
 from http import HTTPStatus
 from typing import Optional, Any, List, Union, Tuple
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Extra
 import tornado.web
 
 from aixplain.model_interfaces.utils import serialize
@@ -632,4 +632,69 @@ class SubtitleTranslationInput(SubtitleTranslationInputSchema):
             raise tornado.web.HTTPError(
                     status_code=HTTPStatus.BAD_REQUEST,
                     reason="Incorrect types passed into SubtitleTranslationInput."
+                )
+
+class VideoGenerationInputSchema(TextInput, extra=Extra.allow):
+    """The standardized schema of the aiXplain's video generation API 
+    input.
+    
+    :param data:
+        Input prompt to the model.
+    :type data:
+        str
+    :param video_length:
+        Length of the video in seconds.
+    :type video_length:
+        float
+    :param negative_prompt:
+        The prompt or prompts not to guide the image generation. Ignored when 
+        not using guidance (i.e., ignored if guidance_scale is less than 1).
+    :type negative_prompt:
+        str
+    :param height:
+        The height in pixels of the generated image. This is set to 1024 by 
+        default for the best results.
+    :type height:
+        int
+    :param width:
+        he width in pixels of the generated image. This is set to 1024 by 
+        default for the best results.
+    :type width:
+        int
+    :param num_inference_steps:
+        The number of denoising steps. More denoising steps usually lead to a 
+        higher quality image at the expense of slower inference.
+    :type num_inference_steps:
+        int
+    :param timesteps:
+        Custom timesteps to use for the denoising process with schedulers which 
+        support a timesteps argument in their set_timesteps method. If not 
+        defined, the default behavior when num_inference_steps is passed will 
+        be used. Must be in descending order.
+    :type timesteps:
+        List[int]
+    :param guidance_scale:
+        Guidance scale is enabled by setting guidance_scale > 1. Higher 
+        guidance scale encourages to generate images that are closely linked to
+        the text prompt, usually at the expense of lower image quality.
+    :type guidance_scale:
+        float
+    """
+    video_length: float
+    negative_prompt: Optional[str] = None
+    height: Optional[int] = 1024
+    width: Optional[int] = 1024
+    num_inference_steps: Optional[int] = 50
+    timesteps: Optional[List[int]] = None
+    guidance_scale: Optional[float] = 7.0
+
+class VideoGenerationInput(VideoGenerationInputSchema):
+    def __init__(self, **input):
+        super().__init__(**input)
+        try:
+            super().__init__(**input)
+        except ValueError:
+            raise tornado.web.HTTPError(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    reason="Incorrect types passed into VideoGenerationInput."
                 )
