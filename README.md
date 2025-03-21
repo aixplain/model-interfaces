@@ -4,7 +4,7 @@ The interface to host your AI models on aiXplain's model-hosting platform.
 
 ## User Guide
 
-Refer to the [user guide document](docs/users/README.md).
+Refer to the [user guide document](https://docs.aixplain.com/guides/how-to-onboard-a-model/custom-step-1-structure).
 
 ### Samples
 
