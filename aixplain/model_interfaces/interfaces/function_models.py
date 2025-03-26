@@ -129,7 +129,7 @@ class SpeechEnhancementModel(AixplainModel):
 
 
 class SpeechSynthesisPredictInput(BaseModel):
-    instances: List[SpeechEnhancementInput]
+    instances: List[SpeechSynthesisInput]
 
 class SpeechSynthesis(AixplainModel):
 
