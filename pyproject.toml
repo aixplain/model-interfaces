@@ -15,14 +15,14 @@ includes = ["aixplain"]
 
 [project]
 name = "model-interfaces"
-version = "1.0.0"
+version = "1.0.1"
 description = "A package specifying the model interfaces supported by aiXplain"
 license = { text = "Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0" }
 dependencies = [
     "kserve>=0.10.0",
     "multiprocess==0.70.14", 
     "protobuf>=3.19.4",
-    "pyarrow==15.0.0",
+    "pyarrow==17.0.0",
     "pydantic>=1.9.1",
     "pydub>=0.25.1",
     "requests>=2.28.1",
