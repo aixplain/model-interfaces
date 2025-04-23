@@ -9,7 +9,7 @@ anyio==3.6.2
 astunparse==1.6.3
 async-timeout==4.0.2
 attrs==22.1.0
-avro==1.11.1
+avro==1.11.3
 azure-core==1.26.0
 azure-identity==1.11.0
 azure-storage-blob==12.9.0
