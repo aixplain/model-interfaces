@@ -31,7 +31,7 @@ class AudioConfig(BaseModel):
         int
     """
     audio_encoding: AudioEncoding
-    sampling_rate: Optional[int]
+    sampling_rate: Optional[int] = None
 
 class SpeechRecognitionInputSchema(APIInput):
     """The standardized schema of the aiXplain's Speech Recognition API input.
@@ -212,7 +212,7 @@ class SpeechSynthesisInputSchema(BaseModel):
     :type language:
         str
     :param audio_config:
-        Configuration specifying the audio encoding parameters of the provided
+        Configuration specifying the audio encoding parameters of the provided audio
     :type audio_config:
         AudioConfig
     """
@@ -221,7 +221,7 @@ class SpeechSynthesisInputSchema(BaseModel):
     audio: str = ""
     text: str
     text_language: str = "en"
-    audio_config: AudioConfig
+    audio_config: Optional[AudioConfig] = None
 
 class SpeechSynthesisInput(SpeechSynthesisInputSchema):
     def __init__(self, **input):
