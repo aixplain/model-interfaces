@@ -802,7 +802,7 @@ class NamedEntityRecognitionMetricInputSchema(MetricInput):
 
     hypotheses: Union[str, List[List[NamedEntityRecognitionElement]]]
     references: Union[str, List[List[NamedEntityRecognitionElement]]]
-    sources: Optional[str]
+    sources: Optional[str] = None
     threshold: Optional[float] = 0.0
 
     @validator("sources")
