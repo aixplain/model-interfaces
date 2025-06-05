@@ -271,7 +271,7 @@ class Segment(BaseModel):
     segment_id: int
     start: Union[float, int, Tuple[int, int]]
     end: Union[float, int, Tuple[int, int]]
-    url: Optional[str]
+    url: Optional[str] = None
 
 class SegmentationInputSchema(APIInput):
     """The standardized schema of the aiXplain's Segmenation API input.
@@ -567,8 +567,8 @@ class FillTextMaskInputSchema(TextInput):
         str
     """
     language: str
-    dialect: Optional[str]
-    script: Optional[str]
+    dialect: Optional[str] = None
+    script: Optional[str] = None
 
 class FillTextMaskInput(FillTextMaskInputSchema):
     def __init__(self, **input):
@@ -619,9 +619,9 @@ class SubtitleTranslationInputSchema(TextInput):
         List[str]
     """
     source_language: str
-    dialect_in: Optional[str]
-    target_supplier: Optional[str]
-    target_languages: Optional[List[str]]
+    dialect_in: Optional[str] = None
+    target_supplier: Optional[str] = None
+    target_languages: Optional[List[str]] = None
 
 class SubtitleTranslationInput(SubtitleTranslationInputSchema):
     def __init__(self, **input):
