@@ -281,7 +281,7 @@ class SegmentationInputSchema(APIInput):
     :type data:
         Segment
     """
-    details: Optional[Union[List[Segment], str]]
+    details: Optional[Union[List[Segment], str]] = None
 
 class SegmentationInput(SegmentationInputSchema):
     pass
